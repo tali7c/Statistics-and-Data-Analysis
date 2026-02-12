@@ -1,0 +1,174 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 02 -- Lecture 06 Notes\\In-Class Activity: Summarization + Interpretation}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose of This Activity}
+This activity is designed to help you practice descriptive statistics end-to-end.
+You will not only compute numbers, but also interpret what they mean and write a short conclusion.
+
+\paragraph{Repository.}
+\texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Learning Outcomes}
+After this activity, you should be able to:
+\begin{enumerate}
+  \item compute central tendency (mean, median, mode),
+  \item compute dispersion (range, IQR, sample variance, sample std),
+  \item compute Pearson correlation and interpret its sign and magnitude,
+  \item compare groups using grouped summaries,
+  \item write clear insights and limitations from statistical summaries.
+\end{enumerate}
+
+\section*{1. Dataset Description}
+File: \texttt{data/activity\_student\_dataset.csv}
+
+\subsection*{1.1 What the columns mean}
+\begin{itemize}
+  \item \texttt{program}: CSE / ECE / AIML (categorical).
+  \item \texttt{attendance\_pct}: attendance percentage (numeric).
+  \item \texttt{study\_hours}: study hours (numeric).
+  \item \texttt{social\_media\_hours}: social media hours (numeric).
+  \item \texttt{final\_score}: final score (numeric).
+\end{itemize}
+
+\section*{2. Tasks (What You Must Compute)}
+
+\subsection*{Task 1: Central tendency}
+For \texttt{final\_score}, compute:
+\begin{itemize}
+  \item mean: $\bar{x}=\frac{1}{n}\sum x_i$
+  \item median (middle value after sorting)
+  \item mode (most frequent value)
+\end{itemize}
+
+\paragraph{Interpretation tip.}
+Compare mean vs median:
+\begin{itemize}
+  \item mean $>$ median often hints right skew,
+  \item mean $<$ median often hints left skew.
+\end{itemize}
+This is only a clue; confirm with a plot.
+
+\subsection*{Task 2: Dispersion}
+For \texttt{final\_score}, compute:
+\begin{itemize}
+  \item range = $\max - \min$
+  \item quartiles $Q_1, Q_3$ and IQR = $Q_3-Q_1$
+  \item sample variance and sample standard deviation:
+  \[
+    s^2=\frac{1}{n-1}\sum (x_i-\bar{x})^2,\quad s=\sqrt{s^2}
+  \]
+\end{itemize}
+
+\paragraph{Robustness.}
+IQR is more robust to outliers than standard deviation.
+
+\subsection*{Task 3: Correlation}
+Compute Pearson correlation:
+\[
+r=\frac{\sum (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum (x_i-\bar{x})^2}\sqrt{\sum (y_i-\bar{y})^2}}
+\]
+for:
+\begin{itemize}
+  \item (\texttt{study\_hours}, \texttt{final\_score})
+  \item (\texttt{social\_media\_hours}, \texttt{final\_score})
+\end{itemize}
+
+\paragraph{Very important.}
+Correlation measures \textbf{linear association}. It does \textbf{not} prove causation.
+
+\subsection*{Task 4: Grouped summaries}
+Group by \texttt{program} and compute:
+\begin{itemize}
+  \item mean and median of \texttt{final\_score}
+  \item mean of \texttt{attendance\_pct}
+\end{itemize}
+
+\subsection*{Task 5: Write-up}
+Write:
+\begin{itemize}
+  \item 3 insights (what the dataset suggests)
+  \item 2 limitations (why your conclusions might not generalize)
+\end{itemize}
+
+\section*{3. Expected Results (From the Provided Solution)}
+If you run the provided solution script (next section), you should obtain:
+
+\subsection*{3.1 Overall results}
+\begin{itemize}
+  \item mean(final\_score) = 65.50
+  \item median(final\_score) = 65.50
+  \item mode(final\_score) = 60
+  \item $Q_1=60,\ Q_3=72,\ IQR=12$
+  \item sample std(final\_score) $\approx$ 14.11
+\end{itemize}
+
+\subsection*{3.2 Correlations}
+\begin{itemize}
+  \item corr(study\_hours, final\_score) $\approx$ 0.5190 (moderate positive linear association)
+  \item corr(social\_media\_hours, final\_score) $\approx$ -0.9771 (strong negative linear association)
+\end{itemize}
+
+\paragraph{Interpretation note.}
+Even a strong correlation does not prove that one variable causes the other.
+Other variables (motivation, prior knowledge, teaching quality) could be involved.
+
+\subsection*{3.3 By program (mean final score)}
+\begin{itemize}
+  \item AIML: mean $\approx$ 75.83
+  \item CSE: mean $\approx$ 59.17
+  \item ECE: mean $\approx$ 61.50
+\end{itemize}
+
+\section*{4. Provided Solution Script (Mini Demo)}
+After you attempt the activity yourself, run:
+\begin{verbatim}
+python demo/activity_solution.py
+\end{verbatim}
+
+It will save:
+\begin{itemize}
+  \item \texttt{data/overall\_results.csv}
+  \item \texttt{data/summary\_by\_program.csv}
+  \item plots in \texttt{images/} (scatter plots, bar chart, histogram)
+\end{itemize}
+
+\section*{5. Common Mistakes}
+\begin{itemize}
+  \item \textbf{Mixing up correlation and causation.} Correlation is not proof.
+  \item \textbf{Using only the mean.} Always look at median and IQR too.
+  \item \textbf{Ignoring groups.} A global average can hide group differences.
+  \item \textbf{Not writing limitations.} Every conclusion must mention what could be wrong.
+  \item \textbf{No plots.} Tables alone can hide skewness and outliers.
+\end{itemize}
+
+\section*{6. Extension Questions (Optional)}
+If you finish early, try any two:
+\begin{enumerate}
+  \item Identify the lowest and highest scoring students and comment on their study/social media hours.
+  \item Compare correlation within each program separately (CSE vs ECE vs AIML).
+  \item Replace mean with median for program comparison and see if ranking changes.
+  \item Use IQR fences to flag potential outliers in \texttt{final\_score}.
+\end{enumerate}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley, 7th ed., 2020.
+  \item Freedman, D., Pisani, R., \& Purves, R. \textit{Statistics}, W. W. Norton, 4th ed., 2007.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly, 2022.
+\end{itemize}
+
+\end{document}
+

@@ -1,0 +1,276 @@
+\documentclass{beamer}
+
+\usetheme{Berlin}
+\usecolortheme{Orchid}
+\useoutertheme{miniframes}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+
+\title[Statistics and Data Analysis]{Statistics and Data Analysis}
+\subtitle{Unit 01 -- Lecture 02: Feature Scaling and Feature Engineering Basics}
+\author{Tofik Ali}
+\institute{School of Computer Science, UPES Dehradun}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Quick Links}
+  \centering
+  \hyperlink{sec:scaling}{\beamerbutton{Scaling}}\hspace{0.6em}
+  \hyperlink{sec:transform}{\beamerbutton{Transforms}}\hspace{0.6em}
+  \hyperlink{sec:fe}{\beamerbutton{Feature Engg.}}\hspace{0.6em}
+  \hyperlink{sec:demo}{\beamerbutton{Demo}}\hspace{0.6em}
+  \hyperlink{sec:summary}{\beamerbutton{Summary}}
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Overview}
+
+\begin{frame}{Learning Outcomes}
+  \begin{itemize}[<+->]
+    \item Explain why feature scaling is needed in many ML/analytics workflows
+    \item Compute min--max normalization and z-score standardization
+    \item Choose appropriate scaling/transformation for a given scenario
+    \item Create basic engineered features (encoding, bins, interactions, date parts)
+  \end{itemize}
+\end{frame}
+
+\section{Feature Scaling}
+\label{sec:scaling}
+
+\begin{frame}{Why Scale Features?}
+  \begin{itemize}[<+->]
+    \item Different features can have very different units and ranges
+    \item Distance-based methods (kNN, k-means) are dominated by large-scale features
+    \item Optimization can be faster/more stable after scaling (gradient-based models)
+    \item Scaling also helps compare feature importance in some linear models
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Min--Max Normalization}
+  Maps a feature to $[0,1]$:
+  \[
+    x' = \frac{x - \min(x)}{\max(x) - \min(x)}
+  \]
+  \begin{itemize}[<+->]
+    \item Keeps relative ordering
+    \item Sensitive to extreme outliers (min/max can be unstable)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Standardization (z-score)}
+  Centers and scales using mean and standard deviation:
+  \[
+    z = \frac{x - \mu}{\sigma}
+  \]
+  \begin{itemize}[<+->]
+    \item Produces mean 0 and std 1 (approximately)
+    \item Often a good default for many algorithms
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Important: Avoid Data Leakage}
+  \begin{itemize}[<+->]
+    \item Scaling parameters (min/max, mean/std) must be computed on \textbf{training data only}
+    \item Then apply the same parameters to validation/test data
+    \item Otherwise, test information leaks into training and results look unrealistically good
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 1: Min--Max}
+  \small
+  Suppose a feature has min = 20, max = 80.\\
+  Compute the min--max normalized value for $x=50$.
+\end{frame}
+
+\begin{frame}{Solution 1}
+  \[
+    x' = \frac{50-20}{80-20} = \frac{30}{60} = 0.5
+  \]
+\end{frame}
+
+\begin{frame}{Exercise 2: z-score}
+  \small
+  A test score has mean $\mu=60$ and standard deviation $\sigma=10$.\\
+  Compute the z-score for $x=80$ and interpret it.
+\end{frame}
+
+\begin{frame}{Solution 2}
+  \[
+    z=\frac{80-60}{10}=2
+  \]
+  \textbf{Interpretation:} 80 is 2 standard deviations above the mean.
+\end{frame}
+
+\begin{frame}{Exercise 3: Who Needs Scaling?}
+  \small
+  For each algorithm, answer: scaling important? (Yes/No)
+  \begin{enumerate}
+    \item kNN
+    \item k-means clustering
+    \item Linear regression (with gradient descent)
+    \item Decision tree
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Solution 3}
+  \begin{itemize}
+    \item kNN: Yes (distance-based)
+    \item k-means: Yes (distance-based)
+    \item Linear regression (GD): Often yes (helps optimization)
+    \item Decision tree: Usually no (splits are scale-invariant)
+  \end{itemize}
+\end{frame}
+
+\section{Transformations}
+\label{sec:transform}
+
+\begin{frame}{Why Transform Features?}
+  \begin{itemize}[<+->]
+    \item Reduce skewness (e.g., income is often right-skewed)
+    \item Stabilize variance and make patterns more linear
+    \item Improve interpretability and model fit in some cases
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Log Transform (Common for Right-Skew)}
+  For positive values, a common transform is:
+  \[
+    x' = \log(1+x)
+  \]
+  \begin{itemize}[<+->]
+    \item Compresses large values and spreads small values
+    \item Reduces the impact of extreme values
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 4: Pick a Transform}
+  \small
+  Which is a reasonable first transform for a right-skewed income column? \\
+  \vspace{0.4em}
+  (a) $x$ \hspace{1.2em} (b) $x^2$ \hspace{1.2em} (c) $\log(1+x)$
+\end{frame}
+
+\begin{frame}{Solution 4}
+  \textbf{(c) $\log(1+x)$} is a common choice for right-skewed positive features.
+\end{frame}
+
+\section{Feature Engineering Basics}
+\label{sec:fe}
+
+\begin{frame}{What is Feature Engineering?}
+  Feature engineering means creating useful new variables from raw data to improve analysis/models.
+  \vspace{0.6em}
+  \begin{itemize}[<+->]
+    \item Encode categorical variables (one-hot)
+    \item Create buckets/bins (low/medium/high)
+    \item Interactions and ratios (effort = hours $\times$ attendance)
+    \item Date parts (month, weekday)
+    \item Simple text features (length, keywords)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Example (Student Dataset Columns)}
+  Raw columns:
+  \begin{center}
+    \small \texttt{program, city, join\_date, attendance\_pct, study\_hours\_week, cgpa, family\_income\_k, backlogs}
+  \end{center}
+  \vspace{0.4em}
+  Possible engineered features:
+  \begin{itemize}[<+->]
+    \item \texttt{join\_month}, \texttt{join\_weekday}
+    \item \texttt{attendance\_bucket} (low/medium/high)
+    \item \texttt{income\_log1p}
+    \item \texttt{effort\_index} = hours $\times$ attendance/100
+    \item \texttt{has\_backlog} (0/1)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 5: Design Features}
+  \small
+  You have: \texttt{attendance\_pct, study\_hours\_week, family\_income\_k, join\_date, program}.\\
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Propose \textbf{three} engineered features and explain why they might help.
+\end{frame}
+
+\begin{frame}{Solution 5 (Examples)}
+  \begin{itemize}
+    \item \texttt{income\_log1p}: reduces right-skew and outlier impact
+    \item \texttt{effort\_index}: combines hours + attendance into one effort score
+    \item \texttt{join\_month}: captures seasonal patterns (admissions, attendance patterns)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 6: One-hot Encoding}
+  \small
+  Program has categories: \texttt{CSE}, \texttt{ECE}, \texttt{AIML}.\\
+  \textbf{Task:} Write the one-hot encoded columns for \texttt{program}.
+\end{frame}
+
+\begin{frame}{Solution 6}
+  One-hot columns:
+  \begin{itemize}
+    \item \texttt{program\_CSE}
+    \item \texttt{program\_ECE}
+    \item \texttt{program\_AIML}
+  \end{itemize}
+  Each row has 1 for its category and 0 for the others.
+\end{frame}
+
+\section{Demo}
+\label{sec:demo}
+
+\begin{frame}{Mini Demo (Python)}
+  Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/scaling\_feature\_engineering\_demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{data/student\_features\_engineered.csv}
+    \item plots in \texttt{images/} (income vs log-income, hours vs CGPA)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Demo Output (Example Plot)}
+  \begin{center}
+  \IfFileExists{../images/income_vs_log_income.png}{
+    \includegraphics[width=0.95\linewidth]{income_vs_log_income.png}
+  }{
+    \small (Run the demo to generate: \texttt{income\_vs\_log\_income.png})
+  }
+  \end{center}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+\begin{frame}{Summary}
+  \begin{itemize}[<+->]
+    \item Scaling makes features comparable and prevents domination by large-scale variables
+    \item Min--max maps to $[0,1]$; z-score centers and scales by mean/std
+    \item Transformations like $\log(1+x)$ help reduce skew and outlier influence
+    \item Feature engineering creates informative variables (encoding, bins, interactions, dates)
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Exit question:} Why is scaling ``fit on train only'' and then applied to test?
+\end{frame}
+
+\end{document}

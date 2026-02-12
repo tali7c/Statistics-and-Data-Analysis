@@ -1,0 +1,5 @@
+,attendance_pct,study_hours_week,cgpa,final_marks
+attendance_pct,1.0,0.701,0.442,0.825
+study_hours_week,0.701,1.0,0.474,0.905
+cgpa,0.442,0.474,1.0,0.563
+final_marks,0.825,0.905,0.563,1.0

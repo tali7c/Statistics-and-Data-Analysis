@@ -1,9 +1,13 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  4 FEB 2026 23:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  9 FEB 2026 12:58
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**slides.tex
-(./slides.tex
+**D:/InSync-tofik/Work/UPES/Statistics-and-Data-Analysis/Unit-02/Lecture-02/lat
+ex/slides.tex
+
+(d:/InSync-tofik/Work/UPES/Statistics-and-Data-Analysis/Unit-02/Lecture-02/late
+x/slides.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/beamer/beamer.cls
@@ -807,7 +811,9 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 x.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count362
-) (./slides.aux)
+)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-02\late
+x/slides.aux)
 \openout1 = `slides.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -890,7 +896,11 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package hyperref Info: Link coloring OFF on input line 18.
- (./slides.out) (./slides.out)
+
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-02\late
+x/slides.out)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-02\late
+x/slides.out)
 \@outlinefile=\write5
 \openout5 = `slides.out'.
 
@@ -970,12 +980,15 @@ Dictionary: translator-numbers-dictionary, Language: English
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/translator/translator-the
 orem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-) (./slides.nav) [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.ma
-p}
+)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-02\late
+x/slides.nav) [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ] [2
 
-] (./slides.toc) [3
+]
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-02\late
+x/slides.toc) [3
 
 ] [4
 
@@ -987,13 +1000,13 @@ p}
 
 ] [8
 
-]
-[9
+] [9
 
 ]
 LaTeX Font Info:    Trying to load font information for U+msa on input line 78.
 
- (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
+
+(c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 78.
@@ -1118,7 +1131,9 @@ thkerncmss.
 \tf@snm=\write8
 \openout8 = `slides.snm'.
 
- (./slides.aux)
+
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-02\late
+x/slides.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1127,13 +1142,13 @@ Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: 1C8439FE8F08DF2B8818C9A48B6DC822;410.
  ) 
 Here is how much of TeX's memory you used:
- 22084 strings out of 467533
- 430700 string characters out of 5415333
+ 22087 strings out of 467533
+ 432206 string characters out of 5415333
  838341 words of memory out of 5000000
  50407 multiletter control sequences out of 15000+600000
  641795 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,19n,123p,381b,793s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,19n,123p,461b,793s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ex10.pfb><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmmi10.pfb><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/
@@ -1150,7 +1165,8 @@ b><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 sy7.pfb><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy8.pfb><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmtt10.pfb>
-Output written on slides.pdf (57 pages, 286590 bytes).
+Output written on D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-0
+2\Lecture-02\latex/slides.pdf (57 pages, 286590 bytes).
 PDF statistics:
  4140 PDF objects out of 4296 (max. 8388607)
  2577 compressed objects within 26 object streams

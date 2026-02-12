@@ -1,9 +1,13 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  6 FEB 2026 22:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  9 FEB 2026 12:59
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**slides.tex
-(./slides.tex
+**D:/InSync-tofik/Work/UPES/Statistics-and-Data-Analysis/Unit-02/Lecture-03/lat
+ex/slides.tex
+
+(d:/InSync-tofik/Work/UPES/Statistics-and-Data-Analysis/Unit-02/Lecture-03/late
+x/slides.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/beamer/beamer.cls
@@ -807,7 +811,9 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 x.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count362
-) (./slides.aux)
+)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-03\late
+x/slides.aux)
 \openout1 = `slides.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -890,7 +896,11 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package hyperref Info: Link coloring OFF on input line 18.
- (./slides.out) (./slides.out)
+
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-03\late
+x/slides.out)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-03\late
+x/slides.out)
 \@outlinefile=\write5
 \openout5 = `slides.out'.
 
@@ -970,12 +980,15 @@ Dictionary: translator-numbers-dictionary, Language: English
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/translator/translator-the
 orem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-) (./slides.nav) [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.ma
-p}
+)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-03\late
+x/slides.nav) [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ] [2
 
-] (./slides.toc) [3
+]
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-03\late
+x/slides.toc) [3
 
 ]
 LaTeX Font Info:    Trying to load font information for U+msa on input line 50.
@@ -1127,7 +1140,8 @@ thkerncmss.
 \openout8 = `slides.snm'.
 
 
-(./slides.aux)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-03\late
+x/slides.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1136,13 +1150,13 @@ Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: 021E03083EE3625AF88990690695CC37;488.
  ) 
 Here is how much of TeX's memory you used:
- 22098 strings out of 467533
- 430994 string characters out of 5415333
+ 22101 strings out of 467533
+ 432500 string characters out of 5415333
  836890 words of memory out of 5000000
  50414 multiletter control sequences out of 15000+600000
  640901 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,19n,123p,381b,793s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,19n,123p,461b,793s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ex10.pfb><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmmi10.pfb><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/
@@ -1157,7 +1171,8 @@ fik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb><c:/U
 sers/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
 b><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 tt10.pfb>
-Output written on slides.pdf (61 pages, 277798 bytes).
+Output written on D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-0
+2\Lecture-03\latex/slides.pdf (61 pages, 277798 bytes).
 PDF statistics:
  4141 PDF objects out of 4296 (max. 8388607)
  2690 compressed objects within 27 object streams

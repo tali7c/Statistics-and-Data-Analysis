@@ -1,0 +1,320 @@
+\documentclass{beamer}
+
+\usetheme{Berlin}
+\usecolortheme{Orchid}
+\useoutertheme{miniframes}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+
+\title[Statistics and Data Analysis]{Statistics and Data Analysis}
+\subtitle{Unit 02 -- Lecture 04: Statistical Summaries for Data}
+\author{Tofik Ali}
+\institute{School of Computer Science, UPES Dehradun}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Quick Links}
+  \centering
+  \hyperlink{sec:overview}{\beamerbutton{Overview}}\hspace{0.6em}
+  \hyperlink{sec:tables}{\beamerbutton{Summary Tables}}\hspace{0.6em}
+  \hyperlink{sec:group}{\beamerbutton{Grouped Summary}}\hspace{0.6em}
+  \hyperlink{sec:demo}{\beamerbutton{Demo}}\hspace{0.6em}
+  \hyperlink{sec:summary}{\beamerbutton{Summary}}
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Overview}
+\label{sec:overview}
+
+\begin{frame}{Learning Outcomes}
+  \begin{itemize}[<+->]
+    \item Explain why we summarize data (communication and comparison)
+    \item Interpret a standard summary table (count, mean, std, quartiles, min/max)
+    \item Compute and interpret a five-number summary (min, Q1, median, Q3, max)
+    \item Produce grouped summaries (mean/median by category)
+    \item Explain what is lost when we compress data into a few numbers
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Why Summaries?}
+  A summary answers: ``What does the dataset look like in one page?''
+  \vspace{0.6em}
+  \begin{itemize}[<+->]
+    \item We cannot read thousands of rows one-by-one
+    \item We need quick \textbf{comparison} across groups (CSE vs ECE) or time (week 1 vs week 2)
+    \item Summaries are used in reports, dashboards, and as a first step in analysis
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{A Standard Summary Table (Common Columns)}
+  \small
+  For a numeric feature (example: \texttt{final\_score}), a typical summary includes:
+  \vspace{0.4em}
+  \begin{itemize}
+    \item \textbf{count} ($n$): number of non-missing values
+    \item \textbf{mean}, \textbf{std} (sample standard deviation)
+    \item \textbf{min}, \textbf{max}
+    \item \textbf{25\% (Q1)}, \textbf{50\% (median)}, \textbf{75\% (Q3)}
+  \end{itemize}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Idea:} these numbers quickly describe center + spread + typical range.
+\end{frame}
+
+\section{Summary Tables}
+\label{sec:tables}
+
+\begin{frame}{Five-Number Summary (Very Important)}
+  For a dataset $x$ (sorted), the five-number summary is:
+  \[
+    \min(x),\ Q_1,\ \mathrm{median},\ Q_3,\ \max(x)
+  \]
+  \begin{itemize}[<+->]
+    \item It is the foundation of the boxplot
+    \item It is more robust than mean/std when outliers exist
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 1: Five-Number Summary}
+  \small
+  Dataset:
+  \begin{center}
+    \begin{tabular}{ccccccc}
+      4 & 5 & 7 & 8 & 9 & 10 & 25
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute $\min$, $Q_1$, median, $Q_3$, $\max$ and IQR.
+\end{frame}
+
+\begin{frame}{Solution 1}
+  Sorted: 4, 5, 7, 8, 9, 10, 25 (n=7)\\
+  \vspace{0.4em}
+  \begin{itemize}
+    \item $\min=4,\ \max=25$
+    \item median = 8
+    \item lower half: 4, 5, 7 $\Rightarrow Q_1=5$
+    \item upper half: 9, 10, 25 $\Rightarrow Q_3=10$
+    \item IQR = $Q_3-Q_1 = 10-5 = 5$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Reading Quartiles (Interpretation)}
+  Quartiles are percentiles:
+  \begin{itemize}[<+->]
+    \item $Q_1$ (25\%): 25\% of values are \emph{at or below} $Q_1$
+    \item median (50\%): 50\% of values are at or below the median
+    \item $Q_3$ (75\%): 75\% of values are at or below $Q_3$
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Checkpoint:} the middle 50\% of values lie between $Q_1$ and $Q_3$.
+\end{frame}
+
+\begin{frame}{Exercise 2: Interpret a Summary Row}
+  \small
+  Suppose a feature has summary:
+  \begin{center}
+    \begin{tabular}{lrrrrrrrr}
+      \toprule
+      & count & mean & std & min & 25\% & 50\% & 75\% & max \\
+      \midrule
+      final\_score & 24 & 71.0 & 12.0 & 40 & 65 & 74 & 82 & 92 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.2em}
+  \normalsize
+  \textbf{Task:} What do 25\% and 75\% mean? What does std tell us?
+\end{frame}
+
+\begin{frame}{Solution 2}
+  \begin{itemize}
+    \item 25\% (Q1)=65: about 25\% of students scored 65 or less.
+    \item 75\% (Q3)=82: about 75\% of students scored 82 or less.
+    \item std=12: a typical score is about 12 points away from the mean (rough idea of spread).
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Important:} summaries do not show the full distribution shape.
+\end{frame}
+
+\begin{frame}{Mean vs Median in Summaries}
+  \begin{itemize}[<+->]
+    \item If mean $\approx$ median, distribution may be roughly symmetric
+    \item If mean $>$ median, data is often right-skewed (high outliers pull mean up)
+    \item If mean $<$ median, data is often left-skewed (low outliers pull mean down)
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Rule of thumb:} always confirm with a plot (histogram/boxplot).
+\end{frame}
+
+\begin{frame}{Exercise 3: Group Comparison (Outlier Effect)}
+  \small
+  Two groups:
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Group A}\\
+      60,\ 62,\ 65,\ 95
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Group B}\\
+      70,\ 72,\ 73,\ 74
+    \end{column}
+  \end{columns}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute mean and median for both groups. Which group is ``better''?
+\end{frame}
+
+\begin{frame}{Solution 3}
+  \begin{itemize}
+    \item Group A mean $= (60+62+65+95)/4 = 70.5$; median $= (62+65)/2 = 63.5$
+    \item Group B mean $= (70+72+73+74)/4 = 72.25$; median $= (72+73)/2 = 72.5$
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Interpretation:} Group A has an outlier (95) that inflates its mean.
+  Typical performance (median) is much lower in Group A.
+\end{frame}
+
+\section{Grouped Summary}
+\label{sec:group}
+
+\begin{frame}{Grouped Summaries (Stratification)}
+  Instead of one summary for the entire dataset, we summarize \textbf{by group}:
+  \begin{itemize}[<+->]
+    \item mean/median \texttt{final\_score} by \texttt{program}
+    \item mean attendance by section or batch
+    \item revenue by category, etc.
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Why?} A single global average can hide important group differences.
+\end{frame}
+
+\begin{frame}{Exercise 4: Weighted Mean (Correct Overall Average)}
+  \small
+  Suppose:
+  \begin{itemize}
+    \item Section A: $n_A=10$, mean score = 70
+    \item Section B: $n_B=5$, mean score = 80
+  \end{itemize}
+  \normalsize
+  \textbf{Task:} Compute the overall mean score (all 15 students together).
+\end{frame}
+
+\begin{frame}{Solution 4}
+  Overall mean is a \textbf{weighted mean}:
+  \[
+    \bar{x}=\frac{70\cdot 10 + 80\cdot 5}{10+5}=\frac{700+400}{15}=\frac{1100}{15}\approx 73.33
+  \]
+  \textbf{Note:} $(70+80)/2 = 75$ is wrong because group sizes are different.
+\end{frame}
+
+\begin{frame}{Exercise 5: Mean by Program (Small Table)}
+  \small
+  \begin{center}
+  \begin{tabular}{lcc}
+    \toprule
+    Program & final\_score values \\
+    \midrule
+    CSE & 70,\ 75 \\
+    ECE & 60,\ 65 \\
+    AIML & 80,\ 85 \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+  \normalsize
+  \textbf{Task:} Compute mean final\_score for each program.
+\end{frame}
+
+\begin{frame}{Solution 5}
+  \begin{itemize}
+    \item CSE mean = $(70+75)/2 = 72.5$
+    \item ECE mean = $(60+65)/2 = 62.5$
+    \item AIML mean = $(80+85)/2 = 82.5$
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Interpretation:} group summaries let us compare programs directly.
+\end{frame}
+
+\begin{frame}{Exercise 6: What Is Lost in a Summary Table?}
+  \textbf{Question:} If we only report mean and std for a dataset, what could we miss?
+  \vspace{0.6em}
+  \begin{itemize}
+    \item Think about outliers, skewness, and multi-modal distributions.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution 6}
+  A small set of numbers can hide:
+  \begin{itemize}
+    \item outliers (one extreme value can distort mean/std)
+    \item skewness (mean $\neq$ median) and long tails
+    \item multi-modality (two peaks) where ``average'' is not typical
+    \item subgroup differences (one group high, one group low)
+  \end{itemize}
+  \textbf{Takeaway:} summaries are useful, but always validate with plots.
+\end{frame}
+
+\section{Demo}
+\label{sec:demo}
+
+\begin{frame}{Mini Demo (Python)}
+  Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/statistical\_summaries\_demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Uses:
+  \begin{itemize}
+    \item \texttt{data/student\_summary.csv}
+  \end{itemize}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{data/overall\_summary.csv}
+    \item \texttt{data/summary\_by\_program.csv}
+    \item \texttt{images/mean\_final\_by\_program.png} (if matplotlib is installed)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Demo Output (Example Plot)}
+  \begin{center}
+  \IfFileExists{../images/mean_final_by_program.png}{
+    \includegraphics[width=0.92\linewidth]{mean_final_by_program.png}
+  }{
+    \small (Run demo to generate: \texttt{mean\_final\_by\_program.png})
+  }
+  \end{center}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+\begin{frame}{Summary}
+  \begin{itemize}[<+->]
+    \item Summary tables compress data into center + spread + typical range (quartiles)
+    \item Five-number summary is robust and supports boxplot thinking
+    \item Grouped summaries (stratification) reveal differences hidden by global averages
+    \item Summaries can hide distribution shape and outliers $\Rightarrow$ use plots too
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Exit question:} Why is a weighted mean needed when groups have different sizes?
+\end{frame}
+
+\end{document}
+

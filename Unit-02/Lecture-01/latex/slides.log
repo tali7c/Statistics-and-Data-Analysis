@@ -1,9 +1,13 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.2)  2 FEB 2026 23:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.3)  9 FEB 2026 12:58
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**slides.tex
-(./slides.tex
+**D:/InSync-tofik/Work/UPES/Statistics-and-Data-Analysis/Unit-02/Lecture-01/lat
+ex/slides.tex
+
+(d:/InSync-tofik/Work/UPES/Statistics-and-Data-Analysis/Unit-02/Lecture-01/late
+x/slides.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/beamer/beamer.cls
@@ -523,7 +527,51 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)))
+))
+(c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/sansmathaccent/sansmathac
+cent.sty
+Package: sansmathaccent 2020/01/31
+
+(c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/koma-script/scrlfile.sty
+
++----------------------------------------------------------------------
+| WARNING (`scrlfile.sty'):
++----------------------------------------------------------------------
+| YOU SHOULD NOTE, THAT THIS IS NOT AN OFFICIAL RELEASE!
+| THIS VERSION IS INTENDED TO BE USED FOR TESTING ONLY!
+| USAGE FOR PURPOSES OTHER THAN INTENDED IS DANGEROUS!
+| DON'T EXPECT ANY SUPPORT FOR THIS VERSION!
++----------------------------------------------------------------------
+
+Package: scrlfile 2026/01/29 v3.49.1 KOMA-Script package (file load hooks)
+
+(c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/koma-script/scrlfile-hook
+.sty
+
++----------------------------------------------------------------------
+| WARNING (`scrlfile-hook.sty'):
++----------------------------------------------------------------------
+| YOU SHOULD NOTE, THAT THIS IS NOT AN OFFICIAL RELEASE!
+| THIS VERSION IS INTENDED TO BE USED FOR TESTING ONLY!
+| USAGE FOR PURPOSES OTHER THAN INTENDED IS DANGEROUS!
+| DON'T EXPECT ANY SUPPORT FOR THIS VERSION!
++----------------------------------------------------------------------
+
+Package: scrlfile-hook 2026/01/29 v3.49.1 KOMA-Script package (using LaTeX hook
+s)
+(c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/koma-script/scrlogo.sty
+
++----------------------------------------------------------------------
+| WARNING (`scrlogo.sty'):
++----------------------------------------------------------------------
+| YOU SHOULD NOTE, THAT THIS IS NOT AN OFFICIAL RELEASE!
+| THIS VERSION IS INTENDED TO BE USED FOR TESTING ONLY!
+| USAGE FOR PURPOSES OTHER THAN INTENDED IS DANGEROUS!
+| DON'T EXPECT ANY SUPPORT FOR THIS VERSION!
++----------------------------------------------------------------------
+
+Package: scrlogo 2026/01/29 v3.49.1 KOMA-Script package (logo)
+)))))
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/beamer/beamerbasetranslat
 or.sty
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/translator/translator.sty
@@ -763,7 +811,9 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 x.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count362
-) (./slides.aux)
+)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-01\late
+x/slides.aux)
 \openout1 = `slides.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -846,7 +896,11 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package hyperref Info: Link coloring OFF on input line 18.
- (./slides.out) (./slides.out)
+
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-01\late
+x/slides.out)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-01\late
+x/slides.out)
 \@outlinefile=\write5
 \openout5 = `slides.out'.
 
@@ -892,6 +946,16 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 18.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 18.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 1
+8.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 1
+8.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
+ut line 18.
 
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/translator/translator-bas
 ic-dictionary-English.dict
@@ -916,12 +980,15 @@ Dictionary: translator-numbers-dictionary, Language: English
 (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/translator/translator-the
 orem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-) (./slides.nav) [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.ma
-p}
+)
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-01\late
+x/slides.nav) [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ] [2
 
-] (./slides.toc) [3
+]
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-01\late
+x/slides.toc) [3
 
 ] [4
 
@@ -933,23 +1000,31 @@ p}
 
 ] [8
 
-]
-[9
+] [9
 
 ] [10
 
 ]
 LaTeX Font Info:    Trying to load font information for U+msa on input line 69.
 
- (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
+
+(c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 69.
 
- (c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
+
+(c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-[11
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
+ut line 69.
+
+(c:/Users/tofik.ali/texlive/2026/texmf-dist/tex/latex/sansmathaccent/ot1mathker
+ncmss.fd
+File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
+thkerncmss.
+) [11
 
 ] [12
 
@@ -975,12 +1050,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] [23
 
-] [24
+]
+[24
 
 ] [25
 
-]
-[26
+] [26
 
 ] [27
 
@@ -1006,7 +1081,9 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \tf@snm=\write8
 \openout8 = `slides.snm'.
 
- (./slides.aux)
+
+(D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-02\Lecture-01\late
+x/slides.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1015,13 +1092,13 @@ Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: 72C819340882681F2323026BF92A205E;448.
  ) 
 Here is how much of TeX's memory you used:
- 21783 strings out of 469005
- 423787 string characters out of 5454180
- 811134 words of memory out of 5000000
- 49965 multiletter control sequences out of 15000+600000
- 638757 words of font info for 81 fonts, out of 8000000 for 9000
- 319 hyphenation exceptions out of 8191
- 101i,19n,107p,381b,793s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 21985 strings out of 467533
+ 431086 string characters out of 5415333
+ 818240 words of memory out of 5000000
+ 50359 multiletter control sequences out of 15000+600000
+ 639377 words of font info for 82 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 128i,19n,123p,461b,793s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ex10.pfb><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmmi10.pfb><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/
@@ -1036,10 +1113,11 @@ fik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/Us
 ers/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
 ><c:/Users/tofik.ali/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbol
 s/msam10.pfb>
-Output written on slides.pdf (33 pages, 185485 bytes).
+Output written on D:\InSync-tofik\Work\UPES\Statistics-and-Data-Analysis\Unit-0
+2\Lecture-01\latex/slides.pdf (33 pages, 186342 bytes).
 PDF statistics:
- 1627 PDF objects out of 1728 (max. 8388607)
- 1023 compressed objects within 11 object streams
+ 1630 PDF objects out of 1728 (max. 8388607)
+ 1025 compressed objects within 11 object streams
  75 named destinations out of 1000 (max. 500000)
  83 words of extra memory for PDF output out of 10000 (max. 10000000)
 
