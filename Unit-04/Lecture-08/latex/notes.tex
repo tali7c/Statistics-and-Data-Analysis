@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 04 -- Lecture 08 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Train/test split, k-fold cross-validation, and hyper-parameter tuning (grid/random search).
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Explain train/validation/test split roles
+  \item Describe k-fold cross-validation
+  \item Explain grid search vs random search
+  \item Avoid data leakage using pipelines
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{Cross-validation}
+\begin{itemize}
+  \item CV estimates generalization more stably than one split
+  \item k-fold repeats train/validate across folds
+  \item Average score guides selection
+\end{itemize}
+
+\section*{Hyper-parameter Tuning}
+\begin{itemize}
+  \item Grid search tries all combos
+  \item Random search samples combos efficiently
+  \item Never tune on the test set
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Grid size}
+3 parameters with 4 values each: how many combinations?
+\subsection*{Solution}
+\begin{itemize}
+  \item $4^3 = 64$
+\end{itemize}
+
+\subsection*{Exercise 2: Leakage}
+Is scaling on full dataset before split leakage?
+\subsection*{Solution}
+\begin{itemize}
+  \item Yes; fit preprocessing on training only.
+\end{itemize}
+
+\subsection*{Exercise 3: Why CV}
+Why is a single train-test split misleading sometimes?
+\subsection*{Solution}
+\begin{itemize}
+  \item Performance depends on split; CV reduces variance.
+\end{itemize}
+
+\section*{Exit Question}
+Why must you never use the test set to choose hyperparameters?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}

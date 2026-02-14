@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 04 -- Lecture 01 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Correlation vs regression concepts; causation warning; residual idea.
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Differentiate correlation and regression
+  \item Explain why correlation does not imply causation
+  \item Interpret a scatter plot (trend, outliers)
+  \item Define residual and why residuals matter
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{Concepts}
+\begin{itemize}
+  \item Correlation measures linear association
+  \item Regression models Y as a function of X
+  \item Regression has roles: predictors vs response
+\end{itemize}
+
+\section*{Causation Warning}
+\begin{itemize}
+  \item Confounding can create misleading correlation
+  \item Reverse causality is possible
+  \item Causal claims need design or strong assumptions
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Pick response variable}
+Predict house price using size and location. What is the response variable?
+\subsection*{Solution}
+\begin{itemize}
+  \item House price is the response (Y).
+\end{itemize}
+
+\subsection*{Exercise 2: Interpret r}
+If r=0.7 between study hours and score, what does it mean?
+\subsection*{Solution}
+\begin{itemize}
+  \item Strong positive linear association.
+  \item Not proof of causation.
+\end{itemize}
+
+\subsection*{Exercise 3: Residual sign}
+If y=74 and yhat=80, what is residual?
+\subsection*{Solution}
+\begin{itemize}
+  \item Residual = y - yhat = -6 (over-prediction).
+\end{itemize}
+
+\section*{Exit Question}
+Give one example of a confounder that can create a misleading correlation.
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}

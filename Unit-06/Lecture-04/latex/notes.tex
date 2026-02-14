@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 06 -- Lecture 04 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+ARIMA models and forecasting workflow (overview).
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Define ARIMA(p,d,q) at a high level
+  \item Explain differencing (d) to remove trend
+  \item Explain p and q meaning (AR and MA orders)
+  \item Describe time-based train/test split for forecasting
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{ARIMA}
+\begin{itemize}
+  \item p: AR order
+  \item d: differencing order
+  \item q: MA order
+\end{itemize}
+
+\section*{Differencing}
+\begin{itemize}
+  \item First difference: y\_t - y\_{t-1}
+  \item Often stabilizes mean
+  \item Over-differencing adds noise
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Meaning of d}
+What does d=1 mean?
+\subsection*{Solution}
+\begin{itemize}
+  \item First differencing once.
+\end{itemize}
+
+\subsection*{Exercise 2: Chronological split}
+Why not random split in time series?
+\subsection*{Solution}
+\begin{itemize}
+  \item Random split leaks future information.
+\end{itemize}
+
+\subsection*{Exercise 3: Trend fix}
+Series has strong upward trend. Name one simple step.
+\subsection*{Solution}
+\begin{itemize}
+  \item First differencing.
+\end{itemize}
+
+\section*{Exit Question}
+Why do we check residuals after fitting an ARIMA model?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}

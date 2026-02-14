@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 03 -- Lecture 01 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Population vs sample; sampling techniques; estimation; confidence intervals (overview).
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Differentiate population parameters and sample statistics
+  \item Explain sampling bias vs random error
+  \item Describe common sampling methods (SRS, stratified, cluster)
+  \item Compute and interpret a basic confidence interval for a mean
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{Sampling}
+\begin{itemize}
+  \item Population vs sample
+  \item Bias vs random error
+  \item Representative sampling matters
+\end{itemize}
+
+\section*{Confidence Intervals}
+\begin{itemize}
+  \item Interpretation: long-run coverage
+  \item Width depends on n and variability
+  \item CIs support decision-making with uncertainty
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Parameter vs Statistic}
+Give one example of a parameter and one of a statistic.
+\subsection*{Solution}
+\begin{itemize}
+  \item Parameter: population mean
+  \item Statistic: sample mean
+\end{itemize}
+
+\subsection*{Exercise 2: CI Interpretation}
+In one sentence, what does a 95\% CI mean (correctly)?
+\subsection*{Solution}
+\begin{itemize}
+  \item About 95\% of such intervals contain the true mean in repeated sampling.
+\end{itemize}
+
+\subsection*{Exercise 3: Bias Scenario}
+Why does convenience sampling create bias?
+\subsection*{Solution}
+\begin{itemize}
+  \item Because some groups are over/under-represented systematically.
+\end{itemize}
+
+\section*{Exit Question}
+If your CI is too wide, what two actions reduce its width (without cheating)?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}

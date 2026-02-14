@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 05 -- Lecture 07 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Case study: PCA + KMeans clustering; visualize and interpret clusters.
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Run PCA before clustering for visualization/stability
+  \item Explain why scaling matters for clustering
+  \item Use KMeans and interpret clusters cautiously
+  \item Visualize clusters in PCA space
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{Pipeline}
+\begin{itemize}
+  \item Scale features
+  \item Run PCA (2D for visualization)
+  \item Cluster (KMeans) and visualize
+\end{itemize}
+
+\section*{Interpretation}
+\begin{itemize}
+  \item Clusters are patterns, not truth
+  \item Check stability across seeds/k
+  \item Explain clusters using original variables
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Scaling}
+Why scale before KMeans?
+\subsection*{Solution}
+\begin{itemize}
+  \item Distance-based; scale dominates otherwise.
+\end{itemize}
+
+\subsection*{Exercise 2: Choose k}
+Name one heuristic to choose k.
+\subsection*{Solution}
+\begin{itemize}
+  \item Elbow, silhouette, domain knowledge.
+\end{itemize}
+
+\subsection*{Exercise 3: Explain cluster}
+How to explain cluster to non-technical audience?
+\subsection*{Solution}
+\begin{itemize}
+  \item Describe in original variables (high spend, frequent visits, etc.).
+\end{itemize}
+
+\section*{Exit Question}
+Why should you validate cluster stability before using clusters for decisions?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}

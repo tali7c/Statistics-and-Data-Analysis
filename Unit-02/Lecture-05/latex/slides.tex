@@ -1,0 +1,270 @@
+\documentclass{beamer}
+
+\usetheme{Berlin}
+\usecolortheme{Orchid}
+\useoutertheme{miniframes}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+
+\title[Statistics and Data Analysis]{Statistics and Data Analysis}
+\subtitle{Unit 02 -- Lecture 05: Dimensional Summaries and Distributions}
+\author{Tofik Ali}
+\institute{School of Computer Science, UPES Dehradun}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Quick Links}
+  \centering
+  \hyperlink{sec:dim}{\beamerbutton{Dimensional Summary}}\hspace{0.6em}
+  \hyperlink{sec:shape}{\beamerbutton{Distribution Shape}}\hspace{0.6em}
+  \hyperlink{sec:outliers}{\beamerbutton{Outliers}}\hspace{0.6em}
+  \hyperlink{sec:demo}{\beamerbutton{Demo}}\hspace{0.6em}
+  \hyperlink{sec:summary}{\beamerbutton{Summary}}
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Dimensional Summaries}
+\label{sec:dim}
+
+\begin{frame}{Learning Outcomes}
+  \begin{itemize}[<+->]
+    \item Explain what a dimensional (per-feature) summary is
+    \item Use mean/median/quartiles to get a quick idea of distribution shape
+    \item Recognize common distribution shapes (symmetric, skewed, bimodal)
+    \item Explain why distribution shape matters for interpretation and method choice
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{What is a Dimensional Summary?}
+  A \textbf{dimensional summary} reports statistics \emph{for each feature}:
+  \vspace{0.6em}
+  \begin{itemize}[<+->]
+    \item One dataset can have many columns (income, commute, sleep, score)
+    \item We summarize each column separately: center + spread + quartiles
+    \item This helps us quickly spot features that behave differently
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 1: Mean vs Median (Shape Clue)}
+  \small
+  Three features (summary only):
+  \begin{center}
+  \begin{tabular}{lrr}
+    \toprule
+    Feature & Mean & Median \\
+    \midrule
+    A & 50 & 50 \\
+    B & 80 & 60 \\
+    C & 60 & 75 \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+  \normalsize
+  \textbf{Task:} Which looks symmetric? Which is right-skewed? Which is left-skewed?
+\end{frame}
+
+\begin{frame}{Solution 1}
+  \begin{itemize}
+    \item A: mean $\approx$ median $\Rightarrow$ roughly symmetric (likely)
+    \item B: mean $>$ median $\Rightarrow$ right-skewed (high values pull mean up)
+    \item C: mean $<$ median $\Rightarrow$ left-skewed (low values pull mean down)
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Reminder:} this is a clue, not a guarantee. Confirm with a plot.
+\end{frame}
+
+\section{Distribution Shapes}
+\label{sec:shape}
+
+\begin{frame}{Common Distribution Shapes}
+  \begin{itemize}[<+->]
+    \item \textbf{Symmetric (approximately normal)}: mean $\approx$ median; bell-like
+    \item \textbf{Right-skewed}: long tail to the right; mean $>$ median (often income)
+    \item \textbf{Left-skewed}: long tail to the left; mean $<$ median (often scores near 100)
+    \item \textbf{Bimodal}: two peaks (two sub-populations mixed together)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 2: Bimodal Example (Mean Can Be Misleading)}
+  \small
+  Commute times (minutes):
+  \begin{center}
+    \begin{tabular}{cccccccc}
+      10 & 12 & 15 & 18 & 20 & 60 & 65 & 70
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute mean and median. Is the mean a ``typical'' commute time here?
+\end{frame}
+
+\begin{frame}{Solution 2}
+  Sorted data: 10, 12, 15, 18, 20, 60, 65, 70
+  \vspace{0.4em}
+  \begin{itemize}
+    \item mean $=270/8 = 33.75$
+    \item median $=(18+20)/2 = 19$
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Interpretation:} the mean (33.75) is not typical because there are two clusters
+  (short commuters and long commuters). The ``middle'' has almost no data.
+\end{frame}
+
+\begin{frame}{Exercise 3: Identify the Shape (Quick Reasoning)}
+  \textbf{Question:} Which scenario is most likely right-skewed?
+  \vspace{0.6em}
+  \begin{enumerate}
+    \item Heights of students
+    \item Daily income of individuals
+    \item Measurement error around zero
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Solution 3}
+  \textbf{Daily income} is most likely right-skewed:
+  most values are moderate, with a small number of very high values (long right tail).
+\end{frame}
+
+\section{Outliers and Robust Summaries}
+\label{sec:outliers}
+
+\begin{frame}{Outliers and Robustness}
+  \begin{itemize}[<+->]
+    \item Outliers can strongly affect mean and standard deviation
+    \item Median and IQR are more robust (less sensitive to extremes)
+    \item Always ask: error or true extreme?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 4: IQR Outlier Check}
+  \small
+  Dataset:
+  \begin{center}
+    \begin{tabular}{ccccccc}
+      10 & 12 & 13 & 14 & 15 & 16 & 40
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute $Q_1$, $Q_3$, IQR, and check if 40 is an outlier using the IQR fences.
+\end{frame}
+
+\begin{frame}{Solution 4}
+  Sorted: 10, 12, 13, 14, 15, 16, 40\\
+  median = 14; lower half (10,12,13) $\Rightarrow Q_1=12$; upper half (15,16,40) $\Rightarrow Q_3=16$\\
+  \vspace{0.4em}
+  \begin{itemize}
+    \item IQR = $16-12=4$
+    \item Upper fence = $Q_3 + 1.5\cdot IQR = 16 + 6 = 22$
+    \item Since $40>22$, 40 is an outlier by the IQR rule.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Robust Options (When Skew/Outliers Exist)}
+  \begin{itemize}[<+->]
+    \item Report median and IQR instead of mean and std
+    \item Use trimmed mean (remove small \% of extremes)
+    \item Transform the feature (e.g., $\log(1+x)$ for right-skewed positive values)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 5: Which Summary Would You Report?}
+  \textbf{Question:} For income data (right-skewed), which pair is usually better?
+  \vspace{0.6em}
+  \begin{enumerate}
+    \item mean + standard deviation
+    \item median + IQR
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Solution 5}
+  \textbf{Median + IQR} is usually better for right-skewed income:
+  it represents the typical person and is less distorted by a few extremely high incomes.
+\end{frame}
+
+\begin{frame}{Exercise 6: Dimensional Summary (Tiny Table)}
+  \small
+  \begin{center}
+  \begin{tabular}{lrr}
+    \toprule
+    Student & hours & score \\
+    \midrule
+    1 & 2 & 50 \\
+    2 & 4 & 60 \\
+    3 & 6 & 70 \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+  \normalsize
+  \textbf{Task:} Compute mean(hours) and mean(score). This is a 2-feature dimensional summary.
+\end{frame}
+
+\begin{frame}{Solution 6}
+  \begin{itemize}
+    \item mean(hours) $=(2+4+6)/3 = 4$
+    \item mean(score) $=(50+60+70)/3 = 60$
+  \end{itemize}
+\end{frame}
+
+\section{Demo}
+\label{sec:demo}
+
+\begin{frame}{Mini Demo (Python)}
+  Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/dimensional\_summaries\_distributions\_demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Uses:
+  \begin{itemize}
+    \item \texttt{data/multi\_feature\_distributions.csv}
+  \end{itemize}
+  Outputs:
+  \begin{itemize}
+    \item prints a per-feature summary (mean, median, std, quartiles, skewness)
+    \item saves \texttt{images/hists\_grid.png} (if matplotlib is installed)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Demo Output (Histogram Grid)}
+  \begin{center}
+  \IfFileExists{../images/hists_grid.png}{
+    \includegraphics[width=0.97\linewidth]{hists_grid.png}
+  }{
+    \small (Run demo to generate: \texttt{hists\_grid.png})
+  }
+  \end{center}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+\begin{frame}{Summary}
+  \begin{itemize}[<+->]
+    \item Dimensional summaries describe each feature (column) separately
+    \item Mean vs median gives a fast clue about skewness; confirm with plots
+    \item Bimodal data can make the mean ``not typical''
+    \item For skew/outliers, use robust summaries (median/IQR) or transformations
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Exit question:} Why can the mean be misleading for a bimodal distribution?
+\end{frame}
+
+\end{document}
+

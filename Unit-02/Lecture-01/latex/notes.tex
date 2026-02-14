@@ -1,0 +1,189 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 02 -- Lecture 01 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Measures of Central Tendency}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Differentiate mean, median, and mode.
+  \item Choose the most appropriate measure for a given context.
+  \item Explain robustness and the effect of outliers.
+  \item Apply these measures to real datasets.
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+
+\subsection*{Title Slide}
+Introduce the unit and the focus on central tendency as the ``center'' of data.
+Explain that many real datasets are large and messy, so we need a simple way to
+summarize what a typical value looks like. Central tendency gives us a single
+number that represents the dataset.
+
+\subsection*{Quick Links / Agenda}
+Explain the flow: core concepts, examples and visuals, then a short demo and
+exercise. Tell students the aim is to understand when each measure is useful,
+not just how to calculate it.
+
+\subsection*{Learning Outcomes}
+Central tendency is the foundation for descriptive statistics and later inference.
+By the end of the lecture, students should be able to pick the correct measure
+for a given context and justify their choice.
+
+\subsection*{Why Central Tendency?}
+Central tendency compresses data into a representative value for comparison
+and communication. In practice, people ask: ``What is a typical salary?'' or
+``What is the typical score?'' The answer depends on the data distribution.
+No single measure is ``best'' in all cases because different datasets have
+different shapes and outliers.
+When we say it ``enables comparison across groups or time,'' we mean we can
+reduce each group (e.g., Section A vs. Section B) or each time period (e.g.,
+this year vs. last year) to a single representative value and then compare
+those values. For example, if the median score in Section A is 72 and in
+Section B is 68, we can quickly see which group performed better. Similarly,
+if the mean weekly sales were 50 units in January and 65 units in February, we
+can say sales increased over time. Without a central measure, comparing large
+datasets is slower and harder to communicate.
+
+\subsection*{Mean}
+The arithmetic mean is the average:
+\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+\]
+Explain each symbol: $n$ is the number of data points, $x_i$ is the $i$-th value,
+and $\bar{x}$ is read as ``x-bar.'' The mean adds all values and divides by the
+count. It uses every data point, so it changes when any value changes.\\
+\textbf{Strengths:} stable for symmetric distributions, easy to compute, and used
+in later formulas (variance, covariance, regression).\\
+\textbf{Limitations:} sensitive to outliers. A single extremely large or small
+value can pull the mean away from the ``typical'' value.
+
+\subsection*{Median}
+The median is the middle value after sorting the data. If there are an odd
+number of values, the median is the middle one. If there are an even number,
+the median is the average of the two middle values.\\
+\textbf{Strengths:} robust to extreme values; preferred for skewed data
+(e.g., income, house prices).\\
+\textbf{Limitations:} ignores the magnitude of extreme values, so it is less
+sensitive to tail changes.
+
+\subsection*{Mode}
+The mode is the most frequent value or category. A dataset can have one mode,
+multiple modes (bi-modal, multi-modal), or no clear mode.\\
+\textbf{Strengths:} useful for categorical or discrete data (e.g., most common
+major, most common defect type).\\
+\textbf{Limitations:} can be unstable and may not represent the ``center'' for
+continuous data.
+
+\subsection*{Categorical Example (Mode)}
+Use a categorical dataset like ``Major Specialization'' to show that mean and
+median are not meaningful for categories, while mode is meaningful. The mode
+answers: which category appears most often?
+
+\subsection*{Decimal Real-Value Example}
+For continuous values such as CGPA, mean and median are both valid. Emphasize
+that these values are real numbers and represent typical performance. The mode
+may be less informative if values are mostly unique.
+
+\subsection*{Multi-Dimensional Example}
+For a table with multiple columns (e.g., attendance, quiz score, project score),
+central tendency is computed column-wise. This shows that a dataset can have
+several ``centers,'' one for each feature.
+
+\subsection*{Dataset for Calculation Exercise}
+Provide the small income dataset. Ask students to compute mean, median, and
+mode manually. This helps them practice sorting and calculating.
+
+\subsection*{Exercise Solution}
+Explain the solution step-by-step:
+\begin{itemize}
+  \item Count values: $n=15$.
+  \item Sort the data and identify the middle value (median).
+  \item Compute the mean by summing all values and dividing by 15.
+  \item Identify the most frequent value (mode).
+\end{itemize}
+Highlight that the mean is larger than the median, which indicates right-skew.
+
+\subsection*{Comparison Table}
+Selection rules:
+\begin{itemize}
+  \item Symmetric data: mean/median/mode are all acceptable.
+  \item Skewed data or outliers: median (or mode) is more stable.
+\end{itemize}
+Explain that this is a practical checklist for choosing the correct measure.
+
+\subsection*{Outlier Effect}
+Demonstrate with a simple example:
+\begin{itemize}
+  \item Dataset A: 10, 12, 12, 13, 14 $\rightarrow$ mean $\approx$ 12.2, median = 12
+  \item Dataset B: add outlier 100 $\rightarrow$ mean $\approx$ 30.2, median = 12
+\end{itemize}
+Conclusion: median is robust. This is why reports for skewed data often use
+median instead of mean.
+
+\subsection*{Trimmed Mean}
+The trimmed mean removes a small percentage of the smallest and largest values
+before computing the mean. It is a compromise between mean and median and is
+useful when there are mild outliers but we still want to use most of the data.
+
+\subsection*{Checkpoint Question}
+Which measure best describes income data, and why?\\
+Expected: median, because income distributions are typically right-skewed.
+Right-skewed means a long tail to the right: a small number of very high incomes
+pull the mean upward, while most values remain lower. The median resists this
+pull and better represents the ``typical'' income for the majority of people.
+
+\subsection*{Mini Demo (Python)}
+Walk through:
+\begin{enumerate}
+  \item Load dataset
+  \item Compute mean/median/mode
+  \item Visualize histogram and show effect of outlier
+\end{enumerate}
+Explain each step briefly, and remind students to compare mean and median after
+adding the outlier.
+
+Demo assets:
+\begin{itemize}
+  \item \texttt{demo/mini\_demo.py}
+  \item \texttt{data/income\_small.csv}
+\end{itemize}
+
+\subsection*{Summary / Exit Question}
+Reinforce the selection logic and ask students to justify a choice in context.
+Encourage them to always look at the distribution shape before deciding on a
+single summary value.
+
+\section*{Demo (Python)}
+Run:
+\begin{verbatim}
+python demo/mini_demo.py
+\end{verbatim}
+
+What it shows:
+\begin{itemize}
+  \item Mean/median/mode on a small income dataset
+  \item Mean shift after injecting an outlier
+  \item Histogram of values
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley, 7th ed., 2020.
+  \item Gupta, S. C., \& Kapoor, V. K. \textit{Fundamentals of Applied Statistics}, Sultan Chand \& Sons, 4th rev. ed., 2007.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly, 2022.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 04 -- Lecture 02 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Simple linear regression model, interpretation, residuals and R-squared.
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Write the simple linear regression model
+  \item Interpret slope and intercept in context
+  \item Compute a prediction and a residual
+  \item Explain R-squared (intuition)
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{Model}
+\begin{itemize}
+  \item y = b0 + b1 x + error
+  \item Slope: expected change in y for 1-unit increase in x
+  \item Intercept: predicted y at x=0 (interpret carefully)
+\end{itemize}
+
+\section*{Fit and Diagnostics}
+\begin{itemize}
+  \item Look at residual plots for patterns
+  \item Outliers can dominate the fitted line
+  \item High $R^2$ does not guarantee a good model
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Prediction}
+Model: yhat = 10 + 2x. Predict y when x=7.
+\subsection*{Solution}
+\begin{itemize}
+  \item yhat = 24
+\end{itemize}
+
+\subsection*{Exercise 2: Residual}
+If actual y=20 at x=7, compute residual.
+\subsection*{Solution}
+\begin{itemize}
+  \item 20-24 = -4
+\end{itemize}
+
+\subsection*{Exercise 3: Interpret slope}
+Slope is 5 thousand INR per extra room. Interpret.
+\subsection*{Solution}
+\begin{itemize}
+  \item Each extra room increases predicted price by ~5k INR (on average).
+\end{itemize}
+
+\section*{Exit Question}
+Why do we check residual plots even if $R^2$ is high?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}

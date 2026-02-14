@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 03 -- Lecture 07 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Interpret published hypothesis testing results; emphasize CI, effect size, and pitfalls.
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Interpret p-values and confidence intervals correctly
+  \item Compute a simple effect size from summary statistics
+  \item Identify common red flags (only p-values, many tests, no effect size)
+  \item Write a cautious conclusion in plain language
+  \item Avoid correlation-causation confusion
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{Reading Results}
+\begin{itemize}
+  \item Check n, center, spread
+  \item Prefer CI + effect size
+  \item Ask: what does it mean in the real world?
+\end{itemize}
+
+\section*{Pitfalls}
+\begin{itemize}
+  \item Multiple comparisons
+  \item Selective reporting (p-hacking)
+  \item Over-claiming causation
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Interpret CI}
+95\% CI for (new-old) is (1.2, 3.8). What does it suggest?
+\subsection*{Solution}
+\begin{itemize}
+  \item Likely positive effect (CI above 0).
+  \item Magnitude between 1.2 and 3.8 units.
+\end{itemize}
+
+\subsection*{Exercise 2: Compute d}
+A: n=20 mean=72 SD=10; B: n=20 mean=68 SD=10. Compute Cohen's d.
+\subsection*{Solution}
+\begin{itemize}
+  \item Pooled SD=10
+  \item d=(72-68)/10=0.4
+\end{itemize}
+
+\subsection*{Exercise 3: Cautious conclusion}
+p-value=0.03 but effect size is tiny. What should you conclude?
+\subsection*{Solution}
+\begin{itemize}
+  \item Evidence of difference, but small magnitude.
+  \item May not justify action without cost/benefit.
+\end{itemize}
+
+\section*{Exit Question}
+What is one red flag when a paper reports only p-values and no effect sizes?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}
