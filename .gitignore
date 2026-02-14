@@ -14,6 +14,13 @@
 **/*.bbl
 **/*.blg
 
+# Generated PDFs inside source folders (deliverables live in lecture root)
+**/latex/*.pdf
+
+# Python bytecode/cache
+__pycache__/
+*.py[cod]
+
 # Local scratch/extractions (do not commit)
 _tmp/
 
@@ -24,7 +31,6 @@ Text Books/
 # Internal curriculum PDFs (keep local; do not commit)
 Statistics_And_Data_Analysis_Sem_VI.docx.pdf
 
-
 # Lab/code build artifacts
 **/*.class
 **/*.o
@@ -34,6 +40,6 @@ Statistics_And_Data_Analysis_Sem_VI.docx.pdf
 **/bin/
 **/build/
 
+# Markdown notes/plans (keep repo focused on deliverables)
+**/*.md
 
-# Planning docs (optional; keep repo focused on deliverables)
-*-Lecture-Plan.md

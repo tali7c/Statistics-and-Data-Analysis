@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 03 -- Lecture 02 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Null vs alternative; one-sample and two-sample t-tests; p-values and interpretation.
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Define null and alternative hypotheses clearly
+  \item Compute a one-sample t statistic (given summary)
+  \item Explain p-value and significance level alpha
+  \item Distinguish one-tailed vs two-tailed tests
+  \item State key assumptions behind the t-test
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{t-test Basics}
+\begin{itemize}
+  \item H0/H1 setup
+  \item Test statistic measures how far the sample is from H0
+  \item Assumptions: independence, outliers, normality/CLT
+\end{itemize}
+
+\section*{p-values}
+\begin{itemize}
+  \item p-value = probability of data (or more extreme) assuming H0
+  \item Small p-value -> evidence against H0
+  \item p-value is not effect size
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Write hypotheses}
+Claim: mean score is 60. Write H0 and H1 for a two-sided test.
+\subsection*{Solution}
+\begin{itemize}
+  \item H0: mu = 60
+  \item H1: mu != 60
+\end{itemize}
+
+\subsection*{Exercise 2: Compute t}
+Given n=25, xbar=53, s=10, test H0: mu=50. Compute t.
+\subsection*{Solution}
+\begin{itemize}
+  \item SE = 10/sqrt(25) = 2
+  \item t = (53-50)/2 = 1.5
+  \item df = 24
+\end{itemize}
+
+\subsection*{Exercise 3: Tail choice}
+You want to show a new method increases mean score. One-tailed or two-tailed?
+\subsection*{Solution}
+\begin{itemize}
+  \item One-tailed (right): H1: mu > mu0
+\end{itemize}
+
+\section*{Exit Question}
+Why can a very small p-value still be unimportant in practice?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}

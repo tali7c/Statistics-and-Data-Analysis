@@ -1,0 +1,162 @@
+\documentclass{beamer}
+
+      \usetheme{Berlin}
+      \usecolortheme{Orchid}
+      \useoutertheme{miniframes}
+      \setbeamertemplate{navigation symbols}{}
+
+      \usepackage{amsmath}
+      \usepackage{amssymb}
+      \usepackage{booktabs}
+      \usepackage{graphicx}
+      \graphicspath{{../images/}}
+
+      \title[Statistics and Data Analysis]{Statistics and Data Analysis}
+      \subtitle{Unit 05 -- Lecture 01: Feature Selection, Engineering and Dimensionality Reduction (Intro)}
+      \author{Tofik Ali}
+      \institute{School of Computer Science, UPES Dehradun}
+      \date{\today}
+
+      \begin{document}
+
+      \begin{frame}
+        \titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+      \end{frame}
+
+      \begin{frame}{Quick Links}
+        \centering
+        \hyperlink{sec:overview}{\beamerbutton{Overview}}\hspace{0.6em}
+\hyperlink{sec:why}{\beamerbutton{Why Features}}\hspace{0.6em}
+\hyperlink{sec:sel}{\beamerbutton{Selection vs Reduction}}\hspace{0.6em}
+\hyperlink{sec:exercises}{\beamerbutton{Exercises}}\hspace{0.6em}
+\hyperlink{sec:demo}{\beamerbutton{Demo}}\hspace{0.6em}
+\hyperlink{sec:summary}{\beamerbutton{Summary}}\hspace{0.6em}
+      \end{frame}
+
+      \begin{frame}{Agenda}
+        \tableofcontents
+      \end{frame}
+
+\section{Overview}
+\label{sec:overview}
+
+
+\begin{frame}{Learning Outcomes}
+      \begin{itemize}[<+->]
+        \item Differentiate feature selection vs dimensionality reduction
+\item Explain why too many features can hurt (overfitting, cost)
+\item Describe a simple feature engineering pipeline
+\item Identify target leakage in engineered features
+      \end{itemize}
+    \end{frame}
+
+\section{Why Features}
+\label{sec:why}
+
+
+\begin{frame}{Why Features: Key Points}
+      \begin{itemize}[<+->]
+        \item Features are how models see data
+\item Goal: represent signal and reduce noise
+\item Bad features -> bad models
+      \end{itemize}
+    \end{frame}
+
+\section{Selection vs Reduction}
+\label{sec:sel}
+
+
+\begin{frame}{Selection vs Reduction: Key Points}
+      \begin{itemize}[<+->]
+        \item Selection keeps a subset of original features
+\item Reduction creates new components (e.g., PCA)
+\item Validate choices using CV
+      \end{itemize}
+    \end{frame}
+
+\section{Exercises}
+\label{sec:exercises}
+
+
+\begin{frame}{Exercise 1: Selection or reduction}
+  \small
+  Dropping 30 out of 100 features is selection or reduction?
+\end{frame}
+
+\begin{frame}{Solution 1}
+  \begin{itemize}
+    \item Feature selection (subset).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 2: Leakage}
+  \small
+  Is using final exam score to predict final grade leakage?
+\end{frame}
+
+\begin{frame}{Solution 2}
+  \begin{itemize}
+    \item Yes; it contains future/target information.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 3: Engineering example}
+  \small
+  Give one time-based engineered feature.
+\end{frame}
+
+\begin{frame}{Solution 3}
+  \begin{itemize}
+    \item Day-of-week, month, time-since-last-event, rolling average, etc.
+  \end{itemize}
+\end{frame}
+
+\section{Demo}
+\label{sec:demo}
+
+
+\begin{frame}{Mini Demo (Python)}
+  Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Demo Output (Example)}
+  \begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+
+\begin{frame}{Summary}
+      \begin{itemize}[<+->]
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+    \end{frame}
+
+\begin{frame}{Exit Question}
+  \small
+  Why can adding more features sometimes reduce test accuracy?
+\end{frame}
+
+\end{document}

@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 06 -- Lecture 06 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+ADF test (unit root) and interpretation.
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item State null and alternative of ADF test (unit root)
+  \item Interpret ADF p-value for stationarity decision
+  \item Apply ADF to original and differenced series (idea)
+  \item Explain why tests are not the only evidence (plots matter)
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{ADF Test}
+\begin{itemize}
+  \item H0: unit root (non-stationary)
+  \item H1: stationary
+  \item Small p-value -> reject H0
+\end{itemize}
+
+\section*{Interpretation}
+\begin{itemize}
+  \item If non-stationary, difference and test again
+  \item Seasonality can require seasonal differencing
+  \item Use ACF/PACF + diagnostics too
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: ADF null}
+What is H0 in ADF?
+\subsection*{Solution}
+\begin{itemize}
+  \item Unit root; non-stationary.
+\end{itemize}
+
+\subsection*{Exercise 2: Decision}
+If p=0.02 at alpha=0.05, what do you conclude?
+\subsection*{Solution}
+\begin{itemize}
+  \item Reject H0; evidence of stationarity.
+\end{itemize}
+
+\subsection*{Exercise 3: Next step}
+If p=0.6, what next step?
+\subsection*{Solution}
+\begin{itemize}
+  \item Difference and test again; consider seasonal differencing.
+\end{itemize}
+
+\section*{Exit Question}
+Why should we not rely on only one test to decide stationarity?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}
