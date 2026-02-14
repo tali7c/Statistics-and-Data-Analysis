@@ -1,0 +1,162 @@
+\documentclass{beamer}
+
+      \usetheme{Berlin}
+      \usecolortheme{Orchid}
+      \useoutertheme{miniframes}
+      \setbeamertemplate{navigation symbols}{}
+
+      \usepackage{amsmath}
+      \usepackage{amssymb}
+      \usepackage{booktabs}
+      \usepackage{graphicx}
+      \graphicspath{{../images/}}
+
+      \title[Statistics and Data Analysis]{Statistics and Data Analysis}
+      \subtitle{Unit 04 -- Lecture 05: Multicollinearity}
+      \author{Tofik Ali}
+      \institute{School of Computer Science, UPES Dehradun}
+      \date{\today}
+
+      \begin{document}
+
+      \begin{frame}
+        \titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+      \end{frame}
+
+      \begin{frame}{Quick Links}
+        \centering
+        \hyperlink{sec:overview}{\beamerbutton{Overview}}\hspace{0.6em}
+\hyperlink{sec:why}{\beamerbutton{What and Why}}\hspace{0.6em}
+\hyperlink{sec:detect}{\beamerbutton{Detection}}\hspace{0.6em}
+\hyperlink{sec:exercises}{\beamerbutton{Exercises}}\hspace{0.6em}
+\hyperlink{sec:demo}{\beamerbutton{Demo}}\hspace{0.6em}
+\hyperlink{sec:summary}{\beamerbutton{Summary}}\hspace{0.6em}
+      \end{frame}
+
+      \begin{frame}{Agenda}
+        \tableofcontents
+      \end{frame}
+
+\section{Overview}
+\label{sec:overview}
+
+
+\begin{frame}{Learning Outcomes}
+      \begin{itemize}[<+->]
+        \item Define multicollinearity (high correlation among predictors)
+\item Explain why it harms interpretation (unstable coefficients)
+\item Recognize symptoms (large SEs, unstable signs)
+\item List common fixes (drop/combine/regularize)
+      \end{itemize}
+    \end{frame}
+
+\section{What and Why}
+\label{sec:why}
+
+
+\begin{frame}{What and Why: Key Points}
+      \begin{itemize}[<+->]
+        \item Predictors overlap in information
+\item Coefficients become unstable
+\item Prediction may still be OK but interpretation suffers
+      \end{itemize}
+    \end{frame}
+
+\section{Detection}
+\label{sec:detect}
+
+
+\begin{frame}{Detection: Key Points}
+      \begin{itemize}[<+->]
+        \item Correlation matrix/heatmap (screening)
+\item VIF (next)
+\item Condition number (advanced)
+      \end{itemize}
+    \end{frame}
+
+\section{Exercises}
+\label{sec:exercises}
+
+
+\begin{frame}{Exercise 1: Identify}
+  \small
+  If corr(x1,x2)=0.98, what risk do you expect?
+\end{frame}
+
+\begin{frame}{Solution 1}
+  \begin{itemize}
+    \item High multicollinearity; unstable coefficients.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 2: Fix}
+  \small
+  Name one fix for multicollinearity.
+\end{frame}
+
+\begin{frame}{Solution 2}
+  \begin{itemize}
+    \item Drop one feature, combine features, or use ridge/PCA.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 3: Prediction vs interpretation}
+  \small
+  Can multicollinearity still allow good prediction?
+\end{frame}
+
+\begin{frame}{Solution 3}
+  \begin{itemize}
+    \item Yes, but individual coefficients are unreliable.
+  \end{itemize}
+\end{frame}
+
+\section{Demo}
+\label{sec:demo}
+
+
+\begin{frame}{Mini Demo (Python)}
+  Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Demo Output (Example)}
+  \begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+
+\begin{frame}{Summary}
+      \begin{itemize}[<+->]
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+    \end{frame}
+
+\begin{frame}{Exit Question}
+  \small
+  What does multicollinearity break first: prediction or interpretation (and why)?
+\end{frame}
+
+\end{document}

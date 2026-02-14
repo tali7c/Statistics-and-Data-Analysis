@@ -1,0 +1,21 @@
+student_id,age,gender,program,cgpa,attendance_pct,study_hours_week,city,join_date
+1001,19,M,CSE,8.2,92,12,Dehradun,2025-01-10
+1002,20,F," cse",7.5,85,10,"Dehradun ",2025-01-12
+1003,19,M,ECE,8.9,105,8,Haridwar,2025-01-15
+1004,21,Female,AIML,9.1,88,15,Rishikesh,15-01-2025
+1005,22,Male,CSE,12.0,70,5,Dehradun,2025-01-18
+1006,18,,ECE,6.8,90,,Haldwani,2025-01-20
+1007,20,M,ME,7.1,-5,6,Delhi,2025-01-25
+1008,19,F,AIML,8.0,95,20,Noida,2025-01-27
+1009,20,M,CSE,8," 80",-2,Dehradun,2025-01-30
+1010,21,F," CSE",,75,9,Gurugram,2025-02-01
+1011,19,M,cse,8.4,88,11,Gurugram,2025-02-05
+1012,20,F,EEE,7.8,86,10,Lucknow,2025/02/07
+1013,20,F,EEE,nine,84,12,Lucknow,2025-02-10
+1014,23,M,CSE,7.2,82,13,Dehradun,2025-02-11
+1015,17,F,ECE,6.5,89,14,Dehradun,2025-02-14
+1016,45,M,CSE,7.9,90,8,Dehradun,2025-02-15
+1017,20,F,AIML,8.7,,16,Dehradun,2025-02-17
+1018,19,M,CSE,8.1,91,10,Dehradun,2025/13/01
+1019,19,F,CSE,8.3,87,7,Dehradun,2025-02-20
+1003,19,M,ECE,8.9,105,8,Haridwar,2025-01-15

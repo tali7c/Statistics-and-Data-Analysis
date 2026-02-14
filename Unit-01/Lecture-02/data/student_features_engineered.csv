@@ -1,0 +1,13 @@
+student_id,city,join_date,attendance_pct,study_hours_week,cgpa,family_income_k,backlogs,join_month,join_weekday,attendance_bucket,income_log1p,effort_index,has_backlog,program_AIML,program_CSE,program_ECE
+2001,Dehradun,2025-01-10,92,12,8.2,30,0,1,Friday,high,3.4339872044851463,11.040000000000001,0,0,1,0
+2002,Dehradun,2025-01-12,85,10,7.5,28,1,1,Sunday,medium,3.367295829986474,8.5,1,0,1,0
+2003,Haridwar,2025-01-15,88,8,8.9,35,0,1,Wednesday,medium,3.58351893845611,7.04,0,0,0,1
+2004,Rishikesh,2025-01-20,90,15,9.1,45,0,1,Monday,medium,3.828641396489095,13.5,0,1,0,0
+2005,Delhi,2025-02-01,75,9,8.0,25,2,2,Saturday,low,3.258096538021482,6.75,1,0,1,0
+2006,Gurugram,2025-02-05,89,14,6.8,40,1,2,Wednesday,medium,3.713572066704308,12.46,1,0,0,1
+2007,Noida,2025-02-10,95,20,8.4,60,0,2,Monday,high,4.110873864173311,19.0,0,0,1,0
+2008,Lucknow,2025-02-14,82,7,7.8,80,1,2,Friday,medium,4.394449154672439,5.739999999999999,1,1,0,0
+2009,Dehradun,2025-03-01,78,6,7.2,50,0,3,Saturday,low,3.9318256327243257,4.68,0,0,0,1
+2010,Dehradun,2025-03-05,87,13,6.5,120,0,3,Wednesday,medium,4.795790545596741,11.31,0,0,1,0
+2011,Delhi,2025-03-10,93,18,8.7,200,0,3,Monday,high,5.303304908059076,16.740000000000002,0,1,0,0
+2012,Noida,2025-03-12,88,11,8.1,35,3,3,Wednesday,medium,3.58351893845611,9.68,1,0,1,0

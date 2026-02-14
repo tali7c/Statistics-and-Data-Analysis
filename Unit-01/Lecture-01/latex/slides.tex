@@ -1,0 +1,345 @@
+\documentclass{beamer}
+
+\usetheme{Berlin}
+\usecolortheme{Orchid}
+\useoutertheme{miniframes}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+
+\title[Statistics and Data Analysis]{Statistics and Data Analysis}
+\subtitle{Unit 01 -- Lecture 01: Data Types, Sources, and Cleaning Basics}
+\author{Tofik Ali}
+\institute{School of Computer Science, UPES Dehradun}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Quick Links}
+  \centering
+  \hyperlink{sec:types}{\beamerbutton{Types \& Formats}}\hspace{0.6em}
+  \hyperlink{sec:sources}{\beamerbutton{Sources}}\hspace{0.6em}
+  \hyperlink{sec:cleaning}{\beamerbutton{Cleaning}}\hspace{0.6em}
+  \hyperlink{sec:demo}{\beamerbutton{Demo}}\hspace{0.6em}
+  \hyperlink{sec:summary}{\beamerbutton{Summary}}
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Overview}
+
+\begin{frame}{Learning Outcomes}
+  \begin{itemize}[<+->]
+    \item Identify common data types and formats used in analytics
+    \item List common data sources and acquisition methods
+    \item Detect typical data quality issues (missing values, duplicates, outliers)
+    \item Apply basic cleaning steps in Python and save a cleaned dataset
+  \end{itemize}
+\end{frame}
+
+\section{Data Types and Formats}
+\label{sec:types}
+
+\begin{frame}{Dataset, Observation, Variable}
+  \begin{itemize}[<+->]
+    \item \textbf{Dataset:} a collection of observations (rows) and variables (columns)
+    \item \textbf{Observation:} one record (e.g., one student)
+    \item \textbf{Variable/Feature:} one attribute (e.g., attendance, CGPA)
+  \end{itemize}
+  \vspace{0.4em}
+  \textbf{Goal:} convert raw data into a form suitable for analysis and modeling.
+\end{frame}
+
+\begin{frame}{Common Data Types (Practical View)}
+  \begin{itemize}[<+->]
+    \item \textbf{Numeric:} integers (count), real values (measurements)
+    \item \textbf{Categorical:} nominal (branch), ordinal (rating: low/med/high)
+    \item \textbf{Binary:} yes/no, pass/fail
+    \item \textbf{Date/Time:} join date, timestamp
+    \item \textbf{Text:} feedback, comments
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 1: Classify Variable Types}
+  \small
+  For each variable, write the type (numeric/categorical/binary/datetime/text):
+  \begin{enumerate}
+    \item Age
+    \item Program/Branch (CSE, ECE, \ldots)
+    \item Attendance (\%)
+    \item Join date
+    \item Feedback comment
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Solution 1}
+  \begin{itemize}
+    \item Age: numeric (integer)
+    \item Program/Branch: categorical (nominal)
+    \item Attendance (\%): numeric (real)
+    \item Join date: datetime
+    \item Feedback: text (unstructured)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Data Formats}
+  \begin{itemize}[<+->]
+    \item \textbf{Structured:} fixed schema (tables) \\
+      \hspace{1.2em}Examples: CSV, SQL tables
+    \item \textbf{Semi-structured:} flexible schema with tags/keys \\
+      \hspace{1.2em}Examples: JSON, XML
+    \item \textbf{Unstructured:} free-form content \\
+      \hspace{1.2em}Examples: text documents, images, audio
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Structured Example (Table)}
+  \small
+  \begin{center}
+    \begin{tabular}{lccc}
+      \toprule
+      student\_id & program & attendance\_pct & cgpa \\
+      \midrule
+      1001 & CSE & 92 & 8.2 \\
+      1002 & CSE & 85 & 7.5 \\
+      1003 & ECE & 105 & 8.9 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Note:} 105\% attendance is an example of an out-of-range value.
+\end{frame}
+
+\begin{frame}[fragile]{Semi-structured Example (JSON)}
+\small
+\begin{verbatim}
+{
+  "student_id": 1001,
+  "program": "CSE",
+  "attendance_pct": 92,
+  "courses": ["Math", "DSA", "Stats"]
+}
+\end{verbatim}
+\normalsize
+Keys may vary from record to record (flexible schema).
+\end{frame}
+
+\begin{frame}[fragile]{Unstructured Example (Text/Log)}
+\small
+\begin{verbatim}
+2026-02-08 10:02:11 INFO login user=1007 device=android city=Delhi
+\end{verbatim}
+\normalsize
+Useful information exists, but it requires parsing and feature extraction.
+\end{frame}
+
+\section{Data Sources and Acquisition}
+\label{sec:sources}
+
+\begin{frame}{Common Data Sources}
+  \begin{itemize}[<+->]
+    \item Surveys and forms (Google Forms, LMS exports)
+    \item Databases (student records, attendance systems)
+    \item Web and app logs (clickstream)
+    \item Sensors/IoT (temperature, GPS)
+    \item Public datasets (government portals, research repositories)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Acquisition Methods}
+  \begin{itemize}[<+->]
+    \item Files: CSV/Excel export $\rightarrow$ \texttt{read\_csv}, \texttt{read\_excel}
+    \item Database query: SQL $\rightarrow$ extract tables
+    \item API calls: JSON responses $\rightarrow$ parse and store
+    \item Manual entry: small datasets (careful with errors)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 2: Choose a Source}
+  \small
+  For each case, suggest a likely source (survey/database/log/API):
+  \begin{enumerate}
+    \item Daily attendance of students
+    \item Online learning platform clicks
+    \item Student feedback comments
+    \item Weather readings every minute
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Solution 2}
+  \begin{itemize}
+    \item Attendance: database export (or CSV from attendance system)
+    \item Clicks: logs (web/app logs)
+    \item Feedback: survey + text field (unstructured text)
+    \item Weather readings: sensors/IoT or API
+  \end{itemize}
+\end{frame}
+
+\section{Data Cleaning}
+\label{sec:cleaning}
+
+\begin{frame}{Why Cleaning Matters}
+  \begin{itemize}[<+->]
+    \item Models and statistics assume data is meaningful and consistent
+    \item ``Garbage in, garbage out'' $\rightarrow$ wrong conclusions
+    \item Cleaning improves: accuracy, fairness, and reproducibility
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Common Data Quality Issues}
+  \begin{itemize}[<+->]
+    \item Missing values (blank, NaN, NULL)
+    \item Duplicates (same record repeated)
+    \item Inconsistent categories (\texttt{cse}, \texttt{CSE}, \texttt{ CSE})
+    \item Out-of-range values (attendance 105\%, CGPA 12)
+    \item Wrong data type (``nine'' instead of 9.0)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Handling Missing Values (Basic Options)}
+  \begin{itemize}[<+->]
+    \item \textbf{Drop:} remove rows/columns (only if few missing and safe)
+    \item \textbf{Impute:} fill with mean/median/mode (simple baseline)
+    \item \textbf{Domain rule:} fill with a meaningful default (carefully)
+    \item \textbf{Flag:} create an indicator feature ``was\_missing''
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 3: Missingness Decision}
+  \small
+  In a dataset of 20 students, the column \texttt{cgpa} has 2 missing values.
+  \begin{itemize}
+    \item What is the missingness percentage?
+    \item Suggest one reasonable action for this column.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution 3}
+  \begin{itemize}
+    \item Missingness = $2/20 \times 100\% = 10\%$
+    \item Action: impute using \textbf{median} CGPA (robust) and optionally add a flag
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Outliers (Basic Idea)}
+  An outlier is a value that is unusually far from typical values.
+  \vspace{0.6em}
+  \begin{itemize}[<+->]
+    \item Outliers can be \textbf{errors} (wrong entry) or \textbf{real extremes}
+    \item They can strongly affect mean, variance, and some models
+    \item Use rules like IQR fences as a \textbf{screening} step
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{IQR Rule (Fences)}
+  \[
+    \text{Lower fence} = Q_1 - 1.5\times \mathrm{IQR},\quad
+    \text{Upper fence} = Q_3 + 1.5\times \mathrm{IQR}
+  \]
+  \[
+    \mathrm{IQR} = Q_3 - Q_1
+  \]
+  Values outside fences are \textit{possible} outliers.
+\end{frame}
+
+\begin{frame}{Exercise 4: IQR Outlier Check}
+  \small
+  Attendance (\%): 70, 75, 80, 85, 90, 95, 150 \\
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute $Q_1$, $Q_3$, IQR, fences, and decide if 150 is an outlier.
+\end{frame}
+
+\begin{frame}{Solution 4}
+  \small
+  Sorted data: 70, 75, 80, 85, 90, 95, 150 (n=7). Median = 85. \\
+  Lower half: 70, 75, 80 $\Rightarrow Q_1=75$ \\
+  Upper half: 90, 95, 150 $\Rightarrow Q_3=95$ \\
+  IQR = $95-75=20$ \\
+  Fences: $75-30=45$ and $95+30=125$ \\
+  \normalsize
+  \textbf{Conclusion:} 150 $>$ 125 $\Rightarrow$ outlier (by IQR rule).
+\end{frame}
+
+\begin{frame}{Cleaning Checklist (Fast)}
+  \begin{itemize}[<+->]
+    \item Check shape, column names, and data types
+    \item Check missingness and duplicates
+    \item Standardize categories (trim whitespace, normalize case)
+    \item Check ranges and impossible values
+    \item Save a cleaned version (do not overwrite raw file)
+  \end{itemize}
+\end{frame}
+
+\section{Demo}
+\label{sec:demo}
+
+\begin{frame}{Mini Demo (Python)}
+  Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/cleaning\_demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{data/students\_clean.csv}
+    \item plots in \texttt{images/} (missingness and outlier visual)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Demo Output (Example)}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Missingness}
+      \vspace{0.2em}
+      \begin{center}
+      \IfFileExists{../images/missingness_before.png}{
+        \includegraphics[width=\linewidth]{missingness_before.png}
+      }{
+        \small (Run the demo to generate: \texttt{missingness\_before.png})
+      }
+      \end{center}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Attendance Outliers}
+      \vspace{0.2em}
+      \begin{center}
+      \IfFileExists{../images/attendance_box_before.png}{
+        \includegraphics[width=\linewidth]{attendance_box_before.png}
+      }{
+        \small (Run the demo to generate: \texttt{attendance\_box\_before.png})
+      }
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+\begin{frame}{Summary}
+  \begin{itemize}[<+->]
+    \item Data types and formats determine how we store and process data
+    \item Different sources require different acquisition and validation steps
+    \item Cleaning deals with missing values, duplicates, inconsistencies, and outliers
+    \item Always save a cleaned dataset and document the rules you applied
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Exit question:} In one sentence, why can ``attendance 105\%'' be dangerous in analysis?
+\end{frame}
+
+\end{document}

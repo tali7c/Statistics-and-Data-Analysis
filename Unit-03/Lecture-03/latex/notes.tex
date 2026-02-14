@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 03 -- Lecture 03 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Paired t-test, mean difference, effect size, and interpretation.
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Differentiate paired vs independent designs
+  \item Compute within-pair differences di
+  \item Run a paired t-test (conceptually)
+  \item Explain effect size and why we report it
+  \item Interpret results in context (not only p-value)
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{Paired Design}
+\begin{itemize}
+  \item Same unit measured twice (before/after)
+  \item Analyze differences di = after - before
+  \item Pairing reduces noise from individual differences
+\end{itemize}
+
+\section*{Effect Size}
+\begin{itemize}
+  \item p-value answers: evidence?
+  \item Effect size answers: how big?
+  \item Large n can make tiny effects significant
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Compute differences}
+Before/After: (10,12), (12,12), (11,14), (9,10). Compute di and dbar.
+\subsection*{Solution}
+\begin{itemize}
+  \item di: 2,0,3,1
+  \item dbar = 1.5
+\end{itemize}
+
+\subsection*{Exercise 2: CI idea}
+If the 95\% CI for mean difference excludes 0, what does it suggest?
+\subsection*{Solution}
+\begin{itemize}
+  \item Evidence of a change (difference likely non-zero).
+  \item Check magnitude and context.
+\end{itemize}
+
+\subsection*{Exercise 3: Interpret d}
+If Cohen's d=0.3, what does it suggest (rule of thumb)?
+\subsection*{Solution}
+\begin{itemize}
+  \item Small effect (context dependent).
+  \item Still may matter if cheap/safe to adopt.
+\end{itemize}
+
+\section*{Exit Question}
+Why can paired designs be more powerful than independent designs?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}

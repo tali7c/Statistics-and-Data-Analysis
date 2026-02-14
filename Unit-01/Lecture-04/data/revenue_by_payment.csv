@@ -1,0 +1,4 @@
+payment_mode,count,sum,mean
+Card,6,353.0,58.83
+Cash,6,304.0,50.67
+UPI,12,1124.15,93.68

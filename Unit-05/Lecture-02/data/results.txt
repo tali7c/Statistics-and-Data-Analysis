@@ -1,0 +1,7 @@
+Ranked features by |corr| (desc):
+x1: corr=0.6901
+x3: corr=-0.5739
+x5: corr=0.1562
+x2: corr=0.0470
+x4: corr=0.0075
+x6: corr=0.0034

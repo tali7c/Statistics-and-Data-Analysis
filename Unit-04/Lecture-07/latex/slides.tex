@@ -1,0 +1,170 @@
+\documentclass{beamer}
+
+      \usetheme{Berlin}
+      \usecolortheme{Orchid}
+      \useoutertheme{miniframes}
+      \setbeamertemplate{navigation symbols}{}
+
+      \usepackage{amsmath}
+      \usepackage{amssymb}
+      \usepackage{booktabs}
+      \usepackage{graphicx}
+      \graphicspath{{../images/}}
+
+      \title[Statistics and Data Analysis]{Statistics and Data Analysis}
+      \subtitle{Unit 04 -- Lecture 07: VIF, AIC/BIC, Ridge and Lasso (Part 2)}
+      \author{Tofik Ali}
+      \institute{School of Computer Science, UPES Dehradun}
+      \date{\today}
+
+      \begin{document}
+
+      \begin{frame}
+        \titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+      \end{frame}
+
+      \begin{frame}{Quick Links}
+        \centering
+        \hyperlink{sec:overview}{\beamerbutton{Overview}}\hspace{0.6em}
+\hyperlink{sec:vif}{\beamerbutton{VIF}}\hspace{0.6em}
+\hyperlink{sec:reg}{\beamerbutton{Ridge/Lasso}}\hspace{0.6em}
+\hyperlink{sec:exercises}{\beamerbutton{Exercises}}\hspace{0.6em}
+\hyperlink{sec:demo}{\beamerbutton{Demo}}\hspace{0.6em}
+\hyperlink{sec:summary}{\beamerbutton{Summary}}\hspace{0.6em}
+      \end{frame}
+
+      \begin{frame}{Agenda}
+        \tableofcontents
+      \end{frame}
+
+\section{Overview}
+\label{sec:overview}
+
+
+\begin{frame}{Learning Outcomes}
+      \begin{itemize}[<+->]
+        \item Compute and interpret VIF (basic)
+\item Explain AIC/BIC as model selection criteria (intuition)
+\item Write ridge and lasso objectives
+\item Explain coefficient shrinkage and feature selection idea
+      \end{itemize}
+    \end{frame}
+
+\section{VIF}
+\label{sec:vif}
+
+
+\begin{frame}{VIF: Key Points}
+      \begin{itemize}[<+->]
+        \item Definition: $\mathrm{VIF}_j = 1/(1-R_j^2)$
+\item Higher VIF -> more multicollinearity
+\item Rule of thumb thresholds (5/10)
+      \end{itemize}
+    \end{frame}
+
+\begin{frame}{VIF: Key Formula}
+  \[ \mathrm{VIF}_j = \frac{1}{1-R_j^2} \]
+\end{frame}
+
+\section{Ridge/Lasso}
+\label{sec:reg}
+
+
+\begin{frame}{Ridge/Lasso: Key Points}
+      \begin{itemize}[<+->]
+        \item Ridge uses L2 penalty (shrinks)
+\item Lasso uses L1 penalty (can set some to 0)
+\item Scale features before regularization
+      \end{itemize}
+    \end{frame}
+
+\begin{frame}{Ridge/Lasso: Key Formula}
+  \[ \min \sum (y-\hat{y})^2 + \lambda \sum \beta_j^2 \quad \text{(ridge)} \]
+\end{frame}
+
+\section{Exercises}
+\label{sec:exercises}
+
+
+\begin{frame}{Exercise 1: Compute VIF}
+  \small
+  If $R_j^2=0.9$, compute $\mathrm{VIF}_j$.
+\end{frame}
+
+\begin{frame}{Solution 1}
+  \begin{itemize}
+    \item $\mathrm{VIF}_j = 1/(1-0.9)=10$ (high).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 2: Ridge vs lasso}
+  \small
+  Which can produce exact zero coefficients?
+\end{frame}
+
+\begin{frame}{Solution 2}
+  \begin{itemize}
+    \item Lasso (L1) can set some coefficients to 0.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 3: AIC/BIC meaning}
+  \small
+  Lower AIC/BIC means what (conceptually)?
+\end{frame}
+
+\begin{frame}{Solution 3}
+  \begin{itemize}
+    \item Better trade-off between fit and complexity (relative).
+  \end{itemize}
+\end{frame}
+
+\section{Demo}
+\label{sec:demo}
+
+
+\begin{frame}{Mini Demo (Python)}
+  Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Demo Output (Example)}
+  \begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+
+\begin{frame}{Summary}
+      \begin{itemize}[<+->]
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+    \end{frame}
+
+\begin{frame}{Exit Question}
+  \small
+  Why can ridge help when predictors are highly correlated?
+\end{frame}
+
+\end{document}

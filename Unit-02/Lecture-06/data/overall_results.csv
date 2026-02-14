@@ -1,0 +1,2 @@
+n,mean_final_score,median_final_score,modes_final_score,range_final_score,q1_final_score,q3_final_score,iqr_final_score,sample_variance_final_score,sample_std_final_score,corr_hours_final,corr_social_media_final
+18,65.5000,65.5000,60,65.0000,60.0000,72.0000,12.0000,199.0882,14.1099,0.519021,-0.977097

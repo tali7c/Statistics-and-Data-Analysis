@@ -1,0 +1,425 @@
+\documentclass{beamer}
+
+\usetheme{Berlin}
+\usecolortheme{Orchid}
+\useoutertheme{miniframes}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+\title[Statistics and Data Analysis]{Statistics and Data Analysis}
+\subtitle{Unit 02 -- Lecture 02: Dispersion and Covariance}
+\author{Tofik Ali}
+\institute{School of Computer Science, UPES Dehradun}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Quick Links}
+  \centering
+  \hyperlink{sec:overview}{\beamerbutton{Overview}}\hspace{0.6em}
+  \hyperlink{sec:dispersion}{\beamerbutton{Dispersion}}\hspace{0.6em}
+  \hyperlink{sec:covariance}{\beamerbutton{Covariance}}\hspace{0.6em}
+  \hyperlink{sec:demo}{\beamerbutton{Demo}}\hspace{0.6em}
+  \hyperlink{sec:summary}{\beamerbutton{Summary}}
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Overview}
+\label{sec:overview}
+
+\begin{frame}{Learning Outcomes}
+  \begin{itemize}[<+->]
+    \item Explain why dispersion is needed (beyond the mean/median/mode)
+    \item Compute and interpret range and IQR
+    \item Compute sample variance and standard deviation
+    \item Compute coefficient of variation (CV) and simple z-scores
+    \item Use the IQR rule to flag potential outliers
+    \item Define covariance and interpret its sign and units
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Warm-up: Same Mean, Different Spread}
+  Two datasets can have the same mean but different variability:
+  \vspace{0.6em}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Dataset A}\\
+      \begin{center}
+        \begin{tabular}{ccc}
+          10 & 15 & 20
+        \end{tabular}
+      \end{center}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Dataset B}\\
+      \begin{center}
+        \begin{tabular}{ccc}
+          14 & 15 & 16
+        \end{tabular}
+      \end{center}
+    \end{column}
+  \end{columns}
+  \vspace{0.6em}
+  \textbf{Checkpoint:} Which dataset is more variable? Why?
+\end{frame}
+
+\section{Dispersion}
+\label{sec:dispersion}
+
+\begin{frame}{What is Dispersion?}
+  Dispersion describes how spread out the data is around the center.
+  \vspace{0.6em}
+  \begin{itemize}[<+->]
+    \item \textbf{Range:} max -- min
+    \item \textbf{IQR:} spread of the middle 50\% (Q3 -- Q1)
+    \item \textbf{Variance/SD:} average squared deviation / typical deviation
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Range and Interquartile Range (IQR)}
+  \begin{itemize}[<+->]
+    \item \textbf{Range} = $\max(x) - \min(x)$ (very sensitive to outliers)
+    \item \textbf{Quartiles} split sorted data into quarters
+    \item \textbf{IQR} = Q3 -- Q1 (more robust than range)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 1: Range and IQR}
+  \small
+  Dataset (Scores):
+  \vspace{0.4em}
+  \begin{center}
+    \begin{tabular}{cccccc}
+      11 & 13 & 15 & 15 & 17 & 19
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute Range, Q1, Q3, and IQR.
+\end{frame}
+
+\begin{frame}{Solution 1}
+  Sorted data: 11, 13, 15, 15, 17, 19
+  \vspace{0.4em}
+  \begin{itemize}
+    \item Range = $19 - 11 = 8$
+    \item Lower half: 11, 13, 15 $\Rightarrow$ Q1 = 13
+    \item Upper half: 15, 17, 19 $\Rightarrow$ Q3 = 17
+    \item IQR = $17 - 13 = 4$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Variance and Standard Deviation}
+  \begin{itemize}[<+->]
+    \item Variance measures average squared deviation from the mean
+    \item Standard deviation is the square root of variance
+    \item \textbf{Units:} variance has squared units; SD has original units
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Sample Variance (Why $n-1$?)}
+  \[
+    s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2
+  \]
+  \begin{itemize}[<+->]
+    \item Using $n-1$ helps correct bias when estimating population variance
+    \item We lose one ``degree of freedom'' because $\bar{x}$ is estimated from the data
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 2: Sample Variance and SD}
+  \small
+  Use the same dataset: 11, 13, 15, 15, 17, 19 \\
+  Mean: $\bar{x}=15$
+  \vspace{0.4em}
+  \begin{itemize}
+    \item Compute $s^2$ and $s$
+    \item Hint: $\sum (x_i-\bar{x})^2 = 40$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Solution 2}
+  \begin{itemize}
+    \item $n=6$
+    \item $s^2 = \frac{40}{6-1} = \frac{40}{5} = 8$
+    \item $s = \sqrt{8} \approx 2.83$
+  \end{itemize}
+  \vspace{0.5em}
+  \textbf{Interpretation:} A typical score is about 2.8 points away from the mean.
+\end{frame}
+
+\begin{frame}{Coefficient of Variation (CV)}
+  CV compares spread \emph{relative to the mean}:
+  \[
+    \mathrm{CV} = \frac{s}{\bar{x}} \times 100\%
+  \]
+  \begin{itemize}[<+->]
+    \item Unitless (percentage) $\Rightarrow$ useful to compare variability across different scales
+    \item Works best when the mean is positive and not near zero
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 3: Coefficient of Variation}
+  \small
+  Use the same dataset: 11, 13, 15, 15, 17, 19 \\
+  From Exercise 2: $\bar{x}=15$, $s \approx 2.83$
+  \vspace{0.4em}
+
+  \normalsize
+  \textbf{Task:} Compute CV (in \%).
+\end{frame}
+
+\begin{frame}{Solution 3}
+  \[
+    \mathrm{CV} = \frac{2.83}{15}\times 100\% \approx 18.9\%
+  \]
+  \textbf{Interpretation:} The typical spread is about 19\% of the mean.
+\end{frame}
+
+\begin{frame}{Standardization (z-score)}
+  A z-score tells how many standard deviations a value is from the mean:
+  \[
+    z = \frac{x - \bar{x}}{s}
+  \]
+  \begin{itemize}[<+->]
+    \item $z>0$: value is above the mean; $z<0$: below the mean
+    \item $|z|$ near 2 or 3 often indicates an unusually large/small value
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 4: z-score}
+  \small
+  Using $\bar{x}=15$ and $s \approx 2.83$, compute the z-score of $x=19$.
+  \vspace{0.4em}
+
+  \normalsize
+  \textbf{Task:} Compute $z$ and interpret it in one sentence.
+\end{frame}
+
+\begin{frame}{Solution 4}
+  \[
+    z = \frac{19-15}{2.83} \approx 1.41
+  \]
+  \textbf{Interpretation:} 19 is about 1.4 standard deviations above the mean.
+\end{frame}
+
+\begin{frame}{Outlier Detection (IQR Rule)}
+  A common rule to flag potential outliers uses \textbf{fences}:
+  \[
+    \text{Lower fence} = Q_1 - 1.5\times \mathrm{IQR},\quad
+    \text{Upper fence} = Q_3 + 1.5\times \mathrm{IQR}
+  \]
+  \vspace{0.4em}
+  Values outside the fences are possible outliers.
+\end{frame}
+
+\begin{frame}{Exercise 5: IQR Outlier Check}
+  \small
+  Monthly income (INR thousands):
+  \vspace{0.4em}
+  \begin{center}
+    \begin{tabular}{ccccccccc}
+      20 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 60
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute $Q_1$, $Q_3$, IQR and decide if 60 is an outlier.
+\end{frame}
+
+\begin{frame}{Solution 5}
+  \small
+  Median = 25 (since $n=9$).
+  \begin{itemize}
+    \item Lower half: 20, 22, 23, 24 $\Rightarrow Q_1 = (22+23)/2 = 22.5$
+    \item Upper half: 26, 27, 28, 60 $\Rightarrow Q_3 = (27+28)/2 = 27.5$
+    \item IQR = $27.5 - 22.5 = 5$
+    \item Fences: $22.5-7.5=15$ and $27.5+7.5=35$
+  \end{itemize}
+  \textbf{Conclusion:} $60>35$ $\Rightarrow$ 60 is an outlier.
+\end{frame}
+
+\begin{frame}{Think-Pair-Share (2 minutes)}
+  \textbf{Prompt:} Suppose you have a dataset with a few extreme outliers.\\
+  Which spread measure would you report first: \textbf{IQR} or \textbf{SD}? Why?
+\end{frame}
+
+\section{Covariance}
+\label{sec:covariance}
+
+\begin{frame}{What is Covariance?}
+  Covariance measures how two variables vary together.
+  \vspace{0.6em}
+  \begin{itemize}[<+->]
+    \item Positive covariance: both tend to increase together
+    \item Negative covariance: one increases while the other decreases
+    \item Near zero: no \emph{linear} co-variation (could still be non-linear)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Sample Covariance}
+  For paired data $(x_i,y_i)$:
+  \[
+    s_{xy} = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})
+  \]
+  \begin{itemize}[<+->]
+    \item \textbf{Units:} (units of $x$) $\times$ (units of $y$)
+    \item Covariance depends on scale (change units $\Rightarrow$ covariance changes)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 6: Covariance (Positive)}
+  \small
+  Dataset (Hours studied vs Score):
+  \vspace{0.4em}
+  \begin{center}
+    \begin{tabular}{cccccc}
+      \toprule
+      Hours ($x$) & 1 & 2 & 3 & 4 & 5 \\
+      Score ($y$) & 52 & 55 & 60 & 65 & 68 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute sample covariance $s_{xy}$. Interpret the sign.\\
+  (Means: $\bar{x}=3$, $\bar{y}=60$)
+\end{frame}
+
+\begin{frame}{Solution 6}
+  Deviations: $x-\bar{x} = [-2,-1,0,1,2]$ \\
+  Deviations: $y-\bar{y} = [-8,-5,0,5,8]$
+  \vspace{0.4em}
+  \[
+    \sum (x_i-\bar{x})(y_i-\bar{y}) = 42
+  \]
+  \[
+    s_{xy} = \frac{42}{5-1} = 10.5
+  \]
+  \textbf{Interpretation:} Positive covariance $\Rightarrow$ as hours increase, scores tend to increase.
+\end{frame}
+
+\begin{frame}{Scale Dependence (Important)}
+  \begin{itemize}[<+->]
+    \item If we multiply $y$ by 10 (change units), covariance multiplies by 10
+    \item So covariance is hard to compare across different unit scales
+    \item Next lecture: \textbf{correlation} standardizes covariance to $[-1,1]$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 7: Covariance (Negative)}
+  \small
+  Dataset (Price vs Demand):
+  \vspace{0.4em}
+  \begin{center}
+    \begin{tabular}{cccccc}
+      \toprule
+      Price ($x$) & 1 & 2 & 3 & 4 & 5 \\
+      Demand ($y$) & 80 & 70 & 60 & 50 & 40 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Compute $s_{xy}$ and interpret the sign.\\
+  (Means: $\bar{x}=3$, $\bar{y}=60$)
+\end{frame}
+
+\begin{frame}{Solution 7}
+  Deviations: $x-\bar{x} = [-2,-1,0,1,2]$ \\
+  Deviations: $y-\bar{y} = [20,10,0,-10,-20]$
+  \vspace{0.4em}
+  \[
+    \sum (x_i-\bar{x})(y_i-\bar{y}) = -100
+  \]
+  \[
+    s_{xy} = \frac{-100}{5-1} = -25
+  \]
+  \textbf{Interpretation:} Negative covariance $\Rightarrow$ higher price tends to reduce demand.
+\end{frame}
+
+\begin{frame}{Exercise 8: Unit Change and Covariance}
+  \small
+  From Exercise 6, covariance (hours, score) is $10.5$. \\
+  Suppose we measure time in minutes: $x' = 60x$.
+  \vspace{0.4em}
+
+  \normalsize
+  \textbf{Task:} What is covariance of $(x',y)$? (No re-calculation needed.)
+\end{frame}
+
+\begin{frame}{Solution 8}
+  Property: $\mathrm{cov}(aX,Y)=a\,\mathrm{cov}(X,Y)$.
+  \[
+    \mathrm{cov}(60X,Y)=60\times 10.5 = 630
+  \]
+  \textbf{Interpretation:} Units changed $\Rightarrow$ covariance changed (scale-dependent).
+\end{frame}
+
+\begin{frame}{Exercise 9: Covariance 0 but Strong Relationship}
+  \small
+  Consider:
+  \[
+    x = [-2,-1,0,1,2],\quad y=x^2 = [4,1,0,1,4]
+  \]
+  \normalsize
+  \textbf{Task:} Compute sample covariance. Are $x$ and $y$ independent?
+\end{frame}
+
+\begin{frame}{Solution 9}
+  \small
+  $\bar{x}=0$, $\bar{y}=2$. \\
+  Products $(x-\bar{x})(y-\bar{y})$: $-4, 1, 0, -1, 4$ $\Rightarrow$ sum $=0$.
+  \[
+    s_{xy} = \frac{0}{5-1} = 0
+  \]
+  \normalsize
+  \textbf{Key point:} Covariance 0 $\neq$ independence (here $y$ is determined by $x$).
+\end{frame}
+
+\section{Demo}
+\label{sec:demo}
+
+\begin{frame}{Mini Demo (Python)}
+  Run:
+  \begin{center}
+    \texttt{python demo/dispersion\_covariance\_demo.py}
+  \end{center}
+  \vspace{0.4em}
+  What it does:
+  \begin{itemize}
+    \item Computes range, IQR, variance, SD for \texttt{data/scores\_small.csv}
+    \item Flags outliers for \texttt{data/incomes\_outlier.csv} using the IQR rule
+    \item Computes covariance for two paired datasets
+    \item (Optional) Saves plots to \texttt{images/} if matplotlib is installed
+  \end{itemize}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+\begin{frame}{Summary}
+  \begin{itemize}[<+->]
+    \item Mean alone is not enough; dispersion describes spread
+    \item IQR is robust; variance/SD quantify typical deviation
+    \item Covariance captures joint variation (sign matters; scale matters)
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Exit question:} For a dataset with strong outliers, which spread measure would you report first and why?
+\end{frame}
+
+\end{document}

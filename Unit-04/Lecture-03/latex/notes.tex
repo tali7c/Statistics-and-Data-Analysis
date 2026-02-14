@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 04 -- Lecture 03 Notes}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Multiple predictors; partial effects; dummy variables; adjusted R-squared (overview).
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Write the multiple linear regression model
+  \item Interpret a coefficient as a partial effect
+  \item Explain dummy variables for categories (basic)
+  \item Explain adjusted R-squared (intuition)
+\end{itemize}
+
+\section*{Detailed Notes}
+These notes are designed to be read alongside the slides. They expand each slide bullet into
+plain-language explanations, small worked examples, and common pitfalls. When a formula
+appears, emphasize (1) what each symbol means, (2) the assumptions needed to use it, and (3)
+how to interpret the final number in the problem context.
+
+\section*{Model}
+\begin{itemize}
+  \item y = b0 + b1 x1 + b2 x2 + ...
+  \item Each coefficient is a partial effect (others fixed)
+  \item Scaling helps when using regularization
+\end{itemize}
+
+\section*{Interpretation}
+\begin{itemize}
+  \item Dummy variables encode categories
+  \item Adjusted $R^2$ penalizes unnecessary predictors
+  \item Multicollinearity can harm interpretability
+\end{itemize}
+
+\section*{Exercises (with Solutions)}
+\subsection*{Exercise 1: Partial effect}
+Model: yhat=5 + 0.8x1 + 2.0x2. Interpret coefficient 2.0.
+\subsection*{Solution}
+\begin{itemize}
+  \item Holding x1 fixed, +1 in x2 increases yhat by 2.0 units.
+\end{itemize}
+
+\subsection*{Exercise 2: Dummy variable}
+Urban=1, Rural=0. If coef(Urban)=10, interpret.
+\subsection*{Solution}
+\begin{itemize}
+  \item Urban has predicted y about 10 units higher than Rural (all else equal).
+\end{itemize}
+
+\subsection*{Exercise 3: Adjusted $R^2$}
+Why use adjusted $R^2$ when comparing models with different number of predictors?
+\subsection*{Solution}
+\begin{itemize}
+  \item Because $R^2$ never decreases, adjusted $R^2$ penalizes extra predictors.
+\end{itemize}
+
+\section*{Exit Question}
+Why does adding a useless feature still increase (or keep) $R^2$?
+
+\section*{Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+\end{document}
