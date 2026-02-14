@@ -1,1 +1,0 @@
-model=ARIMA(1,1,1)
