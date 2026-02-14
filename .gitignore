@@ -23,6 +23,7 @@ __pycache__/
 
 # Local scratch/extractions (do not commit)
 _tmp/
+_tools/
 
 # Copyrighted reference PDFs (keep local; do not commit)
 Text-Books/
