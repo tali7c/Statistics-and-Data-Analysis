@@ -1,1 +1,0 @@
-t-SNE demo on two-moons dataset.
