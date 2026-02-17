@@ -1,2 +1,0 @@
-users=30
-mean_total_spend=610.2592

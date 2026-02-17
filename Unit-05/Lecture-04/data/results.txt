@@ -1,1 +1,0 @@
-LDA demo: 3 classes projected to 2D.

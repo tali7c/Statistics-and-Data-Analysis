@@ -1,6 +1,0 @@
-txn_id,date,category,payment_mode,units,unit_price,discount_pct,net_amount
-5009,2025-03-03,Snacks,UPI,10.0,36.5,0.0,365.0
-5004,2025-03-02,Snacks,UPI,5.0,35.0,5.0,166.25
-5019,2025-03-07,Snacks,UPI,4.0,34.0,0.0,136.0
-5017,2025-03-06,Snacks,Card,3.0,37.0,0.0,111.0
-5025,2025-03-09,Snacks,UPI,3.0,33.0,0.0,99.0

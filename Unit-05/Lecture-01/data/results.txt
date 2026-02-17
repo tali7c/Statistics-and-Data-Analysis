@@ -1,2 +1,0 @@
-rows=200
-net_amount_mean=51.4350
