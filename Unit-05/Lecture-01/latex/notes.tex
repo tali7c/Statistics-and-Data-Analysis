@@ -1,0 +1,262 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 05 -- Lecture 01 Notes\\Feature Selection, Engineering and Dimensionality Reduction (Intro)}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Intro to feature selection, feature engineering, and dimensionality reduction.
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Why Features
+  \item Selection vs Reduction
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Differentiate feature selection vs dimensionality reduction
+  \item Explain why too many features can hurt (overfitting, cost)
+  \item Describe a simple feature engineering pipeline
+  \item Identify target leakage in engineered features
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{Data leakage} happens when information from the future or from the test set
+influences training. Typical examples: scaling before splitting, using target-related
+features, or using random splits for time series. Leakage can produce very good-looking
+accuracy that disappears in real deployment.
+
+\subsection*{Why Features: Key Points}
+\begin{itemize}
+  \item Features are how models see data
+  \item Goal: represent signal and reduce noise
+  \item Bad features -> bad models
+\end{itemize}
+
+\subsection*{Selection vs Reduction: Key Points}
+\begin{itemize}
+  \item Selection keeps a subset of original features
+  \item Reduction creates new components (e.g., PCA)
+  \item Validate choices using CV
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{PCA} finds new axes (principal components) that capture maximum variance. It is a
+rotation of the feature space. Because PCA is variance-based, it is sensitive to scaling:
+standardize features first unless all features are already comparable.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Selection or reduction}
+Dropping 30 out of 100 features is selection or reduction?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Feature selection (subset).
+\end{itemize}
+
+\subsection*{Exercise 2: Leakage}
+Is using final exam score to predict final grade leakage?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Yes; it contains future/target information.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Data leakage} happens when information from the future or from the test set
+influences training. Typical examples: scaling before splitting, using target-related
+features, or using random splits for time series. Leakage can produce very good-looking
+accuracy that disappears in real deployment.
+
+\subsection*{Exercise 3: Engineering example}
+Give one time-based engineered feature.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Day-of-week, month, time-since-last-event, rolling average, etc.
+\end{itemize}
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Shows how feature quality affects model performance on a toy dataset.
+  \item Creates simple engineered features and compares baseline vs improved model.
+  \item Use it to motivate selection/reduction to fight overfitting and cost.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why can adding more features sometimes reduce test accuracy?
+\paragraph{Suggested answer (for revision).}
+Extra features can add noise and increase overfitting (curse of dimensionality), reducing
+test performance even if training fit improves.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Why Features}\hspace{0.6em}
+\textbf{Selection vs Reduction}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Why Features
+  \item Selection vs Reduction
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Differentiate feature selection vs dimensionality reduction
+\item Explain why too many features can hurt (overfitting, cost)
+\item Describe a simple feature engineering pipeline
+\item Identify target leakage in engineered features
+      \end{itemize}
+\subsection*{Why Features: Key Points}
+\begin{itemize}
+        \item Features are how models see data
+\item Goal: represent signal and reduce noise
+\item Bad features -> bad models
+      \end{itemize}
+\subsection*{Selection vs Reduction: Key Points}
+\begin{itemize}
+        \item Selection keeps a subset of original features
+\item Reduction creates new components (e.g., PCA)
+\item Validate choices using CV
+      \end{itemize}
+\subsection*{Exercise 1: Selection or reduction}
+\small
+  Dropping 30 out of 100 features is selection or reduction?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item Feature selection (subset).
+  \end{itemize}
+\subsection*{Exercise 2: Leakage}
+\small
+  Is using final exam score to predict final grade leakage?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Yes; it contains future/target information.
+  \end{itemize}
+\subsection*{Exercise 3: Engineering example}
+\small
+  Give one time-based engineered feature.
+\subsection*{Solution 3}
+\begin{itemize}
+    \item Day-of-week, month, time-since-last-event, rolling average, etc.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why can adding more features sometimes reduce test accuracy?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

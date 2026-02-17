@@ -1,0 +1,303 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 06 -- Lecture 06 Notes\\ADF Test for Stationarity}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+ADF test (unit root) and interpretation.
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item ADF Test
+  \item Interpretation
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item State null and alternative of ADF test (unit root)
+  \item Interpret ADF p-value for stationarity decision
+  \item Apply ADF to original and differenced series (idea)
+  \item Explain why tests are not the only evidence (plots matter)
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{Degrees of freedom (df)} roughly represent how much independent information is
+available to estimate variability. For a one-sample t-test, $\mathrm{df}=n-1$ because one
+constraint is used to estimate the sample mean. df affects the critical values and the shape
+of the t-distribution (small df -> heavier tails).
+A \textbf{p-value} is computed assuming the null hypothesis $H_0$ is true. It measures how
+surprising the observed data (or something more extreme) would be under $H_0$. A small
+p-value suggests the data is hard to explain by $H_0$ alone, but it does not tell you how
+large the effect is or whether it is practically important.
+
+\subsection*{ADF Test: Key Points}
+\begin{itemize}
+  \item H0: unit root (non-stationary)
+  \item H1: stationary
+  \item Small p-value -> reject H0
+\end{itemize}
+\paragraph{Explanation.}
+The \textbf{null hypothesis $H_0$} usually represents 'no effect' or a baseline value (e.g.,
+$\mu=60$). The \textbf{alternative $H_1$} represents the effect you are looking for (e.g.,
+$\mu\neq 60$ or $\mu>60$). We compute a test statistic and a p-value assuming $H_0$ is true.
+\textbf{Degrees of freedom (df)} roughly represent how much independent information is
+available to estimate variability. For a one-sample t-test, $\mathrm{df}=n-1$ because one
+constraint is used to estimate the sample mean. df affects the critical values and the shape
+of the t-distribution (small df -> heavier tails).
+A \textbf{p-value} is computed assuming the null hypothesis $H_0$ is true. It measures how
+surprising the observed data (or something more extreme) would be under $H_0$. A small
+p-value suggests the data is hard to explain by $H_0$ alone, but it does not tell you how
+large the effect is or whether it is practically important.
+
+\subsection*{Interpretation: Key Points}
+\begin{itemize}
+  \item If non-stationary, difference and test again
+  \item Seasonality can require seasonal differencing
+  \item Use ACF/PACF + diagnostics too
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Seasonality} is a repeating pattern with a fixed period (weekly, monthly, yearly).
+You must account for it; otherwise forecasts systematically miss repeating rises/falls.
+Seasonal differencing and SARIMA are common tools.
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+\textbf{Stationarity} (intuition) means the series behavior is stable over time: roughly
+constant mean/variance and correlation structure. AR/MA/ARIMA models assume stationarity
+(after differencing). If the process changes over time, parameters learned from the past may
+not hold.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: ADF null}
+What is H0 in ADF?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Unit root; non-stationary.
+\end{itemize}
+\paragraph{Walkthrough.}
+The \textbf{null hypothesis $H_0$} usually represents 'no effect' or a baseline value (e.g.,
+$\mu=60$). The \textbf{alternative $H_1$} represents the effect you are looking for (e.g.,
+$\mu\neq 60$ or $\mu>60$). We compute a test statistic and a p-value assuming $H_0$ is true.
+\textbf{Degrees of freedom (df)} roughly represent how much independent information is
+available to estimate variability. For a one-sample t-test, $\mathrm{df}=n-1$ because one
+constraint is used to estimate the sample mean. df affects the critical values and the shape
+of the t-distribution (small df -> heavier tails).
+
+\subsection*{Exercise 2: Decision}
+If p=0.02 at alpha=0.05, what do you conclude?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Reject H0; evidence of stationarity.
+\end{itemize}
+\paragraph{Walkthrough.}
+The \textbf{null hypothesis $H_0$} usually represents 'no effect' or a baseline value (e.g.,
+$\mu=60$). The \textbf{alternative $H_1$} represents the effect you are looking for (e.g.,
+$\mu\neq 60$ or $\mu>60$). We compute a test statistic and a p-value assuming $H_0$ is true.
+The \textbf{significance level} $\alpha$ is the maximum Type I error rate you are willing to
+tolerate: the probability of rejecting $H_0$ when $H_0$ is actually true. Common choices are
+0.05 or 0.01, but the right value depends on consequences of false alarms vs missed
+detections.
+
+\subsection*{Exercise 3: Next step}
+If p=0.6, what next step?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Difference and test again; consider seasonal differencing.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Seasonality} is a repeating pattern with a fixed period (weekly, monthly, yearly).
+You must account for it; otherwise forecasts systematically miss repeating rises/falls.
+Seasonal differencing and SARIMA are common tools.
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Runs an ADF test on an example series and reports the p-value.
+  \item Shows how conclusions can change after differencing.
+  \item Use it to stress: combine tests with plots/ACF/PACF, not tests alone.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why should we not rely on only one test to decide stationarity?
+\paragraph{Suggested answer (for revision).}
+Plots and ACF/PACF provide context; a single test can be noisy/misleading under seasonality,
+breaks, or short samples.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{ADF Test}\hspace{0.6em}
+\textbf{Interpretation}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item ADF Test
+  \item Interpretation
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item State null and alternative of ADF test (unit root)
+\item Interpret ADF p-value for stationarity decision
+\item Apply ADF to original and differenced series (idea)
+\item Explain why tests are not the only evidence (plots matter)
+      \end{itemize}
+\subsection*{ADF Test: Key Points}
+\begin{itemize}
+        \item H0: unit root (non-stationary)
+\item H1: stationary
+\item Small p-value -> reject H0
+      \end{itemize}
+\subsection*{Interpretation: Key Points}
+\begin{itemize}
+        \item If non-stationary, difference and test again
+\item Seasonality can require seasonal differencing
+\item Use ACF/PACF + diagnostics too
+      \end{itemize}
+\subsection*{Exercise 1: ADF null}
+\small
+  What is H0 in ADF?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item Unit root; non-stationary.
+  \end{itemize}
+\subsection*{Exercise 2: Decision}
+\small
+  If p=0.02 at alpha=0.05, what do you conclude?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Reject H0; evidence of stationarity.
+  \end{itemize}
+\subsection*{Exercise 3: Next step}
+\small
+  If p=0.6, what next step?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item Difference and test again; consider seasonal differencing.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why should we not rely on only one test to decide stationarity?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

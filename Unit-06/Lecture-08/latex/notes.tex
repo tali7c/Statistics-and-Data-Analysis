@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 06 -- Lecture 08 Notes\\Diagnostics and SARIMA Models}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Time-series diagnostics and SARIMA seasonal modeling (overview).
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Diagnostics
+  \item SARIMA
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Explain why diagnostics are needed after fitting
+  \item Recognize residual autocorrelation as model issue
+  \item Explain SARIMA seasonal terms at a high level
+  \item Choose seasonal period s (weekly/monthly/yearly)
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{Correlation} measures the strength of a linear association between two variables. It
+is symmetric (no X/Y direction) and does not imply causation. Outliers can inflate or hide
+correlation, so always look at the scatter plot.
+A \textbf{residual} is $y - \hat{y}$. Residual plots tell you what the model failed to
+explain. Patterns in residuals (trend, curvature, changing variance) are warnings that your
+model form is inadequate or assumptions are violated.
+
+\subsection*{Diagnostics: Key Points}
+\begin{itemize}
+  \item Residuals should look like white noise
+  \item Check residual ACF
+  \item Check stability of variance
+\end{itemize}
+\paragraph{Explanation.}
+A \textbf{residual} is $y - \hat{y}$. Residual plots tell you what the model failed to
+explain. Patterns in residuals (trend, curvature, changing variance) are warnings that your
+model form is inadequate or assumptions are violated.
+\textbf{ACF} shows correlation of the series with its lagged versions. It helps identify MA-
+like behavior and seasonality. \textbf{PACF} shows the correlation at a lag after removing
+shorter-lag effects and helps identify AR-like behavior.
+
+\subsection*{SARIMA: Key Points}
+\begin{itemize}
+  \item ARIMA(p,d,q) x (P,D,Q,s)
+  \item Seasonal differencing D
+  \item s is the seasonal period
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Seasonality} is a repeating pattern with a fixed period (weekly, monthly, yearly).
+You must account for it; otherwise forecasts systematically miss repeating rises/falls.
+Seasonal differencing and SARIMA are common tools.
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+\textbf{SARIMA} extends ARIMA by adding seasonal AR/MA terms and seasonal differencing. It
+is used when patterns repeat every $s$ steps (e.g., weekly seasonality with daily data).
+Diagnostics on residuals are important: residuals should look like white noise.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Residual goal}
+After fitting, what should residuals look like ideally?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item White noise: no pattern, no autocorrelation.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Correlation} measures the strength of a linear association between two variables. It
+is symmetric (no X/Y direction) and does not imply causation. Outliers can inflate or hide
+correlation, so always look at the scatter plot.
+A \textbf{residual} is $y - \hat{y}$. Residual plots tell you what the model failed to
+explain. Patterns in residuals (trend, curvature, changing variance) are warnings that your
+model form is inadequate or assumptions are violated.
+
+\subsection*{Exercise 2: Seasonal period}
+Daily data with weekly seasonality: what is s?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item s=7
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Seasonality} is a repeating pattern with a fixed period (weekly, monthly, yearly).
+You must account for it; otherwise forecasts systematically miss repeating rises/falls.
+Seasonal differencing and SARIMA are common tools.
+
+\subsection*{Exercise 3: Why seasonal}
+Why add seasonal terms?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item To capture repeating seasonal dependence.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Seasonality} is a repeating pattern with a fixed period (weekly, monthly, yearly).
+You must account for it; otherwise forecasts systematically miss repeating rises/falls.
+Seasonal differencing and SARIMA are common tools.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Fits a seasonal model idea and checks residual diagnostics conceptually.
+  \item Shows how seasonal period s (e.g., 7 for weekly) enters the model.
+  \item Use residual ACF idea to explain when the model is still missing structure.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+What is one residual symptom that suggests your model is inadequate?
+\paragraph{Suggested answer (for revision).}
+Residual autocorrelation (or visible patterns) suggests the model is missing structure; add
+terms/seasonality until residuals resemble white noise.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Diagnostics}\hspace{0.6em}
+\textbf{SARIMA}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Diagnostics
+  \item SARIMA
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Explain why diagnostics are needed after fitting
+\item Recognize residual autocorrelation as model issue
+\item Explain SARIMA seasonal terms at a high level
+\item Choose seasonal period s (weekly/monthly/yearly)
+      \end{itemize}
+\subsection*{Diagnostics: Key Points}
+\begin{itemize}
+        \item Residuals should look like white noise
+\item Check residual ACF
+\item Check stability of variance
+      \end{itemize}
+\subsection*{SARIMA: Key Points}
+\begin{itemize}
+        \item ARIMA(p,d,q) x (P,D,Q,s)
+\item Seasonal differencing D
+\item s is the seasonal period
+      \end{itemize}
+\subsection*{Exercise 1: Residual goal}
+\small
+  After fitting, what should residuals look like ideally?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item White noise: no pattern, no autocorrelation.
+  \end{itemize}
+\subsection*{Exercise 2: Seasonal period}
+\small
+  Daily data with weekly seasonality: what is s?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item s=7
+  \end{itemize}
+\subsection*{Exercise 3: Why seasonal}
+\small
+  Why add seasonal terms?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item To capture repeating seasonal dependence.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  What is one residual symptom that suggests your model is inadequate?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

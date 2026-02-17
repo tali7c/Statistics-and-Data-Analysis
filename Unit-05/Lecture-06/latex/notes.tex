@@ -1,0 +1,262 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 05 -- Lecture 06 Notes\\Advanced Feature Engineering for Multivariate Data}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Interactions, aggregations, time features, and leakage avoidance.
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Interactions
+  \item Aggregations
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Create interaction features when meaningful
+  \item Create aggregation features from transactional data
+  \item Engineer time-based features (lags/rolling)
+  \item Avoid leakage and look-ahead bias
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{Bias} is a systematic error: your method tends to be wrong in the same direction
+again and again (too high or too low). It does not disappear by taking more samples if the
+sampling process is flawed. Fixing bias usually requires changing the data collection
+procedure (sampling frame, selection method, non-response handling).
+\textbf{Data leakage} happens when information from the future or from the test set
+influences training. Typical examples: scaling before splitting, using target-related
+features, or using random splits for time series. Leakage can produce very good-looking
+accuracy that disappears in real deployment.
+
+\subsection*{Interactions: Key Points}
+\begin{itemize}
+  \item Products and ratios capture combined effects
+  \item Use domain knowledge
+  \item Validate with CV
+\end{itemize}
+
+\subsection*{Aggregations: Key Points}
+\begin{itemize}
+  \item Per-user totals/means/counts
+  \item Rolling windows (last 7/30 days)
+  \item Avoid using future data
+\end{itemize}
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Interaction}
+Give one interaction feature for house price.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item size\_m2 * location\_score (example).
+\end{itemize}
+
+\subsection*{Exercise 2: Aggregation}
+Name one per-user aggregation for churn prediction.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item days\_since\_last\_purchase (example).
+\end{itemize}
+
+\subsection*{Exercise 3: Leakage}
+Is using next-30-days spend to predict churn today leakage?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Yes; it uses future info.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Data leakage} happens when information from the future or from the test set
+influences training. Typical examples: scaling before splitting, using target-related
+features, or using random splits for time series. Leakage can produce very good-looking
+accuracy that disappears in real deployment.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Creates interaction and aggregation features from a toy transactional dataset.
+  \item Shows how leakage can happen if you use future information in features.
+  \item Use it to emphasize validation and time-aware splits when needed.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+How does cross-validation help detect whether engineered features overfit?
+\paragraph{Suggested answer (for revision).}
+Cross-validation (and proper time splits) reveal whether engineered features generalize; if
+score drops on validation, features may overfit/leak.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Interactions}\hspace{0.6em}
+\textbf{Aggregations}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Interactions
+  \item Aggregations
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Create interaction features when meaningful
+\item Create aggregation features from transactional data
+\item Engineer time-based features (lags/rolling)
+\item Avoid leakage and look-ahead bias
+      \end{itemize}
+\subsection*{Interactions: Key Points}
+\begin{itemize}
+        \item Products and ratios capture combined effects
+\item Use domain knowledge
+\item Validate with CV
+      \end{itemize}
+\subsection*{Aggregations: Key Points}
+\begin{itemize}
+        \item Per-user totals/means/counts
+\item Rolling windows (last 7/30 days)
+\item Avoid using future data
+      \end{itemize}
+\subsection*{Exercise 1: Interaction}
+\small
+  Give one interaction feature for house price.
+\subsection*{Solution 1}
+\begin{itemize}
+    \item size\_m2 * location\_score (example).
+  \end{itemize}
+\subsection*{Exercise 2: Aggregation}
+\small
+  Name one per-user aggregation for churn prediction.
+\subsection*{Solution 2}
+\begin{itemize}
+    \item days\_since\_last\_purchase (example).
+  \end{itemize}
+\subsection*{Exercise 3: Leakage}
+\small
+  Is using next-30-days spend to predict churn today leakage?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item Yes; it uses future info.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  How does cross-validation help detect whether engineered features overfit?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

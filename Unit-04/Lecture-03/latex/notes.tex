@@ -1,0 +1,284 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 04 -- Lecture 03 Notes\\Multiple Linear Regression}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Multiple predictors; partial effects; dummy variables; adjusted R-squared (overview).
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Model
+  \item Interpretation
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Write the multiple linear regression model
+  \item Interpret a coefficient as a partial effect
+  \item Explain dummy variables for categories (basic)
+  \item Explain adjusted R-squared (intuition)
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{Regression} models a response variable $Y$ as a function of predictor(s) $X$. It has
+direction (predictors -> response), produces a fitted equation, and lets you predict and
+explain. Regression is not automatically causal; causality needs design or strong
+assumptions.
+\textbf{Adjusted $R^2$} adds a penalty for extra predictors. It is better than $R^2$ for
+comparing models with different numbers of features, but it is still an in-sample measure
+and should be complemented with validation/test performance.
+
+\subsection*{Model: Key Points}
+\begin{itemize}
+  \item y = b0 + b1 x1 + b2 x2 + ...
+  \item Each coefficient is a partial effect (others fixed)
+  \item Scaling helps when using regularization
+\end{itemize}
+
+\subsection*{Model: Key Formula}
+\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \epsilon \]
+
+\subsection*{Interpretation: Key Points}
+\begin{itemize}
+  \item Dummy variables encode categories
+  \item Adjusted $R^2$ penalizes unnecessary predictors
+  \item Multicollinearity can harm interpretability
+\end{itemize}
+\paragraph{Explanation.}
+$R^2$ is the fraction of variance in $Y$ explained by the model (in-sample). It increases
+when you add predictors, even useless ones, so it is not a guarantee of a good model. Use
+residual diagnostics and out-of-sample evaluation to judge model quality.
+\textbf{Adjusted $R^2$} adds a penalty for extra predictors. It is better than $R^2$ for
+comparing models with different numbers of features, but it is still an in-sample measure
+and should be complemented with validation/test performance.
+A \textbf{dummy variable} (one-hot encoding) converts a category into 0/1 indicators so
+regression models can use it. Interpret coefficients relative to the reference (dropped)
+category, and avoid the dummy-variable trap by not including all categories at once when an
+intercept is present.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Partial effect}
+Model: yhat=5 + 0.8x1 + 2.0x2. Interpret coefficient 2.0.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Holding x1 fixed, +1 in x2 increases yhat by 2.0 units.
+\end{itemize}
+
+\subsection*{Exercise 2: Dummy variable}
+Urban=1, Rural=0. If coef(Urban)=10, interpret.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Urban has predicted y about 10 units higher than Rural (all else equal).
+\end{itemize}
+\paragraph{Walkthrough.}
+A \textbf{dummy variable} (one-hot encoding) converts a category into 0/1 indicators so
+regression models can use it. Interpret coefficients relative to the reference (dropped)
+category, and avoid the dummy-variable trap by not including all categories at once when an
+intercept is present.
+
+\subsection*{Exercise 3: Adjusted $R^2$}
+Why use adjusted $R^2$ when comparing models with different number of predictors?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Because $R^2$ never decreases, adjusted $R^2$ penalizes extra predictors.
+\end{itemize}
+\paragraph{Walkthrough.}
+$R^2$ is the fraction of variance in $Y$ explained by the model (in-sample). It increases
+when you add predictors, even useless ones, so it is not a guarantee of a good model. Use
+residual diagnostics and out-of-sample evaluation to judge model quality.
+\textbf{Adjusted $R^2$} adds a penalty for extra predictors. It is better than $R^2$ for
+comparing models with different numbers of features, but it is still an in-sample measure
+and should be complemented with validation/test performance.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Fits multiple linear regression with numeric + categorical (dummy) features.
+  \item Shows how coefficients change when controlling for other variables.
+  \item Use it to discuss adjusted $R^2$ and interpretation vs prediction goals.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why does adding a useless feature still increase (or keep) $R^2$?
+\paragraph{Suggested answer (for revision).}
+$R^2$ never decreases when adding predictors because the model can always set a new
+coefficient to 0 and keep the same fit (or improve it).
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Model}\hspace{0.6em}
+\textbf{Interpretation}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Model
+  \item Interpretation
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Write the multiple linear regression model
+\item Interpret a coefficient as a partial effect
+\item Explain dummy variables for categories (basic)
+\item Explain adjusted R-squared (intuition)
+      \end{itemize}
+\subsection*{Model: Key Points}
+\begin{itemize}
+        \item y = b0 + b1 x1 + b2 x2 + ...
+\item Each coefficient is a partial effect (others fixed)
+\item Scaling helps when using regularization
+      \end{itemize}
+\subsection*{Model: Key Formula}
+\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \epsilon \]
+\subsection*{Interpretation: Key Points}
+\begin{itemize}
+        \item Dummy variables encode categories
+\item Adjusted $R^2$ penalizes unnecessary predictors
+\item Multicollinearity can harm interpretability
+      \end{itemize}
+\subsection*{Exercise 1: Partial effect}
+\small
+  Model: yhat=5 + 0.8x1 + 2.0x2. Interpret coefficient 2.0.
+\subsection*{Solution 1}
+\begin{itemize}
+    \item Holding x1 fixed, +1 in x2 increases yhat by 2.0 units.
+  \end{itemize}
+\subsection*{Exercise 2: Dummy variable}
+\small
+  Urban=1, Rural=0. If coef(Urban)=10, interpret.
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Urban has predicted y about 10 units higher than Rural (all else equal).
+  \end{itemize}
+\subsection*{Exercise 3: Adjusted $R^2$}
+\small
+  Why use adjusted $R^2$ when comparing models with different number of predictors?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item Because $R^2$ never decreases, adjusted $R^2$ penalizes extra predictors.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why does adding a useless feature still increase (or keep) $R^2$?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

@@ -1,0 +1,290 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 06 -- Lecture 07 Notes\\ACF and PACF Interpretation}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+ACF/PACF interpretation to guide AR/MA orders (rough).
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item ACF
+  \item PACF
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Define ACF and PACF (intuition)
+  \item Use ACF/PACF patterns to guess AR and MA orders (rough)
+  \item Recognize slow ACF decay as non-stationarity hint
+  \item Explain why validation/diagnostics are still needed
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{Stationarity} (intuition) means the series behavior is stable over time: roughly
+constant mean/variance and correlation structure. AR/MA/ARIMA models assume stationarity
+(after differencing). If the process changes over time, parameters learned from the past may
+not hold.
+\textbf{ACF} shows correlation of the series with its lagged versions. It helps identify MA-
+like behavior and seasonality. \textbf{PACF} shows the correlation at a lag after removing
+shorter-lag effects and helps identify AR-like behavior.
+
+\subsection*{ACF: Key Points}
+\begin{itemize}
+  \item Corr(x\_t, x\_{t-k}) vs lag k
+  \item Slow decay can suggest non-stationarity
+  \item ACF cutoff after q lags can suggest MA(q) (rough)
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Stationarity} (intuition) means the series behavior is stable over time: roughly
+constant mean/variance and correlation structure. AR/MA/ARIMA models assume stationarity
+(after differencing). If the process changes over time, parameters learned from the past may
+not hold.
+\textbf{ACF} shows correlation of the series with its lagged versions. It helps identify MA-
+like behavior and seasonality. \textbf{PACF} shows the correlation at a lag after removing
+shorter-lag effects and helps identify AR-like behavior.
+
+\subsection*{PACF: Key Points}
+\begin{itemize}
+  \item Partial correlation after removing lower lags
+  \item PACF cutoff after p lags can suggest AR(p) (rough)
+  \item Use with caution and validate
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Correlation} measures the strength of a linear association between two variables. It
+is symmetric (no X/Y direction) and does not imply causation. Outliers can inflate or hide
+correlation, so always look at the scatter plot.
+\textbf{ACF} shows correlation of the series with its lagged versions. It helps identify MA-
+like behavior and seasonality. \textbf{PACF} shows the correlation at a lag after removing
+shorter-lag effects and helps identify AR-like behavior.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: ACF pattern}
+If ACF stays significant for many lags, what might it suggest?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Non-stationary; try differencing.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+\textbf{Stationarity} (intuition) means the series behavior is stable over time: roughly
+constant mean/variance and correlation structure. AR/MA/ARIMA models assume stationarity
+(after differencing). If the process changes over time, parameters learned from the past may
+not hold.
+
+\subsection*{Exercise 2: PACF AR hint}
+PACF cuts off after lag 2: what AR order to try?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Try AR(2) as starting point.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{ACF} shows correlation of the series with its lagged versions. It helps identify MA-
+like behavior and seasonality. \textbf{PACF} shows the correlation at a lag after removing
+shorter-lag effects and helps identify AR-like behavior.
+
+\subsection*{Exercise 3: Rules not perfect}
+Why ACF/PACF rules are not perfect?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Finite sample noise, seasonality, mixed ARMA.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Seasonality} is a repeating pattern with a fixed period (weekly, monthly, yearly).
+You must account for it; otherwise forecasts systematically miss repeating rises/falls.
+Seasonal differencing and SARIMA are common tools.
+\textbf{ACF} shows correlation of the series with its lagged versions. It helps identify MA-
+like behavior and seasonality. \textbf{PACF} shows the correlation at a lag after removing
+shorter-lag effects and helps identify AR-like behavior.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Computes and plots ACF/PACF-like behavior for a simulated process.
+  \item Use it to practice reading cutoff/decay patterns (rough guidance).
+  \item Emphasize validation and diagnostics because rules are noisy in finite samples.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+How do ACF and PACF help choose ARIMA orders p and q?
+\paragraph{Suggested answer (for revision).}
+ACF/PACF patterns give rough hints: PACF cutoff ~ AR(p), ACF cutoff ~ MA(q); use
+diagnostics/validation because real data is noisy.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{ACF}\hspace{0.6em}
+\textbf{PACF}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item ACF
+  \item PACF
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Define ACF and PACF (intuition)
+\item Use ACF/PACF patterns to guess AR and MA orders (rough)
+\item Recognize slow ACF decay as non-stationarity hint
+\item Explain why validation/diagnostics are still needed
+      \end{itemize}
+\subsection*{ACF: Key Points}
+\begin{itemize}
+        \item Corr(x\_t, x\_{t-k}) vs lag k
+\item Slow decay can suggest non-stationarity
+\item ACF cutoff after q lags can suggest MA(q) (rough)
+      \end{itemize}
+\subsection*{PACF: Key Points}
+\begin{itemize}
+        \item Partial correlation after removing lower lags
+\item PACF cutoff after p lags can suggest AR(p) (rough)
+\item Use with caution and validate
+      \end{itemize}
+\subsection*{Exercise 1: ACF pattern}
+\small
+  If ACF stays significant for many lags, what might it suggest?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item Non-stationary; try differencing.
+  \end{itemize}
+\subsection*{Exercise 2: PACF AR hint}
+\small
+  PACF cuts off after lag 2: what AR order to try?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Try AR(2) as starting point.
+  \end{itemize}
+\subsection*{Exercise 3: Rules not perfect}
+\small
+  Why ACF/PACF rules are not perfect?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item Finite sample noise, seasonality, mixed ARMA.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  How do ACF and PACF help choose ARIMA orders p and q?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

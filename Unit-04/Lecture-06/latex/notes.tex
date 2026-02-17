@@ -1,0 +1,302 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 04 -- Lecture 06 Notes\\VIF, AIC/BIC, Ridge and Lasso (Part 1)}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+VIF concept; model selection criteria; ridge and lasso regularization (intro).
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item VIF
+  \item Ridge/Lasso
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Compute and interpret VIF (basic)
+  \item Explain AIC/BIC as model selection criteria (intuition)
+  \item Write ridge and lasso objectives
+  \item Explain coefficient shrinkage and feature selection idea
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{VIF} measures how much the variance of a coefficient is inflated due to
+multicollinearity. High VIF indicates a predictor can be explained by other predictors, so
+its coefficient becomes unstable.
+\textbf{Ridge regression (L2)} shrinks coefficients toward zero, which reduces variance and
+helps with multicollinearity. It usually keeps all features but with smaller magnitudes.
+Always scale features before using ridge/lasso so the penalty is fair.
+
+\subsection*{VIF: Key Points}
+\begin{itemize}
+  \item Definition: $\mathrm{VIF}_j = 1/(1-R_j^2)$
+  \item Higher VIF -> more multicollinearity
+  \item Rule of thumb thresholds (5/10)
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Multicollinearity} means predictors overlap strongly (high correlation among $X$'s).
+It makes individual coefficients unstable and standard errors large, so interpretation
+suffers. Prediction can still be good, but explanations like 'feature X causes Y' become
+unreliable.
+\textbf{VIF} measures how much the variance of a coefficient is inflated due to
+multicollinearity. High VIF indicates a predictor can be explained by other predictors, so
+its coefficient becomes unstable.
+
+\subsection*{VIF: Key Formula}
+\[ \mathrm{VIF}_j = \frac{1}{1-R_j^2} \]
+\paragraph{How to read the formula.}
+\textbf{VIF} measures how much the variance of a coefficient is inflated due to
+multicollinearity. High VIF indicates a predictor can be explained by other predictors, so
+its coefficient becomes unstable.
+
+\subsection*{Ridge/Lasso: Key Points}
+\begin{itemize}
+  \item Ridge uses L2 penalty (shrinks)
+  \item Lasso uses L1 penalty (can set some to 0)
+  \item Scale features before regularization
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Ridge regression (L2)} shrinks coefficients toward zero, which reduces variance and
+helps with multicollinearity. It usually keeps all features but with smaller magnitudes.
+Always scale features before using ridge/lasso so the penalty is fair.
+\textbf{Lasso (L1)} can shrink some coefficients exactly to zero, acting like automatic
+feature selection. This can improve interpretability, but it can be unstable when predictors
+are highly correlated.
+
+\subsection*{Ridge/Lasso: Key Formula}
+\[ \min \sum (y-\hat{y})^2 + \lambda \sum \beta_j^2 \quad \text{(ridge)} \]
+\paragraph{How to read the formula.}
+\textbf{Ridge regression (L2)} shrinks coefficients toward zero, which reduces variance and
+helps with multicollinearity. It usually keeps all features but with smaller magnitudes.
+Always scale features before using ridge/lasso so the penalty is fair.
+\textbf{Lasso (L1)} can shrink some coefficients exactly to zero, acting like automatic
+feature selection. This can improve interpretability, but it can be unstable when predictors
+are highly correlated.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Compute VIF}
+If $R_j^2=0.9$, compute $\mathrm{VIF}_j$.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item $\mathrm{VIF}_j = 1/(1-0.9)=10$ (high).
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{VIF} measures how much the variance of a coefficient is inflated due to
+multicollinearity. High VIF indicates a predictor can be explained by other predictors, so
+its coefficient becomes unstable.
+
+\subsection*{Exercise 2: Ridge vs lasso}
+Which can produce exact zero coefficients?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Lasso (L1) can set some coefficients to 0.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Ridge regression (L2)} shrinks coefficients toward zero, which reduces variance and
+helps with multicollinearity. It usually keeps all features but with smaller magnitudes.
+Always scale features before using ridge/lasso so the penalty is fair.
+\textbf{Lasso (L1)} can shrink some coefficients exactly to zero, acting like automatic
+feature selection. This can improve interpretability, but it can be unstable when predictors
+are highly correlated.
+
+\subsection*{Exercise 3: AIC/BIC meaning}
+Lower AIC/BIC means what (conceptually)?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Better trade-off between fit and complexity (relative).
+\end{itemize}
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Computes VIF-like behavior and compares ridge vs lasso shrinkage on correlated features.
+  \item Shows how regularization stabilizes coefficients and can improve generalization.
+  \item Use results to connect penalty strength $\lambda$ to bias-variance trade-off.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why can ridge help when predictors are highly correlated?
+\paragraph{Suggested answer (for revision).}
+Ridge shrinks and stabilizes coefficients, reducing variance caused by correlated predictors
+and improving numerical stability.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{VIF}\hspace{0.6em}
+\textbf{Ridge/Lasso}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item VIF
+  \item Ridge/Lasso
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Compute and interpret VIF (basic)
+\item Explain AIC/BIC as model selection criteria (intuition)
+\item Write ridge and lasso objectives
+\item Explain coefficient shrinkage and feature selection idea
+      \end{itemize}
+\subsection*{VIF: Key Points}
+\begin{itemize}
+        \item Definition: $\mathrm{VIF}_j = 1/(1-R_j^2)$
+\item Higher VIF -> more multicollinearity
+\item Rule of thumb thresholds (5/10)
+      \end{itemize}
+\subsection*{VIF: Key Formula}
+\[ \mathrm{VIF}_j = \frac{1}{1-R_j^2} \]
+\subsection*{Ridge/Lasso: Key Points}
+\begin{itemize}
+        \item Ridge uses L2 penalty (shrinks)
+\item Lasso uses L1 penalty (can set some to 0)
+\item Scale features before regularization
+      \end{itemize}
+\subsection*{Ridge/Lasso: Key Formula}
+\[ \min \sum (y-\hat{y})^2 + \lambda \sum \beta_j^2 \quad \text{(ridge)} \]
+\subsection*{Exercise 1: Compute VIF}
+\small
+  If $R_j^2=0.9$, compute $\mathrm{VIF}_j$.
+\subsection*{Solution 1}
+\begin{itemize}
+    \item $\mathrm{VIF}_j = 1/(1-0.9)=10$ (high).
+  \end{itemize}
+\subsection*{Exercise 2: Ridge vs lasso}
+\small
+  Which can produce exact zero coefficients?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Lasso (L1) can set some coefficients to 0.
+  \end{itemize}
+\subsection*{Exercise 3: AIC/BIC meaning}
+\small
+  Lower AIC/BIC means what (conceptually)?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item Better trade-off between fit and complexity (relative).
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why can ridge help when predictors are highly correlated?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

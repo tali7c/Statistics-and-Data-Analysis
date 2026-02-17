@@ -1,0 +1,13 @@
+student_id,program,city,join_date,attendance_pct,study_hours_week,cgpa,family_income_k,backlogs
+2001,CSE,Dehradun,2025-01-10,92,12,8.2,30,0
+2002,CSE,Dehradun,2025-01-12,85,10,7.5,28,1
+2003,ECE,Haridwar,2025-01-15,88,8,8.9,35,0
+2004,AIML,Rishikesh,2025-01-20,90,15,9.1,45,0
+2005,CSE,Delhi,2025-02-01,75,9,8.0,25,2
+2006,ECE,Gurugram,2025-02-05,89,14,6.8,40,1
+2007,CSE,Noida,2025-02-10,95,20,8.4,60,0
+2008,AIML,Lucknow,2025-02-14,82,7,7.8,80,1
+2009,ECE,Dehradun,2025-03-01,78,6,7.2,50,0
+2010,CSE,Dehradun,2025-03-05,87,13,6.5,120,0
+2011,AIML,Delhi,2025-03-10,93,18,8.7,200,0
+2012,CSE,Noida,2025-03-12,88,11,8.1,35,3

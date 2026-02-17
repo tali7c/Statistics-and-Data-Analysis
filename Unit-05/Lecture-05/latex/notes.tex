@@ -1,0 +1,275 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 05 -- Lecture 05 Notes\\Kernel PCA and t-SNE}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Nonlinear dimensionality reduction: kernel PCA and t-SNE (visualization).
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Kernel PCA
+  \item t-SNE
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Explain why nonlinear methods are sometimes needed
+  \item Describe kernel PCA idea (high level)
+  \item Describe t-SNE purpose (visualization) and pitfalls
+  \item Choose PCA vs t-SNE appropriately
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{PCA} finds new axes (principal components) that capture maximum variance. It is a
+rotation of the feature space. Because PCA is variance-based, it is sensitive to scaling:
+standardize features first unless all features are already comparable.
+\textbf{t-SNE} is mainly for visualization. It preserves local neighborhood structure but
+can distort global distances. Do not treat t-SNE plots as proof of clusters; treat them as
+exploratory pictures that need validation.
+
+\subsection*{Kernel PCA: Key Points}
+\begin{itemize}
+  \item Implicitly map to higher-dimensional space via kernel
+  \item Apply PCA in that space
+  \item Captures nonlinear structure
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{PCA} finds new axes (principal components) that capture maximum variance. It is a
+rotation of the feature space. Because PCA is variance-based, it is sensitive to scaling:
+standardize features first unless all features are already comparable.
+
+\subsection*{t-SNE: Key Points}
+\begin{itemize}
+  \item Mainly for 2D/3D visualization
+  \item Preserves local neighborhoods
+  \item Global distances can be misleading
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{t-SNE} is mainly for visualization. It preserves local neighborhood structure but
+can distort global distances. Do not treat t-SNE plots as proof of clusters; treat them as
+exploratory pictures that need validation.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Use case}
+Name one warning when interpreting t-SNE plots.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Global distances and cluster sizes can be misleading.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{t-SNE} is mainly for visualization. It preserves local neighborhood structure but
+can distort global distances. Do not treat t-SNE plots as proof of clusters; treat them as
+exploratory pictures that need validation.
+
+\subsection*{Exercise 2: Randomness}
+What should you do if t-SNE changes across runs?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Set seed and check stability.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{t-SNE} is mainly for visualization. It preserves local neighborhood structure but
+can distort global distances. Do not treat t-SNE plots as proof of clusters; treat them as
+exploratory pictures that need validation.
+
+\subsection*{Exercise 3: Kernel PCA benefit}
+Why kernel PCA can help on circular data?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item It can capture nonlinear manifold structure.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{PCA} finds new axes (principal components) that capture maximum variance. It is a
+rotation of the feature space. Because PCA is variance-based, it is sensitive to scaling:
+standardize features first unless all features are already comparable.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Creates a nonlinear dataset and compares PCA-like vs nonlinear embeddings.
+  \item Produces a 2D visualization to discuss neighborhood preservation.
+  \item Use it to warn that t-SNE is mainly for visualization, not modeling features.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why should we avoid using t-SNE coordinates directly as model features (usually)?
+\paragraph{Suggested answer (for revision).}
+t-SNE coordinates are not stable/global-metric features and can distort distances; it is
+primarily a visualization tool, not a feature generator.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Kernel PCA}\hspace{0.6em}
+\textbf{t-SNE}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Kernel PCA
+  \item t-SNE
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Explain why nonlinear methods are sometimes needed
+\item Describe kernel PCA idea (high level)
+\item Describe t-SNE purpose (visualization) and pitfalls
+\item Choose PCA vs t-SNE appropriately
+      \end{itemize}
+\subsection*{Kernel PCA: Key Points}
+\begin{itemize}
+        \item Implicitly map to higher-dimensional space via kernel
+\item Apply PCA in that space
+\item Captures nonlinear structure
+      \end{itemize}
+\subsection*{t-SNE: Key Points}
+\begin{itemize}
+        \item Mainly for 2D/3D visualization
+\item Preserves local neighborhoods
+\item Global distances can be misleading
+      \end{itemize}
+\subsection*{Exercise 1: Use case}
+\small
+  Name one warning when interpreting t-SNE plots.
+\subsection*{Solution 1}
+\begin{itemize}
+    \item Global distances and cluster sizes can be misleading.
+  \end{itemize}
+\subsection*{Exercise 2: Randomness}
+\small
+  What should you do if t-SNE changes across runs?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Set seed and check stability.
+  \end{itemize}
+\subsection*{Exercise 3: Kernel PCA benefit}
+\small
+  Why kernel PCA can help on circular data?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item It can capture nonlinear manifold structure.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why should we avoid using t-SNE coordinates directly as model features (usually)?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

@@ -1,0 +1,331 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 01 -- Lecture 03 Notes\\Preprocessing Pipelines and Exploratory Data Analysis (EDA)}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{What You Will Learn}
+In this lecture we move from individual cleaning techniques to a full workflow:
+\begin{itemize}
+  \item how to organize preprocessing as a \textbf{pipeline},
+  \item how to run a basic \textbf{EDA} (exploratory data analysis),
+  \item how to choose plots based on variable types,
+  \item and how to avoid \textbf{data leakage}.
+\end{itemize}
+
+\section*{1. Preprocessing Pipelines}
+
+\subsection*{1.1 What is a pipeline?}
+A pipeline is an ordered set of steps that you apply consistently to data.
+For example:
+\begin{enumerate}
+  \item read raw data,
+  \item clean and validate,
+  \item create summaries and plots,
+  \item save cleaned data and reports.
+\end{enumerate}
+
+\subsection*{1.2 Why pipelines matter}
+Pipelines are important because they:
+\begin{itemize}
+  \item make your work \textbf{reproducible} (you can re-run on new data),
+  \item reduce errors (clear steps, less manual editing),
+  \item make collaboration easier (others can follow the same steps),
+  \item help avoid \textbf{data leakage} in machine learning workflows.
+\end{itemize}
+
+\subsection*{Exercise 1 (solution)}
+One reasonable order is:
+\begin{enumerate}
+  \item Load raw data
+  \item Check missingness
+  \item Fix data types + invalid ranges
+  \item EDA plots
+  \item Save cleaned dataset
+\end{enumerate}
+
+\section*{2. Exploratory Data Analysis (EDA)}
+
+\subsection*{2.1 What is EDA?}
+EDA is the first structured look at the dataset to understand:
+\begin{itemize}
+  \item what the data contains,
+  \item how clean it is,
+  \item what the distributions look like,
+  \item and what relationships might exist.
+\end{itemize}
+
+EDA is not only about plots. It also includes summary tables, missingness reports, and sanity checks.
+
+\subsection*{2.2 Minimum EDA checklist}
+\begin{enumerate}
+  \item \textbf{Shape and columns}: number of rows and columns; column meanings.
+  \item \textbf{Data types}: numeric/categorical/datetime.
+  \item \textbf{Missingness}: missing \% per column.
+  \item \textbf{Ranges}: are values possible? (0--100\%, CGPA 0--10, etc.)
+  \item \textbf{Univariate summaries}: \texttt{describe()} for numeric; counts for categories.
+  \item \textbf{Relationships}: scatter plots and correlations for numeric features.
+  \item \textbf{Group comparisons}: program-wise or gender-wise summaries.
+\end{enumerate}
+
+\subsection*{2.3 Plot selection}
+\begin{itemize}
+  \item Numeric (one variable): histogram / boxplot
+  \item Categorical (one variable): bar chart (counts)
+  \item Numeric vs numeric: scatter plot
+  \item Numeric vs categorical: boxplot grouped by category
+  \item Many numeric features: correlation matrix/heatmap
+\end{itemize}
+
+\subsection*{Exercise 2 (solution)}
+\begin{itemize}
+  \item Distribution of \texttt{final\_marks}: histogram or boxplot.
+  \item Compare \texttt{final\_marks} across \texttt{program}: boxplot grouped by program.
+  \item Relationship between \texttt{study\_hours\_week} and \texttt{final\_marks}: scatter plot.
+\end{itemize}
+
+\section*{3. Data Leakage (Very Important)}
+
+\subsection*{3.1 What is leakage?}
+Leakage happens when we accidentally use information from the test set (future/unseen data) during training.
+This makes the results look better than reality.
+
+Common leakage examples:
+\begin{itemize}
+  \item computing scaling parameters using the full dataset before train/test split,
+  \item imputing missing values using the full dataset mean/median before split,
+  \item using future data to predict the past (time series leakage).
+\end{itemize}
+
+\subsection*{Exercise 3 (solution)}
+Not correct. The fix is:
+\begin{itemize}
+  \item split into train/test first,
+  \item compute scaling/imputation rules on \textbf{train only},
+  \item apply them to test.
+\end{itemize}
+
+\section*{4. Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/pipeline_eda_demo.py
+\end{verbatim}
+
+The script does:
+\begin{itemize}
+  \item reads \texttt{data/case\_study.csv},
+  \item cleans and validates (range checks + median imputation),
+  \item saves \texttt{data/case\_study\_clean.csv},
+  \item saves group summary and correlation matrix as CSV,
+  \item saves four plots into \texttt{images/}.
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item McKinney, W. \textit{Python for Data Analysis}. O'Reilly, 2022.
+  \item Tukey, J. W. \textit{Exploratory Data Analysis}. Addison-Wesley, 1977.
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}. Wiley, 7th ed., 2020.
+\end{itemize}
+
+
+
+
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+  \end{center}
+\subsection*{Quick Links}
+\centering
+  \textbf{Workflow}\hspace{0.6em}
+  \textbf{EDA Checklist}\hspace{0.6em}
+  \textbf{Plots}\hspace{0.6em}
+  \textbf{Demo}\hspace{0.6em}
+  \textbf{Summary}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Workflow and Pipelines
+  \item EDA Checklist
+  \item Plots
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+    \item Explain what a preprocessing pipeline is and why it matters
+    \item Apply a simple end-to-end workflow: load $\rightarrow$ clean $\rightarrow$ validate $\rightarrow$ summarize
+    \item Perform basic EDA: missingness, summary stats, group summaries, correlations
+    \item Choose appropriate plots for numeric and categorical variables
+  \end{itemize}
+\subsection*{What is a Pipeline?}
+A pipeline is an ordered set of steps applied consistently to data.
+  \vspace{0.6em}
+  \begin{itemize}
+    \item Makes analysis \textbf{reproducible} (same input $\Rightarrow$ same output)
+    \item Reduces mistakes (steps are documented and repeatable)
+    \item Helps avoid \textbf{data leakage} (train/test separation)
+  \end{itemize}
+\subsection*{Typical End-to-End Workflow (Practical)}
+\begin{enumerate}
+    \item Understand the question (what do you want to learn/decide?)
+    \item Acquire data (files, DB, API)
+    \item Inspect: shape, dtypes, missingness
+    \item Clean: duplicates, invalid ranges, inconsistent categories
+    \item Validate: check constraints (0--100\%, 0--10 CGPA, etc.)
+    \item EDA: summary tables + plots + simple relationships
+    \item Save outputs (cleaned dataset, plots, summary tables)
+  \end{enumerate}
+\subsection*{Example: ``Pipeline'' in Code (Concept)}
+\small
+\begin{verbatim}
+df = read_raw()
+df = clean_strings(df)
+df = coerce_types(df)
+df = range_check(df)
+df = impute_missing(df)
+save_clean(df)
+eda_report(df)
+\end{verbatim}
+\normalsize
+This is a simple pipeline: each step has a clear purpose.
+\subsection*{Exercise 1: Put Steps in Order}
+\small
+  Arrange these steps in a reasonable order:
+  \begin{enumerate}
+    \item EDA plots
+    \item Load raw data
+    \item Fix data types + invalid ranges
+    \item Save cleaned dataset
+    \item Check missingness
+  \end{enumerate}
+\subsection*{Solution 1}
+One reasonable order:
+  \begin{enumerate}
+    \item Load raw data
+    \item Check missingness
+    \item Fix data types + invalid ranges
+    \item EDA plots
+    \item Save cleaned dataset
+  \end{enumerate}
+\subsection*{What is EDA?}
+Exploratory Data Analysis (EDA) is the first structured look at your data.
+  \vspace{0.6em}
+  \begin{itemize}
+    \item Understand distribution (shape, spread, outliers)
+    \item Understand relationships (scatter plots, correlation)
+    \item Compare groups (e.g., program-wise summaries)
+    \item Identify issues early (missingness, strange values)
+  \end{itemize}
+\subsection*{EDA Checklist (Minimum)}
+\begin{itemize}
+    \item \textbf{Data quality:} missingness \%, duplicates, invalid ranges
+    \item \textbf{Univariate:} histograms/boxplots for numeric; bar charts for categorical
+    \item \textbf{Bivariate:} scatter plot for numeric--numeric; boxplot for numeric by category
+    \item \textbf{Multivariate (basic):} correlation matrix/heatmap for numeric columns
+    \item \textbf{Group summaries:} mean/median/std by program or gender
+  \end{itemize}
+\subsection*{Plot Selection (Quick Guide)}
+\begin{itemize}
+    \item Numeric (one variable): histogram, boxplot
+    \item Categorical (one variable): bar chart (counts)
+    \item Numeric vs numeric: scatter plot
+    \item Numeric vs categorical: boxplot (numeric grouped by category)
+    \item Many numeric features: correlation heatmap
+  \end{itemize}
+\subsection*{Exercise 2: Choose the Plot}
+\small
+  Pick a good plot for each:
+  \begin{enumerate}
+    \item Distribution of \texttt{final\_marks} (numeric)
+    \item Compare \texttt{final\_marks} across \texttt{program} (categorical)
+    \item Relationship between \texttt{study\_hours\_week} and \texttt{final\_marks}
+  \end{enumerate}
+\subsection*{Solution 2}
+\begin{itemize}
+    \item (1) Histogram or boxplot
+    \item (2) Boxplot of marks grouped by program
+    \item (3) Scatter plot (hours vs marks)
+  \end{itemize}
+\subsection*{Exercise 3: Spot Data Leakage}
+\small
+  A student computes mean/std for scaling using the \textbf{entire dataset},
+  then splits into train/test and trains a model.\\
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Question:} Is this correct? If not, what should be done instead?
+\subsection*{Solution 3}
+Not correct: it uses test information during training (\textbf{leakage}).\\
+  Correct approach:
+  \begin{itemize}
+    \item split into train/test first
+    \item compute scaling parameters on \textbf{train only}
+    \item apply the same parameters to test
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/pipeline\_eda\_demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{data/case\_study\_clean.csv}
+    \item \texttt{data/summary\_by\_program.csv}
+    \item \texttt{data/corr\_matrix.csv}
+    \item plots in \texttt{images/} (histogram, boxplot, scatter, heatmap)
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\textbf{Histogram}
+      \begin{center}
+      \IfFileExists{../images/final_marks_hist.png}{
+        \includegraphics[width=\linewidth]{final_marks_hist.png}
+      }{
+        \small (Run demo to generate: \texttt{final\_marks\_hist.png})
+      }
+      \end{center}
+    
+    
+      \textbf{Correlation Heatmap}
+      \begin{center}
+      \IfFileExists{../images/corr_heatmap.png}{
+        \includegraphics[width=\linewidth]{corr_heatmap.png}
+      }{
+        \small (Run demo to generate: \texttt{corr\_heatmap.png})
+      }
+      \end{center}
+\subsection*{Summary}
+\begin{itemize}
+    \item Pipelines make preprocessing repeatable and reduce mistakes
+    \item EDA is about understanding quality, distributions, and relationships
+    \item Pick plots based on variable types (numeric vs categorical)
+    \item Save cleaned data, plots, and summary tables as reusable artifacts
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Exit question:} Name two checks you must do before trusting a dataset for analysis.
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}
+

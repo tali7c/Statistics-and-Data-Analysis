@@ -1,0 +1,279 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 06 -- Lecture 04 Notes\\Forecasting Fundamentals and ARIMA}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+ARIMA models and forecasting workflow (overview).
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item ARIMA
+  \item Differencing
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Define ARIMA(p,d,q) at a high level
+  \item Explain differencing (d) to remove trend
+  \item Explain p and q meaning (AR and MA orders)
+  \item Describe time-based train/test split for forecasting
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{Trend} is a long-term upward or downward movement. Trend changes the mean over time,
+which often creates non-stationarity. Many forecasting models handle trend by differencing
+or by explicitly modeling trend.
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+
+\subsection*{ARIMA: Key Points}
+\begin{itemize}
+  \item p: AR order
+  \item d: differencing order
+  \item q: MA order
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+
+\subsection*{Differencing: Key Points}
+\begin{itemize}
+  \item First difference: y\_t - y\_{t-1}
+  \item Often stabilizes mean
+  \item Over-differencing adds noise
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Meaning of d}
+What does d=1 mean?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item First differencing once.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+
+\subsection*{Exercise 2: Chronological split}
+Why not random split in time series?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Random split leaks future information.
+\end{itemize}
+\paragraph{Walkthrough.}
+A \textbf{time series} is data indexed by time (daily sales, hourly sensor readings). The
+key difference from 'normal' data is that order matters and observations are often
+correlated over time. Many standard ML assumptions (IID, random split) break for time
+series.
+
+\subsection*{Exercise 3: Trend fix}
+Series has strong upward trend. Name one simple step.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item First differencing.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Trend} is a long-term upward or downward movement. Trend changes the mean over time,
+which often creates non-stationarity. Many forecasting models handle trend by differencing
+or by explicitly modeling trend.
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Creates a trending series, differences it, and fits an ARIMA-style model.
+  \item Shows why differencing helps stabilize the mean (stationarity).
+  \item Use residual output to motivate diagnostics after fitting.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why do we check residuals after fitting an ARIMA model?
+\paragraph{Suggested answer (for revision).}
+We check residuals to see if remaining structure (autocorrelation/patterns) is still
+unexplained; good residuals look like white noise.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{ARIMA}\hspace{0.6em}
+\textbf{Differencing}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item ARIMA
+  \item Differencing
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Define ARIMA(p,d,q) at a high level
+\item Explain differencing (d) to remove trend
+\item Explain p and q meaning (AR and MA orders)
+\item Describe time-based train/test split for forecasting
+      \end{itemize}
+\subsection*{ARIMA: Key Points}
+\begin{itemize}
+        \item p: AR order
+\item d: differencing order
+\item q: MA order
+      \end{itemize}
+\subsection*{Differencing: Key Points}
+\begin{itemize}
+        \item First difference: y\_t - y\_{t-1}
+\item Often stabilizes mean
+\item Over-differencing adds noise
+      \end{itemize}
+\subsection*{Exercise 1: Meaning of d}
+\small
+  What does d=1 mean?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item First differencing once.
+  \end{itemize}
+\subsection*{Exercise 2: Chronological split}
+\small
+  Why not random split in time series?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Random split leaks future information.
+  \end{itemize}
+\subsection*{Exercise 3: Trend fix}
+\small
+  Series has strong upward trend. Name one simple step.
+\subsection*{Solution 3}
+\begin{itemize}
+    \item First differencing.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why do we check residuals after fitting an ARIMA model?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

@@ -1,0 +1,300 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 03 -- Lecture 05 Notes\\ANOVA (One-Way) and Post-hoc Intuition}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+One-way ANOVA; F statistic; assumptions; post-hoc comparisons.
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item ANOVA Concept
+  \item Assumptions
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Explain why ANOVA is used for comparing 3+ means
+  \item Describe between-group vs within-group variation
+  \item Interpret F statistic at a high level
+  \item State main assumptions of one-way ANOVA
+  \item Explain what a post-hoc test is
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{ANOVA} compares means of 3+ groups using variance decomposition. The idea is: if
+group means are truly the same, between-group variability should look similar to within-
+group variability. The F-statistic is essentially a ratio of these two sources of variation.
+If ANOVA is significant, you usually follow with a \textbf{post-hoc} procedure to identify
+which specific pairs of groups differ. Post-hoc methods control the family-wise error rate
+so that 'looking at many pairs' does not create many false positives.
+
+\subsection*{ANOVA Concept: Key Points}
+\begin{itemize}
+  \item One global test for equality of means
+  \item Avoids inflating Type I error vs many t-tests
+  \item If significant, follow with post-hoc
+\end{itemize}
+\paragraph{Explanation.}
+A \textbf{Type I error} is a false positive: you conclude there is an effect/difference when
+there is none. A \textbf{Type II error} is a false negative: you miss a real effect.
+Lowering $\alpha$ reduces Type I errors but can increase Type II errors unless you also
+increase sample size.
+\textbf{ANOVA} compares means of 3+ groups using variance decomposition. The idea is: if
+group means are truly the same, between-group variability should look similar to within-
+group variability. The F-statistic is essentially a ratio of these two sources of variation.
+If ANOVA is significant, you usually follow with a \textbf{post-hoc} procedure to identify
+which specific pairs of groups differ. Post-hoc methods control the family-wise error rate
+so that 'looking at many pairs' does not create many false positives.
+
+\subsection*{ANOVA Concept: Key Formula}
+\[ F = \frac{\text{between-group variation}}{\text{within-group variation}} \]
+\paragraph{How to read the formula.}
+\textbf{ANOVA} compares means of 3+ groups using variance decomposition. The idea is: if
+group means are truly the same, between-group variability should look similar to within-
+group variability. The F-statistic is essentially a ratio of these two sources of variation.
+
+\subsection*{Assumptions: Key Points}
+\begin{itemize}
+  \item Independent observations
+  \item Rough normality within groups (or robust with n)
+  \item Similar variances across groups
+\end{itemize}
+\paragraph{Explanation.}
+Always state assumptions clearly. Common assumptions in classical tests include independence
+of observations, roughly normal errors (or a large-sample justification), and similar
+variances across groups. Violations do not automatically invalidate a result, but they
+change how much you should trust the p-value and confidence interval.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Write H0}
+Compare 3 group means. What is H0?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item H0: mu1 = mu2 = mu3
+\end{itemize}
+\paragraph{Walkthrough.}
+The \textbf{null hypothesis $H_0$} usually represents 'no effect' or a baseline value (e.g.,
+$\mu=60$). The \textbf{alternative $H_1$} represents the effect you are looking for (e.g.,
+$\mu\neq 60$ or $\mu>60$). We compute a test statistic and a p-value assuming $H_0$ is true.
+
+\subsection*{Exercise 2: Within variance}
+If within-group variance increases, what happens to F (all else equal)?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item F tends to decrease; harder to detect differences.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Differencing} transforms a series by subtracting the previous value: $y_t -
+y_{t-1}$. It removes trend and can help achieve stationarity. Over-differencing can add
+noise, so use the smallest differencing order that works.
+
+\subsection*{Exercise 3: Next step}
+ANOVA p-value is 0.01 at alpha=0.05. What next?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Reject H0.
+  \item Run post-hoc to find which pairs differ.
+\end{itemize}
+\paragraph{Walkthrough.}
+The \textbf{null hypothesis $H_0$} usually represents 'no effect' or a baseline value (e.g.,
+$\mu=60$). The \textbf{alternative $H_1$} represents the effect you are looking for (e.g.,
+$\mu\neq 60$ or $\mu>60$). We compute a test statistic and a p-value assuming $H_0$ is true.
+A \textbf{p-value} is computed assuming the null hypothesis $H_0$ is true. It measures how
+surprising the observed data (or something more extreme) would be under $H_0$. A small
+p-value suggests the data is hard to explain by $H_0$ alone, but it does not tell you how
+large the effect is or whether it is practically important.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Generates 3 groups with different means and runs one-way ANOVA (F-test).
+  \item Shows a boxplot of the groups to connect F to 'between vs within' variation.
+  \item Use the p-value to explain what ANOVA can/cannot tell (needs post-hoc for pairs).
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why are several pairwise t-tests not equivalent to one ANOVA?
+\paragraph{Suggested answer (for revision).}
+Many pairwise t-tests inflate the family-wise Type I error rate; ANOVA performs one global
+test to control false positives before post-hoc comparisons.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{ANOVA Concept}\hspace{0.6em}
+\textbf{Assumptions}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item ANOVA Concept
+  \item Assumptions
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Explain why ANOVA is used for comparing 3+ means
+\item Describe between-group vs within-group variation
+\item Interpret F statistic at a high level
+\item State main assumptions of one-way ANOVA
+\item Explain what a post-hoc test is
+      \end{itemize}
+\subsection*{ANOVA Concept: Key Points}
+\begin{itemize}
+        \item One global test for equality of means
+\item Avoids inflating Type I error vs many t-tests
+\item If significant, follow with post-hoc
+      \end{itemize}
+\subsection*{ANOVA Concept: Key Formula}
+\[ F = \frac{\text{between-group variation}}{\text{within-group variation}} \]
+\subsection*{Assumptions: Key Points}
+\begin{itemize}
+        \item Independent observations
+\item Rough normality within groups (or robust with n)
+\item Similar variances across groups
+      \end{itemize}
+\subsection*{Exercise 1: Write H0}
+\small
+  Compare 3 group means. What is H0?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item H0: mu1 = mu2 = mu3
+  \end{itemize}
+\subsection*{Exercise 2: Within variance}
+\small
+  If within-group variance increases, what happens to F (all else equal)?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item F tends to decrease; harder to detect differences.
+  \end{itemize}
+\subsection*{Exercise 3: Next step}
+\small
+  ANOVA p-value is 0.01 at alpha=0.05. What next?
+\subsection*{Solution 3}
+\begin{itemize}
+        \item Reject H0.
+\item Run post-hoc to find which pairs differ.
+      \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why are several pairwise t-tests not equivalent to one ANOVA?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

@@ -1,0 +1,306 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 04 -- Lecture 04 Notes\\Polynomial Regression and Logistic Regression}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Polynomial regression for curvature; logistic regression for classification; basic evaluation metrics.
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Polynomial Regression
+  \item Logistic Regression
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Explain polynomial features for modeling curvature
+  \item Recognize overfitting risk with high degree
+  \item Write logistic regression probability model (sigmoid)
+  \item Compute precision and recall from a confusion matrix
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{Regression} models a response variable $Y$ as a function of predictor(s) $X$. It has
+direction (predictors -> response), produces a fitted equation, and lets you predict and
+explain. Regression is not automatically causal; causality needs design or strong
+assumptions.
+\textbf{Logistic regression} models the probability of a binary outcome. Its output is a
+value between 0 and 1, which you convert to a class label using a threshold (often 0.5, but
+not always). Use metrics like precision/recall and ROC when classes are imbalanced.
+
+\subsection*{Polynomial Regression: Key Points}
+\begin{itemize}
+  \item Add features $x, x^2, x^3, \dots$
+  \item Still linear in parameters
+  \item Choose degree using validation
+\end{itemize}
+\paragraph{Explanation.}
+A \textbf{parameter} is a fixed (but usually unknown) number that describes the population
+(e.g., $\mu$, $\sigma$). A \textbf{statistic} is a number computed from the sample (e.g.,
+$\bar{x}$, $s$). Statistics vary from sample to sample, which is why we talk about
+uncertainty.
+\textbf{Regression} models a response variable $Y$ as a function of predictor(s) $X$. It has
+direction (predictors -> response), produces a fitted equation, and lets you predict and
+explain. Regression is not automatically causal; causality needs design or strong
+assumptions.
+
+\subsection*{Logistic Regression: Key Points}
+\begin{itemize}
+  \item Outputs probability in (0,1)
+  \item Threshold converts probability to class label
+  \item Evaluate using confusion matrix / ROC
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Regression} models a response variable $Y$ as a function of predictor(s) $X$. It has
+direction (predictors -> response), produces a fitted equation, and lets you predict and
+explain. Regression is not automatically causal; causality needs design or strong
+assumptions.
+\textbf{Logistic regression} models the probability of a binary outcome. Its output is a
+value between 0 and 1, which you convert to a class label using a threshold (often 0.5, but
+not always). Use metrics like precision/recall and ROC when classes are imbalanced.
+An \textbf{ROC curve} plots true positive rate vs false positive rate across all thresholds.
+It helps compare classifiers without committing to a single threshold. \textbf{AUC}
+summarizes the ROC curve: higher AUC generally indicates better ranking of positives above
+negatives.
+
+\subsection*{Logistic Regression: Key Formula}
+\[ P(y=1\mid x)=\frac{1}{1+e^{-(\beta_0+\beta^T x)}} \]
+\paragraph{How to read the formula.}
+\textbf{Regression} models a response variable $Y$ as a function of predictor(s) $X$. It has
+direction (predictors -> response), produces a fitted equation, and lets you predict and
+explain. Regression is not automatically causal; causality needs design or strong
+assumptions.
+\textbf{Logistic regression} models the probability of a binary outcome. Its output is a
+value between 0 and 1, which you convert to a class label using a threshold (often 0.5, but
+not always). Use metrics like precision/recall and ROC when classes are imbalanced.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Polynomial features}
+For degree-2 polynomial, what features do we use from $x$?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Use $1, x, x^2$ (intercept + linear + quadratic).
+\end{itemize}
+\paragraph{Walkthrough.}
+The \textbf{intercept} is the predicted value when $X=0$. It may or may not be meaningful
+depending on whether $X=0$ is realistic in your context. If $X=0$ is outside the observed
+range, do not over-interpret the intercept.
+
+\subsection*{Exercise 2: Precision/recall}
+TP=30 FP=10 FN=20 TN=40. Compute precision and recall.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Precision=30/(30+10)=0.75
+  \item Recall=30/(30+20)=0.60
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Precision} answers: of all predicted positives, what fraction were truly positive?
+\textbf{Recall} answers: of all actual positives, what fraction did we catch? Improving
+precision often reduces recall and vice versa, so choose based on cost of false positives vs
+false negatives.
+
+\subsection*{Exercise 3: Threshold effect}
+If threshold increases from 0.5 to 0.8, what tends to happen to precision and recall?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Precision often increases, recall often decreases.
+\end{itemize}
+\paragraph{Walkthrough.}
+\textbf{Precision} answers: of all predicted positives, what fraction were truly positive?
+\textbf{Recall} answers: of all actual positives, what fraction did we catch? Improving
+precision often reduces recall and vice versa, so choose based on cost of false positives vs
+false negatives.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Demonstrates polynomial regression (curvature) and a simple logistic classification boundary.
+  \item Use it to discuss overfitting risk with higher-degree polynomials.
+  \item Connect classification output to precision/recall trade-offs.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why is ROC curve useful when classes are imbalanced?
+\paragraph{Suggested answer (for revision).}
+ROC curves compare performance across thresholds and are less sensitive to class imbalance
+than accuracy at one threshold.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Polynomial Regression}\hspace{0.6em}
+\textbf{Logistic Regression}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Polynomial Regression
+  \item Logistic Regression
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Explain polynomial features for modeling curvature
+\item Recognize overfitting risk with high degree
+\item Write logistic regression probability model (sigmoid)
+\item Compute precision and recall from a confusion matrix
+      \end{itemize}
+\subsection*{Polynomial Regression: Key Points}
+\begin{itemize}
+        \item Add features $x, x^2, x^3, \dots$
+\item Still linear in parameters
+\item Choose degree using validation
+      \end{itemize}
+\subsection*{Logistic Regression: Key Points}
+\begin{itemize}
+        \item Outputs probability in (0,1)
+\item Threshold converts probability to class label
+\item Evaluate using confusion matrix / ROC
+      \end{itemize}
+\subsection*{Logistic Regression: Key Formula}
+\[ P(y=1\mid x)=\frac{1}{1+e^{-(\beta_0+\beta^T x)}} \]
+\subsection*{Exercise 1: Polynomial features}
+\small
+  For degree-2 polynomial, what features do we use from $x$?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item Use $1, x, x^2$ (intercept + linear + quadratic).
+  \end{itemize}
+\subsection*{Exercise 2: Precision/recall}
+\small
+  TP=30 FP=10 FN=20 TN=40. Compute precision and recall.
+\subsection*{Solution 2}
+\begin{itemize}
+        \item Precision=30/(30+10)=0.75
+\item Recall=30/(30+20)=0.60
+      \end{itemize}
+\subsection*{Exercise 3: Threshold effect}
+\small
+  If threshold increases from 0.5 to 0.8, what tends to happen to precision and recall?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item Precision often increases, recall often decreases.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why is ROC curve useful when classes are imbalanced?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

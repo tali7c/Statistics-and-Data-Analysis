@@ -1,0 +1,441 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 01 -- Lecture 04 Notes\\In-class Activity: Cleaning + Summary Tables + Plots}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose of This Activity}
+In real projects, you rarely receive a perfectly clean dataset.
+Before you can compute statistics or build models, you must first:
+\begin{itemize}
+  \item understand what each column means,
+  \item detect problems (missing values, invalid entries, outliers),
+  \item apply clear cleaning rules,
+  \item and then produce summary tables and plots that answer simple questions.
+\end{itemize}
+
+\paragraph{Repository.}
+\texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Learning Outcomes (What You Should Be Able To Do)}
+After completing this activity, you should be able to:
+\begin{enumerate}
+  \item load a CSV in Python and inspect shape, head, and data types,
+  \item compute missingness and spot invalid values,
+  \item write and justify basic cleaning rules,
+  \item engineer simple features from existing columns,
+  \item compute group summaries using \texttt{groupby},
+  \item generate and interpret three basic plots.
+\end{enumerate}
+
+\section*{1. Dataset Description}
+File: \texttt{data/campus\_cafe\_transactions.csv}
+
+\subsection*{1.1 What one row represents}
+Each row is one transaction at a campus cafe/store.
+
+\subsection*{1.2 Column meanings}
+\begin{itemize}
+  \item \texttt{txn\_id}: transaction id (identifier).
+  \item \texttt{date}: transaction date (should become a datetime).
+  \item \texttt{category}: product category (Snacks/Drinks/Stationery).
+  \item \texttt{payment\_mode}: Cash/UPI/Card.
+  \item \texttt{units}: number of items purchased (should be non-negative).
+  \item \texttt{unit\_price}: price per unit in INR (should be positive).
+  \item \texttt{discount\_pct}: discount percentage (0 means no discount).
+\end{itemize}
+
+\paragraph{Important.}
+This dataset intentionally contains:
+\begin{itemize}
+  \item missing values (blank cells),
+  \item invalid values (e.g., negative units),
+  \item and outliers (unrealistic price/discount).
+\end{itemize}
+Your job is to clean it in a transparent, reproducible way.
+
+\section*{2. Step-by-Step Instructions}
+
+\subsection*{2.1 Task A: Load and inspect (first 5 minutes)}
+Run these steps in a Python script or notebook:
+\begin{verbatim}
+import pandas as pd
+
+df = pd.read_csv("data/campus_cafe_transactions.csv")
+print(df.shape)
+print(df.head())
+print(df.dtypes)
+\end{verbatim}
+
+What to check:
+\begin{itemize}
+  \item Are numbers stored as numbers (or as strings)?
+  \item Are there blanks in numeric columns?
+  \item Does \texttt{date} look like a date?
+\end{itemize}
+
+\subsection*{2.2 Task B: Missingness (quick diagnostic)}
+Compute missing percentage per column:
+\begin{verbatim}
+missing_pct = df.isna().mean().sort_values(ascending=False) * 100
+print(missing_pct)
+\end{verbatim}
+
+\paragraph{Why we do this.}
+If a column is mostly missing, dropping it may be reasonable.
+If only a few values are missing, imputation is often better than dropping rows.
+
+\subsection*{2.3 Task C: Cleaning rules (the most important part)}
+Cleaning is not ``one correct answer''. The key is to apply \textbf{defensible rules}.
+For this activity, use rules like the following:
+
+\paragraph{Rule 1: Convert types.}
+\begin{itemize}
+  \item parse \texttt{date} as datetime,
+  \item convert \texttt{units}, \texttt{unit\_price}, \texttt{discount\_pct} to numeric,
+  \item trim whitespace in categorical columns.
+\end{itemize}
+
+\paragraph{Rule 2: Handle missing discounts.}
+If \texttt{discount\_pct} is missing, fill it with 0 because in most sales systems, a missing discount usually means ``no discount recorded''.
+
+\paragraph{Rule 3: Handle missing units (imputation).}
+If only a few \texttt{units} values are missing, impute them with the median units.
+Median is used because it is robust (a few large purchases do not strongly affect the median).
+
+\paragraph{Rule 4: Handle negative units (invalid).}
+If \texttt{units} is negative, drop the row.
+Negative units would mean ``selling -1 items'', which is physically impossible for a purchase transaction.
+
+\paragraph{Rule 5: Cap discount outliers.}
+Discounts like 150\% do not make sense for normal retail transactions.
+Cap \texttt{discount\_pct} to a reasonable range, e.g., 0--50.
+This prevents absurd discounts from creating negative or near-zero net amounts.
+
+\paragraph{Rule 6: Handle price outliers.}
+If \texttt{unit\_price} is unreasonably high (e.g., greater than 200 INR for this small campus dataset),
+replace it with the median price of its \texttt{category}.
+The reasoning: within a category, typical prices are similar, so category median is a stable fallback.
+
+\subsection*{2.4 Task D: Feature engineering}
+Create three new columns:
+\begin{itemize}
+  \item \texttt{gross\_amount} = \texttt{units} $\times$ \texttt{unit\_price}
+  \item \texttt{net\_amount} = \texttt{gross\_amount} $\times (1-\texttt{discount\_pct}/100)$
+  \item \texttt{is\_weekend} = 1 if Saturday/Sunday else 0
+\end{itemize}
+
+\paragraph{Why this matters.}
+Raw columns are often not directly useful. The engineered \texttt{net\_amount} is the key value that we will summarize and plot.
+
+\subsection*{2.5 Task E: Summary tables}
+Compute:
+\begin{itemize}
+  \item total net revenue by \texttt{category}
+  \item total net revenue by \texttt{payment\_mode}
+  \item top 5 transactions by \texttt{net\_amount}
+  \item daily net revenue (sum of net amounts per day)
+\end{itemize}
+
+Typical patterns:
+\begin{verbatim}
+rev_by_cat = df.groupby("category")["net_amount"].sum()
+rev_by_pay = df.groupby("payment_mode")["net_amount"].sum()
+top5 = df.sort_values("net_amount", ascending=False).head(5)
+daily = df.groupby(df["date"].dt.date)["net_amount"].sum()
+\end{verbatim}
+
+\subsection*{2.6 Task F: Plots (and what to look for)}
+\begin{enumerate}
+  \item \textbf{Bar chart (revenue by category):} which category dominates?
+  \item \textbf{Histogram (net amount):} do we have many small transactions and a few big ones?
+  \item \textbf{Line chart (daily revenue):} is revenue stable day-to-day, or spiky?
+\end{enumerate}
+
+\section*{3. Expected Results (After Applying the Example Cleaning Rules)}
+If you run the provided solution script (see next section), you should get results close to these:
+
+\subsection*{3.1 Net revenue by category}
+\begin{center}
+\begin{tabular}{lrr}
+  \toprule
+  Category & Count & Net Revenue (INR) \\
+  \midrule
+  Snacks & 9 & 1129.25 \\
+  Drinks & 8 & 368.00 \\
+  Stationery & 7 & 283.90 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Interpretation.}
+Snacks dominate revenue in this sample because there are several snack transactions and also one very large snack purchase.
+Even after cleaning, a few large transactions can strongly influence totals.
+
+\subsection*{3.2 Net revenue by payment mode}
+\begin{center}
+\begin{tabular}{lrr}
+  \toprule
+  Mode & Count & Net Revenue (INR) \\
+  \midrule
+  UPI & 12 & 1124.15 \\
+  Cash & 6 & 304.00 \\
+  Card & 6 & 353.00 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Interpretation.}
+UPI has the highest count and highest total revenue, which suggests it is the preferred payment mode in this small dataset.
+
+\subsection*{3.3 Top transactions (by net amount)}
+The largest transaction is:
+\begin{itemize}
+  \item \texttt{txn\_id=5009} with \texttt{net\_amount=365.0}.
+\end{itemize}
+This row originally had an unrealistic \texttt{unit\_price=500}.
+After cleaning, the unit price is replaced with the category median (36.5 for Snacks), producing a sensible net amount.
+
+\section*{4. Provided Solution Script (Mini Demo)}
+After you attempt the activity yourself, run:
+\begin{verbatim}
+python demo/activity_solution.py
+\end{verbatim}
+
+It will generate:
+\begin{itemize}
+  \item \texttt{data/campus\_cafe\_clean.csv}
+  \item \texttt{data/revenue\_by\_category.csv}
+  \item \texttt{data/revenue\_by\_payment.csv}
+  \item \texttt{data/daily\_revenue.csv}
+  \item \texttt{data/top\_transactions.csv}
+  \item plots in \texttt{images/}:
+    \texttt{revenue\_by\_category.png}, \texttt{net\_amount\_hist.png}, \texttt{daily\_revenue.png}
+\end{itemize}
+
+\section*{5. Common Mistakes (And How To Avoid Them)}
+\begin{itemize}
+  \item \textbf{Forgetting type conversion:} always run \texttt{pd.to\_numeric} and \texttt{pd.to\_datetime}.
+  \item \textbf{Dropping too many rows:} if missingness is small, prefer imputation.
+  \item \textbf{Blindly deleting outliers:} first decide if it is an error or a true extreme.
+  \item \textbf{Not writing rules:} if rules are not documented, results cannot be trusted or reproduced.
+  \item \textbf{Not saving outputs:} always save cleaned data and plots.
+\end{itemize}
+
+\section*{6. Extension Questions (Optional)}
+If you finish early, try any two:
+\begin{enumerate}
+  \item Compare weekend vs weekday revenue using \texttt{is\_weekend}.
+  \item Compute average discount by category.
+  \item Count transactions per day and compare with daily revenue.
+  \item Identify whether ``Snacks'' dominate because of quantity or price.
+\end{enumerate}
+
+\section*{References}
+\begin{itemize}
+  \item McKinney, W. \textit{Python for Data Analysis}. O'Reilly, 2022.
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}. Wiley, 7th ed., 2020.
+\end{itemize}
+
+
+
+
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+  \end{center}
+\subsection*{Quick Links}
+\centering
+  \textbf{Task}\hspace{0.6em}
+  \textbf{Deliverables}\hspace{0.6em}
+  \textbf{Solution}\hspace{0.6em}
+  \textbf{Wrap-up}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Activity Brief
+  \item Deliverables
+  \item Solution and Discussion
+  \item Wrap-up
+\end{itemize}
+\subsection*{What We Will Do Today}
+You will complete a small end-to-end preprocessing + EDA task:
+  \begin{itemize}
+    \item load a raw dataset
+    \item clean errors (missing, invalid, outliers)
+    \item create 2--3 engineered features
+    \item create summary tables
+    \item create 3 plots and write short insights
+  \end{itemize}
+\subsection*{Time Plan (55 minutes)}
+\begin{itemize}
+    \item 10 min: attendance + setup
+    \item 25 min: activity work (in pairs)
+    \item 10 min: discussion (compare approaches)
+    \item 5 min: wrap-up + exit question
+  \end{itemize}
+\subsection*{Dataset}
+\small
+  File: \texttt{data/campus\_cafe\_transactions.csv}
+  \vspace{0.4em}
+
+  Columns:
+  \begin{itemize}
+    \item \texttt{date} (datetime), \texttt{category} (Snacks/Drinks/Stationery)
+    \item \texttt{payment\_mode} (Cash/UPI/Card)
+    \item \texttt{units}, \texttt{unit\_price}, \texttt{discount\_pct}
+  \end{itemize}
+
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Note:} It intentionally includes missing values and invalid entries to clean.
+\subsection*{Task 1: Load and Inspect (5 minutes)}
+\begin{itemize}
+    \item Print shape and first 5 rows
+    \item Check dtypes (are \texttt{units} numeric? is \texttt{date} datetime?)
+    \item Compute missingness \% per column
+  \end{itemize}
+\subsection*{Task 2: Cleaning Rules (10 minutes)}
+\begin{itemize}
+    \item Convert \texttt{date} to datetime, numeric columns to numeric
+    \item Handle missing \texttt{discount\_pct} (e.g., fill with 0)
+    \item Handle missing \texttt{units} (drop or impute; justify)
+    \item Handle invalid \texttt{units} (negative) \textbf{drop the row}
+    \item Handle discount outliers (cap to a reasonable range)
+    \item Handle price outliers (replace with category median or cap; justify)
+  \end{itemize}
+\subsection*{Task 3: Feature Engineering (5 minutes)}
+Create:
+  \begin{itemize}
+    \item \texttt{gross\_amount} = \texttt{units} $\times$ \texttt{unit\_price}
+    \item \texttt{net\_amount} = \texttt{gross\_amount} $\times (1-\texttt{discount\_pct}/100)$
+    \item \texttt{is\_weekend} from \texttt{date}
+  \end{itemize}
+\subsection*{Task 4: Summary Tables (10 minutes)}
+Produce:
+  \begin{itemize}
+    \item total net revenue by \texttt{category}
+    \item total net revenue by \texttt{payment\_mode}
+    \item top 5 transactions by \texttt{net\_amount}
+  \end{itemize}
+\subsection*{Task 5: Plots (10 minutes)}
+Create and save:
+  \begin{itemize}
+    \item bar chart: net revenue by category
+    \item histogram: net amount per transaction
+    \item line chart: daily net revenue
+  \end{itemize}
+\subsection*{Final Deliverables (Submit/Show)}
+\begin{itemize}
+    \item Cleaned dataset saved as \texttt{data/campus\_cafe\_clean.csv}
+    \item Three plots saved in \texttt{images/}
+    \item 3--5 short insights + 2 limitations/caveats
+  \end{itemize}
+\subsection*{Solution Script (Python)}
+After attempting yourself, run:
+  \begin{center}
+    \texttt{python demo/activity\_solution.py}
+  \end{center}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{data/campus\_cafe\_clean.csv}
+    \item summary CSVs in \texttt{data/}
+    \item plots in \texttt{images/}
+  \end{itemize}
+\subsection*{Expected Key Results (Example)}
+\small
+  Net revenue by category (after cleaning):
+  \begin{center}
+    \begin{tabular}{lrr}
+      \toprule
+      Category & Count & Net Revenue (INR) \\
+      \midrule
+      Snacks & 9 & 1129.25 \\
+      Drinks & 8 & 368.00 \\
+      Stationery & 7 & 283.90 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.2em}
+  \normalsize
+  \textbf{Question:} Why is Snacks revenue much higher?
+\subsection*{Expected Key Results (Payment Mode)}
+\small
+  Net revenue by payment mode (after cleaning):
+  \begin{center}
+    \begin{tabular}{lrr}
+      \toprule
+      Mode & Count & Net Revenue (INR) \\
+      \midrule
+      UPI & 12 & 1124.15 \\
+      Cash & 6 & 304.00 \\
+      Card & 6 & 353.00 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\subsection*{Example Plots}
+\textbf{Revenue by Category}
+      \begin{center}
+      \IfFileExists{../images/revenue_by_category.png}{
+        \includegraphics[width=\linewidth]{revenue_by_category.png}
+      }{
+        \small (Run solution to generate \texttt{revenue\_by\_category.png})
+      }
+      \end{center}
+    
+    
+      \textbf{Daily Revenue}
+      \begin{center}
+      \IfFileExists{../images/daily_revenue.png}{
+        \includegraphics[width=\linewidth]{daily_revenue.png}
+      }{
+        \small (Run solution to generate \texttt{daily\_revenue.png})
+      }
+      \end{center}
+\subsection*{Write Insights + Caveats}
+Examples of insights:
+  \begin{itemize}
+    \item Snacks contribute the largest share of revenue in this sample week.
+    \item UPI is the most common payment mode and also highest revenue.
+    \item A few large transactions dominate total revenue (check top-5 table).
+  \end{itemize}
+  \vspace{0.4em}
+  Examples of caveats:
+  \begin{itemize}
+    \item Small dataset (only a few days) $\Rightarrow$ not representative.
+    \item Cleaning choices (caps/median replacement) can change results.
+  \end{itemize}
+\subsection*{Wrap-up}
+\begin{itemize}
+    \item A good summary combines: cleaning + engineered features + tables + plots
+    \item Document your rules so results are reproducible
+    \item Always communicate limitations honestly
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Exit question:} What is one cleaning rule you applied and why?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}
+

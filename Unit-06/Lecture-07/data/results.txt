@@ -1,0 +1,1 @@
+series=AR(1) phi=0.7

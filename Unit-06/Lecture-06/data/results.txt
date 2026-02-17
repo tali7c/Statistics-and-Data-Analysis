@@ -1,0 +1,2 @@
+ADF_p_original=0.866981
+ADF_p_diff1=0.000000

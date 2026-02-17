@@ -1,0 +1,256 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 05 -- Lecture 07 Notes\\Case Study: PCA + Clustering}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Case study: PCA + KMeans clustering; visualize and interpret clusters.
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Pipeline
+  \item Interpretation
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Run PCA before clustering for visualization/stability
+  \item Explain why scaling matters for clustering
+  \item Use KMeans and interpret clusters cautiously
+  \item Visualize clusters in PCA space
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+\textbf{PCA} finds new axes (principal components) that capture maximum variance. It is a
+rotation of the feature space. Because PCA is variance-based, it is sensitive to scaling:
+standardize features first unless all features are already comparable.
+
+\subsection*{Pipeline: Key Points}
+\begin{itemize}
+  \item Scale features
+  \item Run PCA (2D for visualization)
+  \item Cluster (KMeans) and visualize
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{PCA} finds new axes (principal components) that capture maximum variance. It is a
+rotation of the feature space. Because PCA is variance-based, it is sensitive to scaling:
+standardize features first unless all features are already comparable.
+
+\subsection*{Interpretation: Key Points}
+\begin{itemize}
+  \item Clusters are patterns, not truth
+  \item Check stability across seeds/k
+  \item Explain clusters using original variables
+\end{itemize}
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Scaling}
+Why scale before KMeans?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Distance-based; scale dominates otherwise.
+\end{itemize}
+
+\subsection*{Exercise 2: Choose k}
+Name one heuristic to choose k.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Elbow, silhouette, domain knowledge.
+\end{itemize}
+
+\subsection*{Exercise 3: Explain cluster}
+How to explain cluster to non-technical audience?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Describe in original variables (high spend, frequent visits, etc.).
+\end{itemize}
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Scales features, runs PCA for 2D visualization, then clusters with KMeans.
+  \item Plots clusters in PCA space to discuss patterns vs ground truth.
+  \item Use it to talk about choosing k (elbow/silhouette) and stability checks.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+Why should you validate cluster stability before using clusters for decisions?
+\paragraph{Suggested answer (for revision).}
+Clusters can change with seed/k; stability checks prevent making decisions based on
+accidental patterns in one run.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Pipeline}\hspace{0.6em}
+\textbf{Interpretation}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Pipeline
+  \item Interpretation
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Run PCA before clustering for visualization/stability
+\item Explain why scaling matters for clustering
+\item Use KMeans and interpret clusters cautiously
+\item Visualize clusters in PCA space
+      \end{itemize}
+\subsection*{Pipeline: Key Points}
+\begin{itemize}
+        \item Scale features
+\item Run PCA (2D for visualization)
+\item Cluster (KMeans) and visualize
+      \end{itemize}
+\subsection*{Interpretation: Key Points}
+\begin{itemize}
+        \item Clusters are patterns, not truth
+\item Check stability across seeds/k
+\item Explain clusters using original variables
+      \end{itemize}
+\subsection*{Exercise 1: Scaling}
+\small
+  Why scale before KMeans?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item Distance-based; scale dominates otherwise.
+  \end{itemize}
+\subsection*{Exercise 2: Choose k}
+\small
+  Name one heuristic to choose k.
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Elbow, silhouette, domain knowledge.
+  \end{itemize}
+\subsection*{Exercise 3: Explain cluster}
+\small
+  How to explain cluster to non-technical audience?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item Describe in original variables (high spend, frequent visits, etc.).
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  Why should you validate cluster stability before using clusters for decisions?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

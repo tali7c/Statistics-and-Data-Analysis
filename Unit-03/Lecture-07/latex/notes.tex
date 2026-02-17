@@ -1,0 +1,278 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 03 -- Lecture 07 Notes\\Case Exercise: Interpreting Hypothesis Testing Results}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Interpret published hypothesis testing results; emphasize CI, effect size, and pitfalls.
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Reading Results
+  \item Pitfalls
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Interpret p-values and confidence intervals correctly
+  \item Compute a simple effect size from summary statistics
+  \item Identify common red flags (only p-values, many tests, no effect size)
+  \item Write a cautious conclusion in plain language
+  \item Avoid correlation-causation confusion
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+A \textbf{confidence interval (CI)} is an interval estimate, not a single number. The
+correct interpretation is long-run: if we repeated the same sampling procedure many times,
+about 95\% of the computed 95\% intervals would contain the true population value. It is
+\textbf{not} correct to say there is a 95\% probability the parameter lies in a particular
+computed interval.
+A \textbf{p-value} is computed assuming the null hypothesis $H_0$ is true. It measures how
+surprising the observed data (or something more extreme) would be under $H_0$. A small
+p-value suggests the data is hard to explain by $H_0$ alone, but it does not tell you how
+large the effect is or whether it is practically important.
+
+\subsection*{Reading Results: Key Points}
+\begin{itemize}
+  \item Check n, center, spread
+  \item Prefer CI + effect size
+  \item Ask: what does it mean in the real world?
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Effect size} quantifies \emph{how big} a difference/relationship is (e.g., Cohen's
+$d$, correlation $r$). With large samples, even tiny effects can be statistically
+significant, so reporting effect size prevents over-claiming.
+
+\subsection*{Pitfalls: Key Points}
+\begin{itemize}
+  \item Multiple comparisons
+  \item Selective reporting (p-hacking)
+  \item Over-claiming causation
+\end{itemize}
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Interpret CI}
+95\% CI for (new-old) is (1.2, 3.8). What does it suggest?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Likely positive effect (CI above 0).
+  \item Magnitude between 1.2 and 3.8 units.
+\end{itemize}
+
+\subsection*{Exercise 2: Compute d}
+A: n=20 mean=72 SD=10; B: n=20 mean=68 SD=10. Compute Cohen's d.
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Pooled SD=10
+  \item d=(72-68)/10=0.4
+\end{itemize}
+
+\subsection*{Exercise 3: Cautious conclusion}
+p-value=0.03 but effect size is tiny. What should you conclude?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Evidence of difference, but small magnitude.
+  \item May not justify action without cost/benefit.
+\end{itemize}
+\paragraph{Walkthrough.}
+A \textbf{p-value} is computed assuming the null hypothesis $H_0$ is true. It measures how
+surprising the observed data (or something more extreme) would be under $H_0$. A small
+p-value suggests the data is hard to explain by $H_0$ alone, but it does not tell you how
+large the effect is or whether it is practically important.
+\textbf{Effect size} quantifies \emph{how big} a difference/relationship is (e.g., Cohen's
+$d$, correlation $r$). With large samples, even tiny effects can be statistically
+significant, so reporting effect size prevents over-claiming.
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Computes simple effect sizes (Cohen's d) from multiple study summaries.
+  \item Plots effect sizes around 0 to practice interpretation and cautious conclusions.
+  \item Use it to discuss why we want CI/effect size, not only p-values.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+What is one red flag when a paper reports only p-values and no effect sizes?
+\paragraph{Suggested answer (for revision).}
+Only reporting p-values hides the magnitude; without effect sizes/CIs you cannot judge
+whether a result matters in practice.
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Reading Results}\hspace{0.6em}
+\textbf{Pitfalls}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Reading Results
+  \item Pitfalls
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Interpret p-values and confidence intervals correctly
+\item Compute a simple effect size from summary statistics
+\item Identify common red flags (only p-values, many tests, no effect size)
+\item Write a cautious conclusion in plain language
+\item Avoid correlation-causation confusion
+      \end{itemize}
+\subsection*{Reading Results: Key Points}
+\begin{itemize}
+        \item Check n, center, spread
+\item Prefer CI + effect size
+\item Ask: what does it mean in the real world?
+      \end{itemize}
+\subsection*{Pitfalls: Key Points}
+\begin{itemize}
+        \item Multiple comparisons
+\item Selective reporting (p-hacking)
+\item Over-claiming causation
+      \end{itemize}
+\subsection*{Exercise 1: Interpret CI}
+\small
+  95\% CI for (new-old) is (1.2, 3.8). What does it suggest?
+\subsection*{Solution 1}
+\begin{itemize}
+        \item Likely positive effect (CI above 0).
+\item Magnitude between 1.2 and 3.8 units.
+      \end{itemize}
+\subsection*{Exercise 2: Compute d}
+\small
+  A: n=20 mean=72 SD=10; B: n=20 mean=68 SD=10. Compute Cohen's d.
+\subsection*{Solution 2}
+\begin{itemize}
+        \item Pooled SD=10
+\item d=(72-68)/10=0.4
+      \end{itemize}
+\subsection*{Exercise 3: Cautious conclusion}
+\small
+  p-value=0.03 but effect size is tiny. What should you conclude?
+\subsection*{Solution 3}
+\begin{itemize}
+        \item Evidence of difference, but small magnitude.
+\item May not justify action without cost/benefit.
+      \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  What is one red flag when a paper reports only p-values and no effect sizes?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

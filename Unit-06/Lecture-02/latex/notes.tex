@@ -1,0 +1,289 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 06 -- Lecture 02 Notes\\Smoothing (Moving Average and Exponential Smoothing)}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Topic}
+Smoothing techniques for time series (moving average, exponential smoothing).
+\section*{How to Use These Notes}
+These notes are written for students who are seeing the topic for the first time. They
+follow the slide order, but add the missing 'why', interpretation, and common mistakes. If
+you get stuck, look at the worked exercises and then run the Python demo.
+
+Course repository (slides, demos, datasets): \url{https://github.com/tali7c/Statistics-and-Data-Analysis}
+
+\section*{Time Plan (55 minutes)}
+\begin{itemize}
+  \item 0--10 min: Attendance + recap of previous lecture
+  \item 10--35 min: Core concepts (this lecture's sections)
+  \item 35--45 min: Exercises (solve 1--2 in class, rest as practice)
+  \item 45--50 min: Mini demo + interpretation of output
+  \item 50--55 min: Buffer / wrap-up (leave 5 minutes early)
+\end{itemize}
+
+\section*{Slide-by-slide Notes}
+\subsection*{Title Slide}
+State the lecture title clearly and connect it to what students already know.
+Tell students what they will be able to do by the end (not just what you will cover).
+
+\subsection*{Quick Links / Agenda}
+Explain the structure of the lecture and where the exercises and demo appear.
+\begin{itemize}
+  \item Overview
+  \item Moving Average
+  \item Exponential Smoothing
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+
+\subsection*{Learning Outcomes}
+\begin{itemize}
+  \item Explain why smoothing is used (noise reduction)
+  \item Describe moving average and its window effect
+  \item Describe exponential smoothing and alpha effect
+  \item Discuss responsiveness vs smoothness trade-off
+\end{itemize}
+\paragraph{Why these outcomes matter.}
+The \textbf{significance level} $\alpha$ is the maximum Type I error rate you are willing to
+tolerate: the probability of rejecting $H_0$ when $H_0$ is actually true. Common choices are
+0.05 or 0.01, but the right value depends on consequences of false alarms vs missed
+detections.
+A \textbf{moving average} smooths noise by averaging the last $k$ points. Larger windows
+give smoother curves but introduce lag (the smooth curve reacts slowly to real changes). Use
+smoothing for visualization and as a baseline forecasting idea, not as a magic fix.
+
+\subsection*{Moving Average: Key Points}
+\begin{itemize}
+  \item Average last k points
+  \item Larger k -> smoother but more lag
+  \item Good for trend visualization
+\end{itemize}
+\paragraph{Explanation.}
+\textbf{Trend} is a long-term upward or downward movement. Trend changes the mean over time,
+which often creates non-stationarity. Many forecasting models handle trend by differencing
+or by explicitly modeling trend.
+A \textbf{moving average} smooths noise by averaging the last $k$ points. Larger windows
+give smoother curves but introduce lag (the smooth curve reacts slowly to real changes). Use
+smoothing for visualization and as a baseline forecasting idea, not as a magic fix.
+
+\subsection*{Exponential Smoothing: Key Points}
+\begin{itemize}
+  \item Weighted average with decay
+  \item Alpha near 1 -> responsive
+  \item Alpha near 0 -> smooth
+\end{itemize}
+\paragraph{Explanation.}
+The \textbf{significance level} $\alpha$ is the maximum Type I error rate you are willing to
+tolerate: the probability of rejecting $H_0$ when $H_0$ is actually true. Common choices are
+0.05 or 0.01, but the right value depends on consequences of false alarms vs missed
+detections.
+\textbf{Exponential smoothing} is a weighted average where recent observations get more
+weight. The parameter $\alpha$ controls the trade-off: high $\alpha$ reacts quickly (less
+smoothing), low $\alpha$ is smoother but slower.
+
+\subsection*{Exponential Smoothing: Key Formula}
+\[ s_t = \alpha x_t + (1-\alpha)s_{t-1} \]
+\paragraph{How to read the formula.}
+The \textbf{significance level} $\alpha$ is the maximum Type I error rate you are willing to
+tolerate: the probability of rejecting $H_0$ when $H_0$ is actually true. Common choices are
+0.05 or 0.01, but the right value depends on consequences of false alarms vs missed
+detections.
+\textbf{Exponential smoothing} is a weighted average where recent observations get more
+weight. The parameter $\alpha$ controls the trade-off: high $\alpha$ reacts quickly (less
+smoothing), low $\alpha$ is smoother but slower.
+
+\subsection*{Exercises (with Solutions)}
+Attempt the exercise first, then compare with the solution. Focus on interpretation, not
+only arithmetic.
+
+\subsection*{Exercise 1: Window effect}
+Increase window from 3 to 15: what happens?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Smoother, more lag.
+\end{itemize}
+
+\subsection*{Exercise 2: Alpha}
+If alpha=0.9, smoothing is strong or weak?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item Weak smoothing (very responsive).
+\end{itemize}
+\paragraph{Walkthrough.}
+The \textbf{significance level} $\alpha$ is the maximum Type I error rate you are willing to
+tolerate: the probability of rejecting $H_0$ when $H_0$ is actually true. Common choices are
+0.05 or 0.01, but the right value depends on consequences of false alarms vs missed
+detections.
+
+\subsection*{Exercise 3: Too much smoothing}
+Why can too much smoothing harm forecasting?
+\subsubsection*{Solution}
+\begin{itemize}
+  \item It can hide real changes and add lag.
+\end{itemize}
+
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/demo.py
+\end{verbatim}
+
+Output files:
+\begin{itemize}
+  \item \texttt{images/demo.png}
+  \item \texttt{data/results.txt}
+\end{itemize}
+\paragraph{What to show and say.}
+\begin{itemize}
+  \item Applies moving average and exponential smoothing to a noisy series.
+  \item Shows the lag vs smoothness trade-off for different window/alpha values.
+  \item Use it as a baseline for forecasting and for visual trend extraction.
+\end{itemize}
+
+\subsection*{Demo Output (Example)}
+\begin{center}
+\IfFileExists{../images/demo.png}{
+  \includegraphics[width=0.95\linewidth]{../images/demo.png}
+}{
+  \small (Run the demo to generate \texttt{images/demo.png})
+}
+\end{center}
+
+\subsection*{Summary}
+\begin{itemize}
+  \item Key definitions and the main formula.
+  \item How to interpret results in context.
+  \item How the demo connects to the theory.
+\end{itemize}
+
+\subsection*{Exit Question}
+What is one sign that your smoothing window is too large?
+\paragraph{Suggested answer (for revision).}
+If the smoothed curve reacts too slowly and misses real changes, your window is too large
+(too much lag).
+
+\section*{References}
+\begin{itemize}
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}, Wiley.
+  \item Devore, J. L. \textit{Probability and Statistics for Engineering and the Sciences}, Cengage.
+  \item McKinney, W. \textit{Python for Data Analysis}, O'Reilly.
+\end{itemize}
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+        \vspace{-0.5em}
+        \begin{center}
+          \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+        \end{center}
+\subsection*{Quick Links}
+\centering
+        \textbf{Overview}\hspace{0.6em}
+\textbf{Moving Average}\hspace{0.6em}
+\textbf{Exponential Smoothing}\hspace{0.6em}
+\textbf{Exercises}\hspace{0.6em}
+\textbf{Demo}\hspace{0.6em}
+\textbf{Summary}\hspace{0.6em}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Moving Average
+  \item Exponential Smoothing
+  \item Exercises
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+        \item Explain why smoothing is used (noise reduction)
+\item Describe moving average and its window effect
+\item Describe exponential smoothing and alpha effect
+\item Discuss responsiveness vs smoothness trade-off
+      \end{itemize}
+\subsection*{Moving Average: Key Points}
+\begin{itemize}
+        \item Average last k points
+\item Larger k -> smoother but more lag
+\item Good for trend visualization
+      \end{itemize}
+\subsection*{Exponential Smoothing: Key Points}
+\begin{itemize}
+        \item Weighted average with decay
+\item Alpha near 1 -> responsive
+\item Alpha near 0 -> smooth
+      \end{itemize}
+\subsection*{Exponential Smoothing: Key Formula}
+\[ s_t = \alpha x_t + (1-\alpha)s_{t-1} \]
+\subsection*{Exercise 1: Window effect}
+\small
+  Increase window from 3 to 15: what happens?
+\subsection*{Solution 1}
+\begin{itemize}
+    \item Smoother, more lag.
+  \end{itemize}
+\subsection*{Exercise 2: Alpha}
+\small
+  If alpha=0.9, smoothing is strong or weak?
+\subsection*{Solution 2}
+\begin{itemize}
+    \item Weak smoothing (very responsive).
+  \end{itemize}
+\subsection*{Exercise 3: Too much smoothing}
+\small
+  Why can too much smoothing harm forecasting?
+\subsection*{Solution 3}
+\begin{itemize}
+    \item It can hide real changes and add lag.
+  \end{itemize}
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{images/demo.png}
+    \item \texttt{data/results.txt}
+  \end{itemize}
+\subsection*{Demo Output (Example)}
+\begin{center}
+  \IfFileExists{../images/demo.png}{
+    \includegraphics[width=0.92\linewidth]{demo.png}
+  }{
+    \small (Run demo to generate: \texttt{demo.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+        \item Key definitions and the main formula.
+\item How to interpret results in context.
+\item How the demo connects to the theory.
+      \end{itemize}
+\subsection*{Exit Question}
+\small
+  What is one sign that your smoothing window is too large?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}

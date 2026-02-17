@@ -1,0 +1,370 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\title{Statistics and Data Analysis\\Unit 01 -- Lecture 02 Notes\\Feature Scaling and Feature Engineering Basics}
+\author{Tofik Ali}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{What You Will Learn}
+In this lecture we focus on practical preprocessing steps that are used \emph{before} modeling:
+\begin{itemize}
+  \item scaling (normalization and standardization),
+  \item transformations (especially for skewed variables),
+  \item and basic feature engineering (creating helpful new variables).
+\end{itemize}
+
+\section*{1. Feature Scaling}
+
+\subsection*{1.1 Why scaling is needed}
+Many datasets contain features with different units and magnitudes, for example:
+\begin{itemize}
+  \item attendance (\%) typically ranges 0--100,
+  \item study hours per week might range 0--25,
+  \item income could range 20--200 (in thousands) or much more.
+\end{itemize}
+
+If we use distance (like Euclidean distance), the largest-scale feature can dominate. This is why scaling is important for:
+\begin{itemize}
+  \item kNN (nearest neighbors),
+  \item k-means clustering,
+  \item many gradient-based optimization methods.
+\end{itemize}
+
+\subsection*{1.2 Min--max normalization}
+Min--max scaling maps a feature into $[0,1]$:
+\[
+x' = \frac{x-\min(x)}{\max(x)-\min(x)}
+\]
+Interpretation: $x'=0$ means the minimum observed value; $x'=1$ means the maximum observed value.
+
+\paragraph{Exercise 1 (solution).}
+If min=20, max=80, and $x=50$:
+\[
+x'=\frac{50-20}{80-20}=\frac{30}{60}=0.5
+\]
+
+\subsection*{1.3 Standardization (z-score)}
+Standardization uses mean and standard deviation:
+\[
+z=\frac{x-\mu}{\sigma}
+\]
+Interpretation: $z$ is the number of standard deviations $x$ is above/below the mean.
+
+\paragraph{Exercise 2 (solution).}
+If $\mu=60$, $\sigma=10$, and $x=80$:
+\[
+z=\frac{80-60}{10}=2
+\]
+So the score 80 is 2 standard deviations above the mean.
+
+\subsection*{1.4 Important warning: data leakage}
+When we scale, we compute parameters (min/max or mean/std). These parameters must be estimated on the \textbf{training data only}.
+Then we use the same parameters to transform the test set.
+
+If we use the whole dataset (including test) to compute scaling parameters, then test information ``leaks'' into training. That can make performance look better than it truly is.
+
+\paragraph{Exercise 3 (solution).}
+\begin{itemize}
+  \item kNN: Yes (distance-based)
+  \item k-means: Yes (distance-based)
+  \item Linear regression (gradient descent): often yes (helps optimization)
+  \item Decision tree: usually no (split rules are scale-invariant)
+\end{itemize}
+
+\section*{2. Transformations}
+
+\subsection*{2.1 Why transform?}
+Scaling changes the \emph{units} or spread, but it does not necessarily fix skewness.
+For right-skewed features (like income), many values are small and a few values are extremely large.
+
+Transformations can:
+\begin{itemize}
+  \item reduce skewness,
+  \item make relationships more linear,
+  \item reduce the impact of extreme values.
+\end{itemize}
+
+\subsection*{2.2 Log transform}
+A common transform for positive values is:
+\[
+x'=\log(1+x)
+\]
+We use $\log(1+x)$ instead of $\log(x)$ to handle zero values safely.
+
+\paragraph{Exercise 4 (solution).}
+For right-skewed income, a reasonable first transform is $\log(1+x)$.
+
+\section*{3. Feature Engineering Basics}
+
+\subsection*{3.1 What is feature engineering?}
+Feature engineering means creating new variables (features) from raw columns.
+Good engineered features can:
+\begin{itemize}
+  \item capture patterns more directly,
+  \item improve model performance,
+  \item and make interpretations clearer.
+\end{itemize}
+
+\subsection*{3.2 Common patterns}
+\begin{itemize}
+  \item \textbf{Encoding categorical variables}: one-hot encoding for nominal categories.
+  \item \textbf{Buckets/bins}: convert continuous variables to categories (e.g., attendance low/medium/high).
+  \item \textbf{Interactions}: multiply/add features when combined effect matters (effort = hours $\times$ attendance).
+  \item \textbf{Ratios}: e.g., marks per hour, cost per unit.
+  \item \textbf{Date parts}: month, weekday, time-of-day.
+  \item \textbf{Text features}: word count, length, keyword flags (basic features).
+\end{itemize}
+
+\paragraph{Exercise 5 (example answers).}
+\begin{itemize}
+  \item \texttt{income\_log1p}: reduces skew and outlier impact.
+  \item \texttt{effort\_index} = hours $\times$ attendance/100: single ``effort'' score.
+  \item \texttt{join\_month}: captures seasonal effects.
+\end{itemize}
+
+\paragraph{Exercise 6 (solution).}
+If \texttt{program} has categories CSE/ECE/AIML, the one-hot columns can be:
+\[
+\texttt{program\_CSE},\ \texttt{program\_ECE},\ \texttt{program\_AIML}
+\]
+Each row has exactly one 1 (its category) and 0 for the others.
+
+\section*{4. Mini Demo (Python)}
+Run from the lecture folder:
+\begin{verbatim}
+python demo/scaling_feature_engineering_demo.py
+\end{verbatim}
+
+The demo:
+\begin{itemize}
+  \item scales three features (attendance, hours, income) and prints how distances change after scaling,
+  \item engineers features (month, weekday, income log, effort index, backlog flag, one-hot program),
+  \item saves \texttt{data/student\_features\_engineered.csv},
+  \item saves plots in \texttt{images/}.
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+  \item McKinney, W. \textit{Python for Data Analysis}. O'Reilly, 2022.
+  \item Kuhn, M., \& Johnson, K. \textit{Feature Engineering and Selection}. CRC Press, 2019.
+  \item Montgomery, D. C., \& Runger, G. C. \textit{Applied Statistics and Probability for Engineers}. Wiley, 7th ed., 2020.
+\end{itemize}
+
+
+
+
+
+% BEGIN SLIDE APPENDIX (AUTO-GENERATED)
+\clearpage
+\section*{Appendix: Slide Deck Content (Reference)}
+\noindent The material below is a reference copy of the slide deck content. Exercise solutions are explained in the main notes where applicable.
+
+\subsection*{Title Slide}
+\titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \texttt{https://github.com/tali7c/Statistics-and-Data-Analysis}
+  \end{center}
+\subsection*{Quick Links}
+\centering
+  \textbf{Scaling}\hspace{0.6em}
+  \textbf{Transforms}\hspace{0.6em}
+  \textbf{Feature Engg.}\hspace{0.6em}
+  \textbf{Demo}\hspace{0.6em}
+  \textbf{Summary}
+\subsection*{Agenda}
+\begin{itemize}
+  \item Overview
+  \item Feature Scaling
+  \item Transformations
+  \item Feature Engineering Basics
+  \item Demo
+  \item Summary
+\end{itemize}
+\subsection*{Learning Outcomes}
+\begin{itemize}
+    \item Explain why feature scaling is needed in many ML/analytics workflows
+    \item Compute min--max normalization and z-score standardization
+    \item Choose appropriate scaling/transformation for a given scenario
+    \item Create basic engineered features (encoding, bins, interactions, date parts)
+  \end{itemize}
+\subsection*{Why Scale Features?}
+\begin{itemize}
+    \item Different features can have very different units and ranges
+    \item Distance-based methods (kNN, k-means) are dominated by large-scale features
+    \item Optimization can be faster/more stable after scaling (gradient-based models)
+    \item Scaling also helps compare feature importance in some linear models
+  \end{itemize}
+\subsection*{Min--Max Normalization}
+Maps a feature to $[0,1]$:
+  \[
+    x' = \frac{x - \min(x)}{\max(x) - \min(x)}
+  \]
+  \begin{itemize}
+    \item Keeps relative ordering
+    \item Sensitive to extreme outliers (min/max can be unstable)
+  \end{itemize}
+\subsection*{Standardization (z-score)}
+Centers and scales using mean and standard deviation:
+  \[
+    z = \frac{x - \mu}{\sigma}
+  \]
+  \begin{itemize}
+    \item Produces mean 0 and std 1 (approximately)
+    \item Often a good default for many algorithms
+  \end{itemize}
+\subsection*{Important: Avoid Data Leakage}
+\begin{itemize}
+    \item Scaling parameters (min/max, mean/std) must be computed on \textbf{training data only}
+    \item Then apply the same parameters to validation/test data
+    \item Otherwise, test information leaks into training and results look unrealistically good
+  \end{itemize}
+\subsection*{Exercise 1: Min--Max}
+\small
+  Suppose a feature has min = 20, max = 80.\\
+  Compute the min--max normalized value for $x=50$.
+\subsection*{Solution 1}
+\[
+    x' = \frac{50-20}{80-20} = \frac{30}{60} = 0.5
+  \]
+\subsection*{Exercise 2: z-score}
+\small
+  A test score has mean $\mu=60$ and standard deviation $\sigma=10$.\\
+  Compute the z-score for $x=80$ and interpret it.
+\subsection*{Solution 2}
+\[
+    z=\frac{80-60}{10}=2
+  \]
+  \textbf{Interpretation:} 80 is 2 standard deviations above the mean.
+\subsection*{Exercise 3: Who Needs Scaling?}
+\small
+  For each algorithm, answer: scaling important? (Yes/No)
+  \begin{enumerate}
+    \item kNN
+    \item k-means clustering
+    \item Linear regression (with gradient descent)
+    \item Decision tree
+  \end{enumerate}
+\subsection*{Solution 3}
+\begin{itemize}
+    \item kNN: Yes (distance-based)
+    \item k-means: Yes (distance-based)
+    \item Linear regression (GD): Often yes (helps optimization)
+    \item Decision tree: Usually no (splits are scale-invariant)
+  \end{itemize}
+\subsection*{Why Transform Features?}
+\begin{itemize}
+    \item Reduce skewness (e.g., income is often right-skewed)
+    \item Stabilize variance and make patterns more linear
+    \item Improve interpretability and model fit in some cases
+  \end{itemize}
+\subsection*{Log Transform (Common for Right-Skew)}
+For positive values, a common transform is:
+  \[
+    x' = \log(1+x)
+  \]
+  \begin{itemize}
+    \item Compresses large values and spreads small values
+    \item Reduces the impact of extreme values
+  \end{itemize}
+\subsection*{Exercise 4: Pick a Transform}
+\small
+  Which is a reasonable first transform for a right-skewed income column? \\
+  \vspace{0.4em}
+  (a) $x$ \hspace{1.2em} (b) $x^2$ \hspace{1.2em} (c) $\log(1+x)$
+\subsection*{Solution 4}
+\textbf{(c) $\log(1+x)$} is a common choice for right-skewed positive features.
+\subsection*{What is Feature Engineering?}
+Feature engineering means creating useful new variables from raw data to improve analysis/models.
+  \vspace{0.6em}
+  \begin{itemize}
+    \item Encode categorical variables (one-hot)
+    \item Create buckets/bins (low/medium/high)
+    \item Interactions and ratios (effort = hours $\times$ attendance)
+    \item Date parts (month, weekday)
+    \item Simple text features (length, keywords)
+  \end{itemize}
+\subsection*{Example (Student Dataset Columns)}
+Raw columns:
+  \begin{center}
+    \small \texttt{program, city, join\_date, attendance\_pct, study\_hours\_week, cgpa, family\_income\_k, backlogs}
+  \end{center}
+  \vspace{0.4em}
+  Possible engineered features:
+  \begin{itemize}
+    \item \texttt{join\_month}, \texttt{join\_weekday}
+    \item \texttt{attendance\_bucket} (low/medium/high)
+    \item \texttt{income\_log1p}
+    \item \texttt{effort\_index} = hours $\times$ attendance/100
+    \item \texttt{has\_backlog} (0/1)
+  \end{itemize}
+\subsection*{Exercise 5: Design Features}
+\small
+  You have: \texttt{attendance\_pct, study\_hours\_week, family\_income\_k, join\_date, program}.\\
+  \vspace{0.4em}
+  \normalsize
+  \textbf{Task:} Propose \textbf{three} engineered features and explain why they might help.
+\subsection*{Solution 5 (Examples)}
+\begin{itemize}
+    \item \texttt{income\_log1p}: reduces right-skew and outlier impact
+    \item \texttt{effort\_index}: combines hours + attendance into one effort score
+    \item \texttt{join\_month}: captures seasonal patterns (admissions, attendance patterns)
+  \end{itemize}
+\subsection*{Exercise 6: One-hot Encoding}
+\small
+  Program has categories: \texttt{CSE}, \texttt{ECE}, \texttt{AIML}.\\
+  \textbf{Task:} Write the one-hot encoded columns for \texttt{program}.
+\subsection*{Solution 6}
+One-hot columns:
+  \begin{itemize}
+    \item \texttt{program\_CSE}
+    \item \texttt{program\_ECE}
+    \item \texttt{program\_AIML}
+  \end{itemize}
+  Each row has 1 for its category and 0 for the others.
+\subsection*{Mini Demo (Python)}
+Run from the lecture folder:
+  \begin{center}
+    \texttt{python demo/scaling\_feature\_engineering\_demo.py}
+  \end{center}
+  \vspace{0.4em}
+  Outputs:
+  \begin{itemize}
+    \item \texttt{data/student\_features\_engineered.csv}
+    \item plots in \texttt{images/} (income vs log-income, hours vs CGPA)
+  \end{itemize}
+\subsection*{Demo Output (Example Plot)}
+\begin{center}
+  \IfFileExists{../images/income_vs_log_income.png}{
+    \includegraphics[width=0.95\linewidth]{income_vs_log_income.png}
+  }{
+    \small (Run the demo to generate: \texttt{income\_vs\_log\_income.png})
+  }
+  \end{center}
+\subsection*{Summary}
+\begin{itemize}
+    \item Scaling makes features comparable and prevents domination by large-scale variables
+    \item Min--max maps to $[0,1]$; z-score centers and scales by mean/std
+    \item Transformations like $\log(1+x)$ help reduce skew and outlier influence
+    \item Feature engineering creates informative variables (encoding, bins, interactions, dates)
+  \end{itemize}
+  \vspace{0.6em}
+  \textbf{Exit question:} Why is scaling ``fit on train only'' and then applied to test?
+% END SLIDE APPENDIX (AUTO-GENERATED)
+
+\end{document}
+
